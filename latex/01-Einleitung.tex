@@ -1,31 +1,37 @@
-%Literatur einfügen     \cite[S.3]{bibkey} 
+%Literatur einfügen     \cite[S.3]{bibkey}
 % In JabRef die zu zitierende Quelle auswählen und STRG+L (z.B. bei Verwendun von TeXstudio) oder STRG+K (hier wird direkt "\cite{bibkey}" kopiert) drücken. Dann mit STRG+V an der Stelle einfügen, an welcher man den Literaturverweis einfügen möchte.
 %\section*{Spervermerk} Nicht sichtbares Kapitel in der Gliederung
 
 % In TeXstudio
-% Strg+T  Kommentiert Abschnitte oder Zeilen aus 
+% Strg+T  Kommentiert Abschnitte oder Zeilen aus
 % Strg+U  Entfernt die auskommentierung
 
 
 \chapter{Einleitung}
-\label{sec:Einleitung} %Textmarke/Positionsmarke, um mit Autoref darauf zu verweisen.
+\label{sec:Einleitung}
 
+\section{Hinführung zum Thema und Motivation}
+% TODO: Hinführung zum Thema Virtual Tabletop Plugins für Obsidian
+% Motivation für Performance-Optimierung in Electron-basierten Anwendungen
 
-\todotext{Hier soll die eine Einleitung hin..}
+\section{Darstellung der Problemstellung}
+% TODO: Performance-Probleme bei VTT-Plugins
+% Skalierungsprobleme bei großen Datenmengen
+% Einschränkungen durch Electron-Architektur
 
-Zunächst kommt ein einleitender Text...
-
-\section{Problemstellung / Forschungsfragen}
-
-\section{Lösungsansatz}
-\label{sec:loesungsansatz}
+\section{Zielsetzung und Forschungsfrage}
+% TODO: Hauptziel: Performance-Optimierung von VTT-Plugins
+% Forschungsfrage: Wie können VTT-Plugins in Obsidian performant implementiert werden?
+% Teilziele und erwartete Ergebnisse
 
 \section{Aufbau der Arbeit}
-In \autoref{sec:Kapitel2} wird das und das Thema\todo{Bla bla}{}  behandelt...
-Dieses und jenes Thema wird in \autoref{sec:Kapitel3} näher betrachtet...
 
-\blindtext
+Die vorliegende Arbeit gliedert sich in fünf Hauptkapitel:
 
+In Kapitel \autoref{sec:GrundlagenKapitel} werden die theoretischen Grundlagen erarbeitet. Dies umfasst die technischen Rahmenbedingungen von Obsidian und Electron, die konzeptuellen Grundlagen von Virtual Tabletop Tools und Plugin-Architekturen sowie Methoden zur Performance-Analyse.
 
+Kapitel \autoref{sec:KonzeptionImplementierung} beschreibt die Konzeption und Implementierung des VTT-Plugins. Hier werden die Anforderungsanalyse, das Systemdesign, verschiedene Lösungsansätze und die Implementierung der Testumgebung dokumentiert.
 
- 
+In Kapitel \autoref{sec:EvaluationErgebnisse} erfolgt die Evaluation der implementierten Lösung. Die durchgeführten Performance-Messungen werden ausgewertet und verschiedene Optimierungsstrategien verglichen.
+
+Kapitel \autoref{sec:FazitAusblick} fasst die wesentlichen Erkenntnisse zusammen, beantwortet die Forschungsfrage und gibt einen Ausblick auf zukünftige Entwicklungsmöglichkeiten.

@@ -4,15 +4,11 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Aufbau eines Mustererkennungssystems}}{3}{figure.2.1}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Hier die Bildunterschrift}}{3}{figure.2.2}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Verwendung des Assistenten in \TeX studio, um eine Grafik einzufügen.}}{4}{figure.2.3}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Gesamtbeschreibung der Unterbilder}}{5}{figure.2.4}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Automatische Erzeugung eines Labels für Querverweise}}{6}{figure.2.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Caption}}{12}{figure.A.1}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Caption}}{6}{figure.A.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

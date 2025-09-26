@@ -1,35 +1,70 @@
 \babel@toc {ngerman}{}\relax 
 \contentsline {chapter}{\nonumberline Vorwort}{iii}{chapter*.2}%
-\contentsline {chapter}{\nonumberline Abbildungsverzeichnis}{vi}{chapter*.4}%
-\contentsline {chapter}{\nonumberline Tabellenverzeichnis}{vii}{chapter*.5}%
-\contentsline {chapter}{Abkürzungsverzeichnis}{viii}{chapter*.6}%
+\contentsline {chapter}{\nonumberline Abbildungsverzeichnis}{vii}{chapter*.4}%
+\contentsline {chapter}{\nonumberline Tabellenverzeichnis}{viii}{chapter*.5}%
+\contentsline {chapter}{Abkürzungsverzeichnis}{ix}{chapter*.6}%
 \contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Problemstellung / Forschungsfragen}{1}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Lösungsansatz}{1}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Aufbau der Arbeit}{1}{section.1.3}%
-\contentsline {chapter}{\numberline {2}Kapitel 2 mit besonders langem Titel}{2}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Abschnitt im Kapitel zwei...}{2}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Abschnitt im Kapitel zwei...}{2}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Weitere Kommandos}{2}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Literaturzitate}{2}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Einbinden von Bildern}{2}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Mehrere Bilder in einer Abbildung}{4}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Einbinden von Codeausschnitten}{5}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Abkürzungen}{6}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Querverweise}{6}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Erstellen von Tabellen}{7}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Listen und Aufzählungen}{7}{subsection.2.5.3}%
-\contentsline {subsection}{\numberline {2.5.4}Mathematische Formeln}{8}{subsection.2.5.4}%
-\contentsline {subsection}{\numberline {2.5.5}Silbentrennung}{8}{subsection.2.5.5}%
-\contentsline {section}{\numberline {2.6}Abschnitt im Kapitel zwei...}{8}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Kapitel 3}{9}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Abschnitt im Kapitel drei...}{9}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Abschnitt im Kapitel drei...}{9}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Abschnitt im Kapitel drei...}{9}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Zusammenfassung und Ausblick}{10}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Ausblick}{10}{section.4.1}%
-\contentsline {chapter}{\numberline {A}Thema des ersten Anhangs}{12}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Der erste Abschnitt des ersten Anhangs}{12}{section.A.1}%
-\contentsline {chapter}{\nonumberline Literatur}{13}{chapter*.10}%
-\contentsline {chapter}{\nonumberline Sonstige Quellen}{14}{chapter*.11}%
+\contentsline {section}{\numberline {1.1}Hinführung zum Thema und Motivation}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Darstellung der Problemstellung}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Zielsetzung und Forschungsfrage}{1}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Aufbau der Arbeit}{1}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Theoretische Grundlagen}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Technische Rahmenbedingungen}{2}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Obsidian als Markdown-Editor}{2}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Electron Framework}{2}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Konzeptuelle Grundlagen}{2}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Virtual Tabletop Tools (VTTs)}{2}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Plugin-Architekturen}{2}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Performance-Analyse und Benchmarking}{2}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Performance-Metriken}{2}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Optimierungsstrategien}{2}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}Stand der Forschung und verwandte Arbeiten}{2}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Konzeption und Implementierung}{3}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Anforderungsanalyse}{3}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Funktionale Anforderungen}{3}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Nicht-funktionale Anforderungen}{3}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Systemdesign}{3}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Architekturentwurf}{3}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Datenmodell}{3}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Entwicklung verschiedener Lösungsansätze}{3}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Canvas-basierter Ansatz}{3}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}SVG-basierter Ansatz}{3}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}WebGL-Ansatz}{3}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Hybrid-Lösung}{3}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Implementierung der Testumgebung}{3}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Test-Framework}{3}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Benchmark-Suite}{3}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Dokumentation der Messverfahren}{3}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Performance-Monitoring}{3}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Reproduzierbarkeit}{3}{subsection.3.5.2}%
+\contentsline {chapter}{\numberline {4}Evaluation und Ergebnisse}{4}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Durchführung der Performance-Messungen}{4}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Testumgebung und -bedingungen}{4}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Messmethodik}{4}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Auswertung und Interpretation der Daten}{4}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Performance-Metriken}{4}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Skalierungsverhalten}{4}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Vergleich verschiedener Optimierungsstrategien}{4}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Baseline-Performance}{4}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Optimierungstechniken}{4}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Vergleichende Analyse}{4}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Diskussion der Ergebnisse}{4}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Interpretation der Messergebnisse}{4}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Best Practices}{4}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Limitationen}{4}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}Fazit und Ausblick}{5}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Zusammenfassung der wesentlichen Erkenntnisse}{5}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Beantwortung der Forschungsfrage}{5}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Limitationen und kritische Reflexion}{5}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Methodische Einschränkungen}{5}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Technische Limitationen}{5}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Kritische Würdigung}{5}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}Ausblick auf zukünftige Entwicklungen}{5}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Weiterführende Forschung}{5}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Praktische Anwendung}{5}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Technologische Trends}{5}{subsection.5.4.3}%
+\contentsline {chapter}{\numberline {A}Thema des ersten Anhangs}{6}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Der erste Abschnitt des ersten Anhangs}{6}{section.A.1}%
+\contentsline {chapter}{\nonumberline Literatur}{7}{chapter*.7}%
+\contentsline {chapter}{\nonumberline Sonstige Quellen}{8}{chapter*.8}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

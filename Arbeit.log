@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.10)  25 SEP 2025 19:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.12.10)  25 SEP 2025 19:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1514,18 +1514,18 @@ Package tocbasic Info: character protrusion at toc deactivated on input line 46.
 
 
 
-])
+] [5])
 \tf@toc=\write6
 \openout6 = `Arbeit.toc'.
 
- [5]
+ [6]
 chapter without number
 Package tocbasic Info: character protrusion at lof deactivated on input line 51.
 (./Arbeit.lof)
 \tf@lof=\write7
 \openout7 = `Arbeit.lof'.
 
- [6
+ [7
 
 
 ]
@@ -1535,126 +1535,61 @@ Package tocbasic Info: character protrusion at lot deactivated on input line 52.
 \tf@lot=\write8
 \openout8 = `Arbeit.lot'.
 
- (./latex/abkuerzungen.tex [7
+ (./latex/abkuerzungen.tex [8
 
 
-]) [8
+]) [9
 
 
 ] (./latex/01-Einleitung.tex
 chapter 1.
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input line 14.
-) (./latex/02-Kapitel2.tex [1
+) (./latex/02-Theoretische-Grundlagen.tex [1
 
 
 
 ]
 chapter 2.
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 42.
-(/usr/local/texlive/2024/texmf-dist/tex/latex/bera/t1fvm.fd
-File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
-)
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 42.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `fvm' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 8.09995pt on input line 42.
-<bilder/bildchen.pdf, id=159, 302.93173pt x 46.85506pt>
-File: bilder/bildchen.pdf Graphic file (type pdf)
-<use bilder/bildchen.pdf>
-Package pdftex.def Info: bilder/bildchen.pdf  used on input line 46.
-(pdftex.def)             Requested size: 199.16931pt x 30.80646pt.
-<bilder/GrafikEinfuegen.png, id=162, 562.35094pt x 603.75563pt>
-File: bilder/GrafikEinfuegen.png Graphic file (type png)
-<use bilder/GrafikEinfuegen.png>
-Package pdftex.def Info: bilder/GrafikEinfuegen.png  used on input line 53.
-(pdftex.def)             Requested size: 199.16931pt x 213.83266pt.
- [2
+) (./latex/03-Konzeption-Implementierung.tex [2
 
 
-] [3 <./bilder/bildchen.pdf> <./bilder/GrafikEinfuegen.png>]
-File: bilder/GrafikEinfuegen.png Graphic file (type png)
-<use bilder/GrafikEinfuegen.png>
-Package pdftex.def Info: bilder/GrafikEinfuegen.png  used on input line 62.
-(pdftex.def)             Requested size: 278.83583pt x 299.36205pt.
- (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2024/02/21 1.10 (Carsten Heinz)
-)
-LaTeX Font Info:    Font shape `T1/fvm/b/n' will be
-(Font)              scaled to size 8.09995pt on input line 92.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 109.
- [4] (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2024/02/21 1.10 listings language file
-) (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2024/02/21 1.10 listings language file
-) (./latex/lstlisting.tex) (./latex/lstlisting.tex (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/02/21 1.10 listings language file
-)) [5]
-Package acronym Info: Label `acro:JSON' newly defined as it shall be overridden
-although it is yet undefined on input line 119.
-<bilder/LabelErzeugen.png, id=235, 289.08pt x 313.9228pt>
-File: bilder/LabelErzeugen.png Graphic file (type png)
-<use bilder/LabelErzeugen.png>
-Package pdftex.def Info: bilder/LabelErzeugen.png  used on input line 130.
-(pdftex.def)             Requested size: 159.33302pt x 173.02211pt.
-
-Underfull \hbox (badness 3364) in paragraph at lines 135--139
-[]\T1/ptm/m/n/10.95 (+15) Es wird ein Ein-trag [][]\T1/fvm/m/n/10.95 \label{key} []\T1/ptm/m/n/10.95 (+15) er-zeugt, auf den man bei-spiels-wei-se mit
- []
-
-[6 <./bilder/LabelErzeugen.png>]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 180.
- (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [7]) (./latex/03-Kapitel3.tex [8]
+]
 chapter 3.
-) (./latex/08-ZusammenfassungUndAusblick.tex [9
+) (./latex/04-Evaluation-Ergebnisse.tex [3
 
 
 ]
 chapter 4.
-) [10
+) (./latex/05-Fazit-Ausblick.tex [4
 
 
-] (./latex/anhang.tex [11]
+]
+chapter 5.
+) (./latex/anhang.tex [5
+
+
+]
 chapter A.
-<bilder/statistic_id2984_fahrleistung-von-pkw-in-deutschland-bis-2019.pdf, id=276, 1003.75pt x 745.78625pt>
+<bilder/statistic_id2984_fahrleistung-von-pkw-in-deutschland-bis-2019.pdf, id=220, 1003.75pt x 745.78625pt>
 File: bilder/statistic_id2984_fahrleistung-von-pkw-in-deutschland-bis-2019.pdf Graphic file (type pdf)
 <use bilder/statistic_id2984_fahrleistung-von-pkw-in-deutschland-bis-2019.pdf>
 Package pdftex.def Info: bilder/statistic_id2984_fahrleistung-von-pkw-in-deutschland-bis-2019.pdf  used on input line 9.
 (pdftex.def)             Requested size: 398.33864pt x 295.96498pt.
-) [12
+) [6
 
 
  <./bilder/statistic_id2984_fahrleistung-von-pkw-in-deutschland-bis-2019.pdf>]
 chapter without number
-[13
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 98.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/bera/t1fvm.fd
+File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
+)
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 9.85492pt on input line 98.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `fvm' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [7
 
 
 
@@ -1663,7 +1598,7 @@ chapter without number
 
 ]
 chapter without number
-[14
+[8
 
 
 ] (./latex/ee.tex)
@@ -1673,35 +1608,49 @@ chapter without number
 \tf@loc=\write10
 \openout10 = `Arbeit.loc'.
 
- [15
+ [9
 
 
 
 
-] (./Arbeit.aux)
+] (./Arbeit.aux
+
+Package mparhack Warning: Marginpars may have changed.
+(mparhack)                Rerun to get them right.
+
+)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `Arbeit.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                Arbeit
+(biblatex)                and rerun LaTeX afterwards.
+
 Package logreq Info: Writing requests to 'Arbeit.run.xml'.
 \openout1 = `Arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45255 strings out of 474116
- 878735 string characters out of 5743681
- 2035187 words of memory out of 5000000
- 66466 multiletter control sequences out of 15000+600000
- 644757 words of font info for 263 fonts, out of 8000000 for 9000
- 1144 hyphenation exceptions out of 8191
- 123i,20n,143p,10956b,2483s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/bera/fvmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Arbeit.pdf (23 pages, 573636 bytes).
+ 43004 strings out of 474116
+ 846657 string characters out of 5743681
+ 1946187 words of memory out of 5000000
+ 64339 multiletter control sequences out of 15000+600000
+ 619460 words of font info for 191 fonts, out of 8000000 for 9000
+ 1143 hyphenation exceptions out of 8191
+ 123i,20n,143p,10956b,2482s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Arbeit.pdf (18 pages, 451719 bytes).
 PDF statistics:
- 511 PDF objects out of 1000 (max. 8388607)
- 444 compressed objects within 5 object streams
- 115 named destinations out of 1000 (max. 500000)
- 102718 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 545 PDF objects out of 1000 (max. 8388607)
+ 500 compressed objects within 5 object streams
+ 102 named destinations out of 1000 (max. 500000)
+ 74311 words of extra memory for PDF output out of 89155 (max. 10000000)
 
