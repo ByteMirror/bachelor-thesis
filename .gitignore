@@ -1,1 +1,27 @@
 atlas-vtt
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode/
+.claude/
+
+# Large files
+Daggerheart-Rulebook.pdf
+academic-style.md
