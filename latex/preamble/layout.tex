@@ -114,7 +114,23 @@
 	floatplacement = tb,
 	morekeywords = {foreach},
     %rulesepcolor=\color{darkgrey}
-} 
+}
+
+% TypeScript language definition for listings
+\lstdefinelanguage{TypeScript}{
+  keywords={abstract, any, as, async, await, boolean, break, case, catch, class, const, constructor, continue, debugger, declare, default, delete, do, else, enum, export, extends, false, finally, for, from, function, get, if, implements, import, in, infer, instanceof, interface, is, keyof, let, module, namespace, never, new, null, number, object, of, package, private, protected, public, readonly, require, return, set, static, string, super, switch, symbol, this, throw, true, try, type, typeof, undefined, unique, unknown, var, void, while, with, yield},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={Array, Boolean, Date, Function, Map, Math, Number, Object, Promise, RegExp, Set, String, Symbol, WeakMap, WeakSet},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
 %-----------------------------------------------------------------------------%
 %                                                        Schrifteinstellungen %
 %------------------------------------------------------------------------------
@@ -260,6 +276,7 @@
 
 % Hier die entsprechende .bib-Datei eintragen
 \addbibresource{seminar-lit.bib}
+\addbibresource{references.bib}
 
 % Keine Warnung für geteilte Bibliographien
 \BiblatexSplitbibDefernumbersWarningOff
