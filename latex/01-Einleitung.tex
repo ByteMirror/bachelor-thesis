@@ -19,7 +19,6 @@ Die zunehmende Digitalisierung und geografische Verteilung von Spielgruppen hat 
 Obsidian.md hat sich in der \ac{TTRPG}-Community als beliebtes Werkzeug für Spielleiter etabliert, insbesondere für Worldbuilding und Session-Vorbereitung. Die Plattform wird bereits extensiv für die Organisation von Kampagnennotizen, Charakterbeschreibungen und Regelreferenzen genutzt. Das Plugin Fantasy Statblocks, das Statblocks für verschiedene Spielsysteme direkt in Obsidian rendert, verzeichnet über 250.000 Downloads \autocite{ValentineFantasyStatblocks2024}. Die Community hat ein umfangreiches Ökosystem spezialisierter Plugins entwickelt, darunter Initiative Tracker für Kampfbegegnungen \autocite{JavalentInitiativeTracker2024} und Dice Roller für Würfelsimulationen. Diese etablierte Nutzerbasis und die vorhandene Infrastruktur machen Obsidian zu einer idealen Plattform für die Integration vollwertiger \ac{VTT}-Funktionalität.
 
 Das im Rahmen dieser Arbeit zu entwickelnde \ac{VTT}-Plugin zielt darauf ab, Virtual-Tabletop-Funktionalität nahtlos in Obsidians bewährtes Markdown-Ökosystem zu integrieren. Unter Verwendung der Rendering-Engine PIXI.js v8 soll das Plugin interaktive Spielkarten, Token-Management und grundlegende Würfelfunktionalität direkt in der Obsidian-Umgebung ermöglichen. Die angestrebte Lösung würde es Spielleitern erlauben, ihre Kampagnennotizen, Weltenbeschreibungen und Regelreferenzen in derselben Anwendung zu verwalten, in der auch die taktischen Begegnungen durchgeführt werden. Diese Integration soll den sonst üblichen Kontextwechsel zwischen verschiedenen Anwendungen eliminieren und einen kohärenten digitalen Arbeitsbereich für Tabletop-Rollenspiele schaffen.
-
 \section{Darstellung der Problemstellung}
 
 Die technische Umsetzung von \ac{VTT}-Plugins in Electron-basierten Anwendungen wie Obsidian bringt erhebliche Performance-Herausforderungen mit sich. Electron-Anwendungen basieren auf Chromium und erfordern sorgfältige Optimierung, um eine akzeptable Performance zu erreichen \autocite{ElectronPerformance2024}. Bei \ac{VTT}-Plugins sind die Anforderungen besonders anspruchsvoll: Echtzeit-Rendering von komplexen Karten mit potentiell hunderten von Token, flüssige Animationen für Bewegungen und Effekte, sowie die gleichzeitige Verwaltung von Spielerzuständen und Regelberechnungen.
@@ -48,7 +47,7 @@ Die gewonnenen Erkenntnisse sind nicht nur für die Entwicklung des \ac{VTT}-Plu
 
 Die vorliegende Arbeit gliedert sich in fünf Hauptkapitel:
 
-In Kapitel \autoref{sec:GrundlagenKapitel} werden die theoretischen Grundlagen erarbeitet. Dies umfasst zunächst die konzeptuellen Grundlagen von Virtual Tabletop Tools und Plugin-Architekturen, anschließend die technischen Rahmenbedingungen von Obsidian und Electron sowie Methoden zur Performance-Analyse.
+In Kapitel \autoref{sec:GrundlagenKapitel} werden die theoretischen Grundlagen erarbeitet. Dies umfasst die konzeptuellen Grundlagen von Virtual Tabletop Tools und Plugin-Architekturen und die technischen Rahmenbedingungen von Obsidian und Electron.
 
 Kapitel \autoref{sec:KonzeptionImplementierung} beschreibt die Konzeption und Implementierung des \ac{VTT}-Plugins. Hier werden die Anforderungsanalyse, das Systemdesign, und verschiedene Lösungsansätze dokumentiert.
 
