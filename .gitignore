@@ -14,6 +14,7 @@ atlas-vtt
 *.run.xml
 *.synctex.gz
 *.toc
+*-SAVE-ERROR
 
 # OS files
 .DS_Store
