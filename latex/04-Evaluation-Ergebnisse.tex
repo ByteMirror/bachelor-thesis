@@ -93,13 +93,7 @@ Das Benchmark-System erfasst zwei primäre Metriken, die den CPU- und Speicherve
 \end{itemize}
 
 \paragraph{Statistische Auswertung}
-Für jede Metrik werden folgende statistische Kennwerte berechnet:
-\begin{itemize}
-	\item Arithmetisches Mittel ($\bar{x}$) und Standardabweichung ($\sigma$)
-	\item Median zur Robustheit gegenüber Ausreißern
-	\item 5. und 95. Perzentil (P5, P95) für die Verteilungscharakteristik
-	\item Minimum und Maximum zur Identifikation von Extremwerten
-\end{itemize}
+Für jede Metrik werden das arithmetische Mittel ($\bar{x}$) und die Standardabweichung ($\sigma$) berechnet. Die Standardabweichung quantifiziert die Variabilität der Messungen und ermöglicht die Bewertung der Konsistenz der Performance über die 500 Iterationen hinweg.
 
 Die Ergebnisse werden als JSON exportiert und mittels eines Python-Skripts visualisiert, das automatisch Vergleichsdiagramme für FPS, Speicherverbrauch und Skalierungsverhalten generiert.
 

@@ -9,11 +9,21 @@ Die Anforderungsanalyse bildet die Grundlage für die Konzeption und Implementie
 
 VTTs digitalisieren klassisches Tabletop-RPG-Gameplay durch interaktive Karten, Token-basiertes Movement und Fog of War. Die funktionalen Anforderungen von Atlas VTT orientieren sich an etablierten VTT-Standards von Foundry VTT und Roll20 sowie an D\&D 5e Combat-Regeln. Im Gegensatz zu cloud-basierten Lösungen fokussiert Atlas VTT auf lokales Gameplay innerhalb Obsidian mit direkter Integration in das Vault-System.
 
+\paragraph{Priorisierungskriterien}
+
+Die Anforderungen werden nach ihrer Kritikalität für die Kern-Funktionalität in zwei Prioritätsstufen kategorisiert:
+
+\textbf{P0 (Kritisch)} umfasst Features, die in etablierten VTT-Lösungen als unverzichtbar gelten und ohne die grundlegendes VTT-Gameplay nicht möglich ist. Die Klassifikation als P0 erfolgt, wenn mindestens eines der folgenden Kriterien erfüllt ist: (1) Das Feature ist in allen marktführenden VTT-Lösungen (Foundry VTT, Roll20) als Kern-Feature implementiert\autocite{FoundryVTT2024,Roll202024}, (2) das Feature ist für die Umsetzung grundlegender D\&D 5e-Spielregeln erforderlich\autocite{DnDBasicRules2014}, oder (3) das Feature ist technisch notwendig für die Persistenz und Session-Continuity.
+
+\textbf{P1 (Erweitert)} umfasst Features, die die Benutzererfahrung verbessern oder Obsidian-spezifische Integration bieten, jedoch nicht für grundlegendes VTT-Gameplay erforderlich sind. Diese Features werden oft als optionale Erweiterungen in etablierten VTTs angeboten oder dienen der Differenzierung von Atlas VTT durch vault-native Integration.
+
 \subsubsection{Karten-Management}
 
 Das Karten-Management bildet die Basis jeder VTT-Session. Atlas VTT muss verschiedene Bildformate (JPEG, PNG, WebP) für Hintergrundkarten unterstützen und ein konfigurierbares Grid-Overlay bereitstellen. D\&D 5e definiert das Grid-basierte Movement-System mit einer Standardskalierung, bei der jedes Quadrat auf dem Grid 5 Fuß repräsentiert\autocite{DnDBasicRules2014}. Die Grid-Konfiguration muss verschiedene Größen, Offsets und Typen (Square, Hexagonal) unterstützen, da Battle Maps unterschiedliche Skalierungen aufweisen.
 
 Die Persistenz erfolgt durch ein benutzerdefiniertes \texttt{.atlasmap}-Dateiformat, das Map-Konfiguration und platzierte Objekte als JSON speichert. Dies ermöglicht Session-Continuity und Integration in Obsidians Vault-Struktur. Multi-Scene-Support ermöglicht den Wechsel zwischen verschiedenen Locations innerhalb einer Kampagne.
+
+Die Anforderungen F1.1-F1.4 sind als P0 klassifiziert, da sie in allen etablierten VTT-Lösungen als Kern-Features implementiert sind: Foundry VTT bietet umfassende Grid-Konfiguration und Map-Import\autocite{FoundryVTT2024}, Roll20 unterstützt ebenfalls verschiedene Grid-Typen und Bildformate\autocite{Roll202024}. Ohne diese Features wäre grundlegendes taktisches Gameplay auf Basis von D\&D 5e-Bewegungsregeln nicht möglich. Multi-Scene-Support (F1.5) ist als P1 eingestuft, da einzelne Maps für initiale VTT-Funktionalität ausreichen und Scene-Management eine Komfort-Erweiterung darstellt.
 
 Tabelle~\ref{tab:funktionale-anforderungen-karten} fasst die Karten-Management-Anforderungen zusammen:
 
@@ -41,6 +51,8 @@ Tokens repräsentieren Spielfiguren, NPCs und Monster auf der Map und sind die z
 
 Erweiterte Funktionen umfassen Multi-Selection für Gruppenbewegung, Health Bar Display für visuelles HP-Tracking und Status Icons für Conditions wie Prone oder Stunned. Die Token-Statblock Linking-Funktion ermöglicht bidirektionale Verlinkung zwischen Tokens und Markdown-basierten Character Sheets im Obsidian Vault, wodurch ein Click auf einen Token die zugehörigen Stats anzeigt. Diese Vault-native Integration unterscheidet Atlas VTT von cloud-basierten Lösungen.
 
+Die Anforderungen F2.1-F2.5 sind als P0 klassifiziert, da sie die minimale Funktionalität für Token-basiertes Gameplay darstellen. Foundry VTT definiert Token-Manipulation (Placement, Movement, Selection) als Kern-Feature\autocite{FoundryTokens2024}, Roll20 implementiert ebenfalls Drag \& Drop und Grid-Snapping als Standard\autocite{Roll202024}. Token-Rotation (F2.4) ist für D\&D 5e Combat Facing und Sichtlinien-Berechnung erforderlich. Die erweiterten Features F2.6-F2.8 (Health Bars, Status Icons, Statblock-Linking) sind als P1 eingestuft, da sie zwar die Benutzererfahrung verbessern, aber nicht für grundlegendes Gameplay notwendig sind. Health Bars und Status Icons werden in Foundry VTT als optionale Anzeigeelemente angeboten\autocite{FoundryTokens2024}.
+
 \begin{table}[htbp]
 	\centering
 	\small
@@ -66,6 +78,8 @@ Erweiterte Funktionen umfassen Multi-Selection für Gruppenbewegung, Health Bar 
 
 Fog of War ermöglicht das Verbergen nicht-entdeckter Bereiche einer Map und ist ein Standard-Feature in VTTs wie Foundry VTT und Roll20\autocite{FoundryTokens2024}. Die Anforderungen umfassen das Erstellen von Fog Regions (Rectangle, Polygon), das progressive Aufdecken durch Fog Removal sowie separate Rendering-Modi: Der GM sieht die vollständige Map (GM-Only Preview) zur Fog-Planung, während die Player View Fog opaque rendert.
 
+Alle Fog of War-Anforderungen (F3.1-F3.4) sind als P0 klassifiziert, da Fog of War in allen etablierten VTT-Lösungen als Kern-Feature für Dungeon-Exploration implementiert ist. Foundry VTT bietet umfassende Fog-of-War-Werkzeuge mit verschiedenen Formen und Layer-Management\autocite{FoundryVTT2024}, Roll20 implementiert ebenfalls Fog Reveal/Hide als Standard-Feature\autocite{Roll202024}. Ohne Fog of War wäre eine zentrale Mechanik des Tabletop-Gameplays -- das schrittweise Erkunden unbekannter Gebiete -- nicht umsetzbar. Die Unterscheidung zwischen GM- und Player-View ist technisch notwendig, um dem Spielleiter Map-Planung zu ermöglichen, ohne Spoiler für Spieler zu erzeugen.
+
 \begin{table}[htbp]
 	\centering
 	\small
@@ -86,6 +100,8 @@ Fog of War ermöglicht das Verbergen nicht-entdeckter Bereiche einer Map und ist
 \subsubsection{Werkzeuge und Interaktion}
 
 Interaktive Werkzeuge unterstützen taktisches Gameplay und Map-Annotation. Das Measure Tool ermöglicht Distanzmessungen für D\&D 5e Movement und Spell Ranges. D\&D 5e definiert standardisierte Reichweiten für bestimmte Spielmechaniken die in einem Virtual-Tabletop System nachvollwerden werden müssen.\autocite{DnDBasicRules2014}. Note Pins verlinken Map-Positionen mit Obsidian Notes und integrieren VTT-Gameplay mit Vault Knowledge -- diese Obsidian-spezifische Integration unterscheidet Atlas VTT von anderen VTT-Lösungen. Drawing Tools und Text Placement ermöglichen zusätzliche Map-Annotationen.
+
+Das Measure Tool (F4.1) ist als P0 klassifiziert, da Distanzmessung für die Umsetzung der D\&D 5e-Spielregeln unverzichtbar ist: Bewegungsreichweiten, Zauberreichweiten und Waffenreichweiten sind in Fuß definiert\autocite{DnDBasicRules2014}, was präzise Grid-basierte Messung erfordert. Alle etablierten VTT-Lösungen bieten Measure Tools als Kern-Feature: Foundry VTT implementiert Ruler-Werkzeuge mit Wegpunkt-Unterstützung und automatischer Entfernungsberechnung\autocite{FoundryVTT2024}, Roll20 bietet ebenfalls Measurement-Tools für Grid-basierte Distanzen\autocite{Roll202024}. Die erweiterten Features F4.2-F4.4 (Drawing Tools, Note Pins, Text Placement) sind als P1 eingestuft, da sie optionale Annotations-Features darstellen, die zwar die Benutzererfahrung verbessern, aber nicht für regelkonformes D\&D-Gameplay erforderlich sind. Note Pins (F4.3) bieten Obsidian-spezifische Integration, die Atlas VTT differenziert, sind aber kein Standard-VTT-Feature.
 
 \begin{table}[htbp]
 	\centering

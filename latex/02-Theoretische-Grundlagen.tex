@@ -7,27 +7,26 @@
 
 \ac{VTT}s repräsentieren die digitale Evolution des klassischen Spieltischs für Pen-and-Paper-Rollenspiele. Im Kern handelt es sich um webbasierte oder Desktop-Anwendungen, die die physische Spielumgebung in einem digitalen Raum simulieren und dabei die essentiellen Elemente des Tabletop-Rollenspiels – Karten, Miniaturen, Würfel und Charakterbögen – durch interaktive digitale Komponenten ersetzen. Die primäre Funktion besteht darin, räumlich getrennte Spielgruppen zusammenzuführen und ihnen eine gemeinsame, synchronisierte Spielumgebung zu bieten.
 
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.85\textwidth]{bilder/token-demo.jpeg}
-    \caption{Token-Interaktion in Atlas VTT mit Ressourcenbalken, Statuseffekten und Kontextmenü.}
-    \label{fig:token-demo}
-\end{figure}
-
 \subsubsection{Token – Digitale Spielfiguren}
 
 Token sind die digitalen Entsprechungen der klassischen Miniaturen oder Spielsteine auf einem physischen Spielbrett. Sie sind bewegliche Bilder oder Symbole, die darstellen, wo sich Spielercharaktere, Gegner oder wichtige Objekte auf der Spielkarte befinden. Jeder Token repräsentiert eine Entität in der Spielwelt – sei es der heldenhafte Ritter eines Spielers, ein gefährlicher Drache oder eine verschlossene Schatztruhe.
 
 Die technische Implementierung von Token geht jedoch weit über simple Bilddarstellungen hinaus. Moderne \ac{VTT}-Systeme verknüpfen Token mit umfangreichen Metadaten: Gesundheitspunkte werden als farbige Balken visualisiert, Statuseffekte als kleine Icons dargestellt, und Bewegungsreichweiten durch farbige Überlagerungen angezeigt. Token können verschiedene Sichtbarkeitsebenen haben – für Spieler sichtbar, nur für den Spielleiter sichtbar, oder temporär versteckt. Die Größe eines Tokens auf dem Spielfeld korrespondiert mit der Größenkategorie der Kreatur im Regelwerk, wodurch räumliche Verhältnisse korrekt abgebildet werden.
 
-Abbildung~\ref{fig:token-demo} zeigt die Token-Implementierung in Atlas VTT mit konfigurierbaren Ressourcenbalken, Statuseffekt-Tags und einem Kontextmenü für häufige Operationen.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.85\textwidth]{bilder/token-demo.jpeg}
+	\caption{Token-Interaktion in Atlas VTT mit Ressourcenbalken, Statuseffekten und Kontextmenü.}
+	\label{fig:token-demo}
+\end{figure}
 
-\clearpage
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.95\textwidth]{bilder/statblock-showcase.png}
-    \caption{Statblock-Integration in Atlas VTT: Markdown-Quelldatei (links) und gerenderter Statblock (rechts).}
-    \label{fig:statblock-showcase}
+\autoref{fig:token-demo} zeigt die Token-Implementierung in Atlas VTT mit konfigurierbaren Ressourcenbalken, Statuseffekt-Tags und einem Kontextmenü für häufige Operationen.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{bilder/statblock-showcase.png}
+	\caption{Statblock-Integration in Atlas VTT: Markdown-Quelldatei (links) und gerenderter Statblock (rechts).}
+	\label{fig:statblock-showcase}
 \end{figure}
 
 \subsubsection{Statblocks – Charakterdatenblätter}
@@ -38,12 +37,11 @@ Die Struktur eines Statblocks folgt dabei dem jeweiligen Regelsystem. In Dungeon
 
 Abbildung~\ref{fig:statblock-showcase} demonstriert die Statblock-Implementierung in Atlas VTT, die Obsidians Markdown-Fähigkeiten nutzt: Die editierbare Quelldatei (links) wird automatisch als interaktiver Statblock mit klickbaren Würfelformeln gerendert (rechts).
 
-\clearpage
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.9\textwidth]{bilder/fog-of-war-demo.jpeg}
-    \caption{Fog of War in Atlas VTT: Unerforschte Bereiche werden für Spieler verborgen.}
-    \label{fig:fog-of-war-demo}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{bilder/fog-of-war-demo.jpeg}
+	\caption{Fog of War in Atlas VTT: Unerforschte Bereiche werden für Spieler verborgen.}
+	\label{fig:fog-of-war-demo}
 \end{figure}
 
 \subsubsection{Fog of War – Sichtbarkeitsmanagement}
@@ -56,12 +54,11 @@ Abbildung~\ref{fig:fog-of-war-demo} illustriert die Fog-of-War-Implementierung i
 
 Neben den visuellen Komponenten integrieren \ac{VTT}s verschiedene Hilfssysteme zur Automatisierung spielmechanischer Abläufe. Das \textit{Initiative-Tracking} verwaltet die Zugreihenfolge in rundenbasierten Kämpfen, indem es Teilnehmer nach ihrem Initiativwert sortiert und den Spielfluss koordiniert. \textit{Digitale Würfelsysteme} ersetzen physische Würfel durch Zufallsgeneratoren und bieten dabei automatische Erfolgsberechnungen sowie komplexe Würfelausdrücke. Weitere Automatisierungsfunktionen umfassen Rundenzähler, Statuseffekt-Verwaltung, automatische Schadensberechnung und Ressourcen-Tracking. Diese Systeme reduzieren den Verwaltungsaufwand erheblich und ermöglichen es Spielleitern, sich stärker auf die narrative Gestaltung zu konzentrieren.
 
-\clearpage
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.95\textwidth]{bilder/asset-manager.jpeg}
-    \caption{Asset Manager in Atlas VTT mit Collection-Sidebar, Tab-Navigation und Grid-Ansicht.}
-    \label{fig:asset-manager}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{bilder/asset-manager.jpeg}
+	\caption{Asset Manager in Atlas VTT mit Collection-Sidebar, Tab-Navigation und Grid-Ansicht.}
+	\label{fig:asset-manager}
 \end{figure}
 
 \subsubsection{Asset-Management}
