@@ -4,7 +4,7 @@
 
 \section{Durchführung der Performance-Messungen}
 
-Die Performance-Evaluation von Atlas VTT folgt einer praxisorientierten Messmethodik, die den offiziellen Performance-Empfehlungen für Electron-Anwendungen entspricht\autocite{ElectronPerformanceGuide2024}. Die Electron-Dokumentation betont das Prinzip \textit{„profile the running code, find the most resource-hungry piece of it"} als zuverlässigste Strategie zur Performance-Optimierung -- ein Ansatz, der sich in erfolgreichen Electron-Anwendungen wie Visual Studio Code und Slack bewährt hat. Die Messungen verwenden ausschließlich die Chrome DevTools als Messinstrument und zielen darauf ab, den Performance-Einfluss einzelner Features in der Single-Bundle-Architektur zu quantifizieren.
+Die Performance-Evaluation von Atlas VTT folgt einer praxisorientierten Messmethodik, die den offiziellen Performance-Empfehlungen für Electron-Anwendungen entspricht\autocite{ElectronPerformanceGuide2024}. Die Electron-Dokumentation betont das Prinzip, den laufenden Code zu profilieren und die ressourcenintensivsten Teile zu finden, als zuverlässigste Strategie zur Performance-Optimierung -- ein Ansatz, der sich in erfolgreichen Electron-Anwendungen wie Visual Studio Code und Slack bewährt hat. Die Messungen verwenden ausschließlich die Chrome DevTools als Messinstrument und zielen darauf ab, den Performance-Einfluss einzelner Features in der Single-Bundle-Architektur zu quantifizieren.
 
 \subsection{Testumgebung und -bedingungen}
 
@@ -13,11 +13,11 @@ Die Reproduzierbarkeit der Performance-Messungen erfordert eine präzise Dokumen
 \paragraph{Hardware-Spezifikationen}
 Die Tests wurden auf einem repräsentativen Consumer-System durchgeführt, das die typische Zielgruppe von Obsidian-Nutzern widerspiegelt:
 \begin{itemize}
-    \item \textbf{Prozessor}: Apple M1 Pro (8 Performance-Kerne, 2 Efficiency-Kerne, 3,2 GHz)
-    \item \textbf{Arbeitsspeicher}: 16 GB LPDDR5
-    \item \textbf{Grafik}: Integrierte Apple M1 Pro GPU (16 Kerne)
-    \item \textbf{Speicher}: 512 GB SSD (NVMe)
-    \item \textbf{Display}: 14-Zoll Liquid Retina XDR (3024 × 1964 Pixel)
+	\item \textbf{Prozessor}: Apple M1 Pro (8 Performance-Kerne, 2 Efficiency-Kerne, 3,2 GHz)
+	\item \textbf{Arbeitsspeicher}: 16 GB LPDDR5
+	\item \textbf{Grafik}: Integrierte Apple M1 Pro GPU (16 Kerne)
+	\item \textbf{Speicher}: 512 GB SSD (NVMe)
+	\item \textbf{Display}: 14-Zoll Liquid Retina XDR (3024 × 1964 Pixel)
 \end{itemize}
 
 Die Auswahl dieser Hardware-Konfiguration begründet sich durch die weite Verbreitung von Apple Silicon Macs in der Entwickler- und Content-Creator-Community, die eine zentrale Nutzergruppe von Obsidian darstellt. Die ARM-basierte Architektur des M1-Chips stellt zudem besondere Anforderungen an Electron-Anwendungen und ermöglicht die Evaluation unter realistischen Bedingungen.
@@ -25,12 +25,12 @@ Die Auswahl dieser Hardware-Konfiguration begründet sich durch die weite Verbre
 \paragraph{Software-Versionen}
 Um die Nachvollziehbarkeit der Messungen zu gewährleisten, wurden folgende Software-Versionen verwendet:
 \begin{itemize}
-    \item \textbf{Obsidian}: Version 1.7.7 (Installer-Version 1.7.4)
-    \item \textbf{Electron}: Version 32.2.5 (gebündelt mit Obsidian)
-    \item \textbf{Node.js}: Version 20.18.1 (Entwicklungsumgebung)
-    \item \textbf{PIXI.js}: Version 8.9.1
-    \item \textbf{Atlas VTT Plugin}: Version 1.0.0 (Evaluationsversion)
-    \item \textbf{Betriebssystem}: macOS Sequoia 15.0
+	\item \textbf{Obsidian}: Version 1.7.7 (Installer-Version 1.7.4)
+	\item \textbf{Electron}: Version 32.2.5 (gebündelt mit Obsidian)
+	\item \textbf{Node.js}: Version 20.18.1 (Entwicklungsumgebung)
+	\item \textbf{PIXI.js}: Version 8.9.1
+	\item \textbf{Atlas VTT Plugin}: Version 1.0.0 (Evaluationsversion)
+	\item \textbf{Betriebssystem}: macOS Sequoia 15.0
 \end{itemize}
 
 Besonders hervorzuheben ist die Verwendung von PIXI.js Version 8, da Obsidian selbst PIXI.js Version 7 als globale Dependency bereitstellt. Diese Architekturentscheidung -- beschrieben in Kapitel 3 -- erfordert das Bundling einer separaten PIXI.js-Instanz und beeinflusst maßgeblich die Bundle-Größe und Startup-Performance des Plugins.
@@ -38,12 +38,12 @@ Besonders hervorzuheben ist die Verwendung von PIXI.js Version 8, da Obsidian se
 \paragraph{Kontrollierte Testbedingungen}
 Um Störfaktoren zu minimieren und die interne Validität der Messungen zu sichern \autocite{Basili1986ExperimentationEngineering}, wurden folgende Kontrollmaßnahmen implementiert:
 \begin{itemize}
-    \item \textbf{Isolierte Testumgebung}: Alle nicht-essentiellen Hintergrundprozesse wurden beendet
-    \item \textbf{Standardisierte Systemlast}: CPU-Auslastung < 5\% vor Testbeginn
-    \item \textbf{Cache-Management}: Browser-Cache und Obsidian-Cache wurden vor jedem Testlauf geleert
-    \item \textbf{Energiemodus}: System im Leistungsmodus (nicht im Energiesparmodus)
-    \item \textbf{Netzwerkisolation}: Keine aktiven Netzwerkverbindungen während der Tests
-    \item \textbf{Temperaturkontrolle}: Tests erst nach thermischer Stabilisierung (< 45°C CPU-Temperatur)
+	\item \textbf{Isolierte Testumgebung}: Alle nicht-essentiellen Hintergrundprozesse wurden beendet
+	\item \textbf{Standardisierte Systemlast}: CPU-Auslastung < 5\% vor Testbeginn
+	\item \textbf{Cache-Management}: Browser-Cache und Obsidian-Cache wurden vor jedem Testlauf geleert
+	\item \textbf{Energiemodus}: System im Leistungsmodus (nicht im Energiesparmodus)
+	\item \textbf{Netzwerkisolation}: Keine aktiven Netzwerkverbindungen während der Tests
+	\item \textbf{Temperaturkontrolle}: Tests erst nach thermischer Stabilisierung (< 45°C CPU-Temperatur)
 \end{itemize}
 
 Diese Kontrollmaßnahmen orientieren sich an Best Practices für Electron-App-Benchmarks, wie sie von Thangadurai et al. in ihrer Studie zum Vergleich von Electron- und Web-Anwendungen etabliert wurden \autocite{Thangadurai2024ElectronApps}.
@@ -52,13 +52,13 @@ Diese Kontrollmaßnahmen orientieren sich an Best Practices für Electron-App-Be
 Die Evaluation folgt einem Multi-Scenario-Ansatz \autocite{Thangadurai2024ElectronApps}, der verschiedene Nutzungsmuster und Belastungsstufen abdeckt:
 
 \begin{enumerate}
-    \item \textbf{Leere Map (Baseline)}: Eine neu erstellte, leere Karte ohne Token oder Assets dient als Performance-Baseline zur Messung der minimalen Plugin-Overhead
+	\item \textbf{Leere Map (Baseline)}: Eine neu erstellte, leere Karte ohne Token oder Assets dient als Performance-Baseline zur Messung der minimalen Plugin-Overhead
 
-    \item \textbf{Standard-Session}: Eine typische Spielsitzung mit 20-30 Token, 2-3 Hintergrundbildern (jeweils ca. 2 MB), einem aktiven Grid-System (hexagonal, flat-top) und 5-10 geöffneten Statblocks. Dieses Szenario repräsentiert die häufigste Nutzung.
+	\item \textbf{Standard-Session}: Eine typische Spielsitzung mit 20-30 Token, 2-3 Hintergrundbildern (jeweils ca. 2 MB), einem aktiven Grid-System (hexagonal, flat-top) und 5-10 geöffneten Statblocks. Dieses Szenario repräsentiert die häufigste Nutzung.
 
-    \item \textbf{Stress-Test}: Eine große Kampagne-Karte mit 100+ Token, 10+ Hintergrundbildern (insgesamt > 20 MB), Fog-of-War-Layern und 20+ geöffneten Statblocks zur Evaluation der Skalierungsgrenzen
+	\item \textbf{Stress-Test}: Eine große Kampagne-Karte mit 100+ Token, 10+ Hintergrundbildern (insgesamt > 20 MB), Fog-of-War-Layern und 20+ geöffneten Statblocks zur Evaluation der Skalierungsgrenzen
 
-    \item \textbf{Interaktions-Test}: Fokussierte Messungen spezifischer User-Interaktionen wie Token-Drag\&Drop, Zoom-Operationen (10\%-400\%), Pan-Gesten und Asset-Upload-Vorgänge
+	\item \textbf{Interaktions-Test}: Fokussierte Messungen spezifischer User-Interaktionen wie Token-Drag\&Drop, Zoom-Operationen (10\%-400\%), Pan-Gesten und Asset-Upload-Vorgänge
 \end{enumerate}
 
 Diese Szenarien wurden gewählt, um sowohl typische als auch Extremfälle der Plugin-Nutzung abzudecken und damit eine realistische Bewertung der Performance unter verschiedenen Bedingungen zu ermöglichen.
@@ -72,11 +72,11 @@ Zur Gewährleistung statistischer Validität wurde ein dedizierter \texttt{Bench
 
 Der Benchmark-Ablauf pro Iteration umfasst:
 \begin{enumerate}
-    \item \textbf{Token-Spawning}: Erzeugung der szenariospezifischen Token-Anzahl über die Zustand-Store-API
-    \item \textbf{Wartezeit}: Sicherstellung der vollständigen Texture-Ladung und PIXI.js-Sprite-Erstellung
-    \item \textbf{Interaktionssimulation}: Selektion aller Token und simulierte Drag-Operation (50px Translation)
-    \item \textbf{Messung}: Erfassung der Frame Time über 60 Frames sowie Heap- und Blink-Memory
-    \item \textbf{Cleanup}: Vollständige Entfernung aller Token vor der nächsten Iteration
+	\item \textbf{Token-Spawning}: Erzeugung der szenariospezifischen Token-Anzahl über die Zustand-Store-API
+	\item \textbf{Wartezeit}: Sicherstellung der vollständigen Texture-Ladung und PIXI.js-Sprite-Erstellung
+	\item \textbf{Interaktionssimulation}: Selektion aller Token und simulierte Drag-Operation (50px Translation)
+	\item \textbf{Messung}: Erfassung der Frame Time über 60 Frames sowie Heap- und Blink-Memory
+	\item \textbf{Cleanup}: Vollständige Entfernung aller Token vor der nächsten Iteration
 \end{enumerate}
 
 Die Persistenz wird während der Benchmarks deaktiviert, um Disk-I/O-Overhead zu eliminieren und ausschließlich die Rendering-Performance zu messen.
@@ -85,20 +85,20 @@ Die Persistenz wird während der Benchmarks deaktiviert, um Disk-I/O-Overhead zu
 Das Benchmark-System erfasst zwei primäre Metriken, die den CPU- und Speicherverbrauch der Anwendung charakterisieren:
 
 \begin{itemize}
-    \item \textbf{Frame Time (ms)}: Die durchschnittliche Zeit pro Frame, gemessen über 60 aufeinanderfolgende Frames mittels \texttt{requestAnimationFrame}. Aus der Frame Time wird die FPS-Rate abgeleitet ($\text{FPS} = 1000 / \text{frameTimeMs}$).
+	\item \textbf{Frame Time (ms)}: Die durchschnittliche Zeit pro Frame, gemessen über 60 aufeinanderfolgende Frames mittels \texttt{requestAnimationFrame}. Aus der Frame Time wird die FPS-Rate abgeleitet ($\text{FPS} = 1000 / \text{frameTimeMs}$).
 
-    \item \textbf{Heap Used (Bytes)}: Der JavaScript-Heap-Verbrauch, erfasst über die Chrome Performance API (\texttt{performance.memory.usedJSHeapSize}). Diese Metrik zeigt den aktiven Speicherverbrauch der JavaScript-Objekte.
+	\item \textbf{Heap Used (Bytes)}: Der JavaScript-Heap-Verbrauch, erfasst über die Chrome Performance API (\texttt{performance.memory.usedJSHeapSize}). Diese Metrik zeigt den aktiven Speicherverbrauch der JavaScript-Objekte.
 
-    \item \textbf{Blink Memory (Bytes)}: Der Speicherverbrauch der Blink-Engine-Caches (Images, CSS, Fonts), erfasst über Electrons \texttt{webFrame.getResourceUsage()} API. Diese Metrik erfasst GPU-relevanten Speicher, der nicht im JavaScript-Heap sichtbar ist.
+	\item \textbf{Blink Memory (Bytes)}: Der Speicherverbrauch der Blink-Engine-Caches (Images, CSS, Fonts), erfasst über Electrons \texttt{webFrame.getResourceUsage()} API. Diese Metrik erfasst GPU-relevanten Speicher, der nicht im JavaScript-Heap sichtbar ist.
 \end{itemize}
 
 \paragraph{Statistische Auswertung}
 Für jede Metrik werden folgende statistische Kennwerte berechnet:
 \begin{itemize}
-    \item Arithmetisches Mittel ($\bar{x}$) und Standardabweichung ($\sigma$)
-    \item Median zur Robustheit gegenüber Ausreißern
-    \item 5. und 95. Perzentil (P5, P95) für die Verteilungscharakteristik
-    \item Minimum und Maximum zur Identifikation von Extremwerten
+	\item Arithmetisches Mittel ($\bar{x}$) und Standardabweichung ($\sigma$)
+	\item Median zur Robustheit gegenüber Ausreißern
+	\item 5. und 95. Perzentil (P5, P95) für die Verteilungscharakteristik
+	\item Minimum und Maximum zur Identifikation von Extremwerten
 \end{itemize}
 
 Die Ergebnisse werden als JSON exportiert und mittels eines Python-Skripts visualisiert, das automatisch Vergleichsdiagramme für FPS, Speicherverbrauch und Skalierungsverhalten generiert.
@@ -106,12 +106,12 @@ Die Ergebnisse werden als JSON exportiert und mittels eines Python-Skripts visua
 \paragraph{Chart-Generierung}
 Nach Abschluss der Benchmark-Suite werden automatisch sechs Visualisierungen erstellt:
 \begin{enumerate}
-    \item FPS-Vergleich zwischen Szenarien (Balkendiagramm mit Standardabweichung)
-    \item Speicherverbrauch-Vergleich (Heap vs. Blink Memory)
-    \item Frame-Time-Analyse mit 60-FPS- und 30-FPS-Ziellinien
-    \item Skalierungsanalyse (FPS und Memory vs. Token-Anzahl)
-    \item Memory-Verlauf über Iterationen (zur Leak-Detektion)
-    \item Zusammenfassungstabelle aller Metriken
+	\item FPS-Vergleich zwischen Szenarien (Balkendiagramm mit Standardabweichung)
+	\item Speicherverbrauch-Vergleich (Heap vs. Blink Memory)
+	\item Frame-Time-Analyse mit 60-FPS- und 30-FPS-Ziellinien
+	\item Skalierungsanalyse (FPS und Memory vs. Token-Anzahl)
+	\item Memory-Verlauf über Iterationen (zur Leak-Detektion)
+	\item Zusammenfassungstabelle aller Metriken
 \end{enumerate}
 
 \section{Auswertung und Interpretation der Daten}
@@ -123,38 +123,41 @@ Die Auswertung der Performance-Messungen basiert auf einem vollständigen Benchm
 Tabelle~\ref{tab:benchmark-results} zeigt die aggregierten Ergebnisse der Performance-Messungen über alle drei Szenarien.
 
 \begin{table}[htbp]
-\centering
-\caption{Benchmark-Ergebnisse (n=500 Iterationen pro Szenario)}
-\label{tab:benchmark-results}
-\begin{tabular}{l r r r r}
-\toprule
-\textbf{Szenario} & \textbf{Token} & \textbf{FPS} & \textbf{Frame Time} & \textbf{Heap Memory} \\
-\midrule
-Baseline (Empty) & 0 & $119{,}94 \pm 0{,}22$ & $8{,}34 \pm 0{,}02$ ms & $52{,}1 \pm 0{,}4$ MB \\
-Typical Session & 20 & $120{,}02 \pm 0{,}96$ & $8{,}33 \pm 0{,}08$ ms & $287{,}3 \pm 77{,}2$ MB \\
-Stress Test & 100 & $120{,}06 \pm 0{,}40$ & $8{,}33 \pm 0{,}03$ ms & $1036{,}4 \pm 271{,}6$ MB \\
-\bottomrule
-\end{tabular}
+	\centering
+	\small
+	\caption{Benchmark-Ergebnisse (n=500 Iterationen pro Szenario)}
+	\label{tab:benchmark-results}
+	\begin{tabularx}{\textwidth}{Xrrrr}
+		\toprule
+		\textbf{Szenario} & \textbf{Token} & \textbf{FPS}          & \textbf{Frame Time}    & \textbf{Heap Memory}      \\
+		\midrule
+		Baseline (Empty)  & 0              & $119{,}94 \pm 0{,}22$ & $8{,}34 \pm 0{,}02$ ms & $52{,}1 \pm 0{,}4$ MB     \\
+		Typical Session   & 20             & $120{,}02 \pm 0{,}96$ & $8{,}33 \pm 0{,}08$ ms & $287{,}3 \pm 77{,}2$ MB   \\
+		Stress Test       & 100            & $120{,}06 \pm 0{,}40$ & $8{,}33 \pm 0{,}03$ ms & $1036{,}4 \pm 271{,}6$ MB \\
+		\bottomrule
+	\end{tabularx}
 \end{table}
 
 \paragraph{Frame Rate Performance}
 Die FPS-Messungen zeigen eine bemerkenswert stabile Rendering-Performance über alle Szenarien hinweg (vgl. Abbildung~\ref{fig:fps-comparison}). Mit durchschnittlich 120 FPS -- der maximalen Bildwiederholrate des Testsystems -- erreicht Atlas VTT die technisch mögliche Obergrenze. Die niedrige Standardabweichung ($\sigma < 1$ FPS) belegt die Konsistenz der Rendering-Pipeline auch unter Last.
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{bilder/fps_comparison.png}
-\caption{FPS-Vergleich zwischen den drei Benchmark-Szenarien. Die Fehlerbalken zeigen die Standardabweichung über 500 Iterationen.}
-\label{fig:fps-comparison}
+	\centering
+	\includegraphics[width=0.85\textwidth]{bilder/fps_comparison.png}
+	\caption{FPS-Vergleich zwischen den drei Benchmark-Szenarien. Die Fehlerbalken zeigen die Standardabweichung über 500 Iterationen.}
+	\label{fig:fps-comparison}
 \end{figure}
 
-Die Frame Time von durchschnittlich 8,33 ms liegt deutlich unter dem 60-FPS-Zielwert von 16,67 ms und dem 30-FPS-Minimum von 33,33 ms. Dies bestätigt die Eignung der PIXI.js-v8-Architektur für VTT-Anwendungen mit hohen Token-Zahlen.
+Die Messung der Frame Time ist neben der FPS-Rate essenziell, da durchschnittliche FPS-Werte kein optimaler Prädiktor für die wahrgenommene Qualität sind\autocite{Liu2023FrameRateVariation}. Liu et al. zeigen in ihrer Studie, dass Frame-Rate-Variationen bei gleicher durchschnittlicher FPS die Quality of Experience reduzieren. Klein et al. quantifizieren diesen Effekt und belegen, dass bereits Variationen von 12 ms in der Frame Time die wahrgenommene Flüssigkeit signifikant beeinträchtigen\autocite{Klein2024FrameTiming}.
+
+Die gemessene Frame Time von durchschnittlich 8,33 ms liegt deutlich unter dem 60-FPS-Zielwert von 16,67 ms und dem 30-FPS-Minimum von 33,33 ms. Dies bestätigt die Eignung der PIXI.js-v8-Architektur für VTT-Anwendungen mit hohen Token-Zahlen.
 
 \paragraph{Speicherverbrauch}
 Der Heap-Speicherverbrauch zeigt erwartungsgemäß eine Korrelation mit der Token-Anzahl:
 \begin{itemize}
-    \item \textbf{Baseline}: 52,1 MB für die leere Rendering-Pipeline
-    \item \textbf{20 Token}: 287,3 MB ($\approx 11{,}8$ MB/Token)
-    \item \textbf{100 Token}: 1036,4 MB ($\approx 9{,}8$ MB/Token)
+	\item \textbf{Baseline}: 52,1 MB für die leere Rendering-Pipeline
+	\item \textbf{20 Token}: 287,3 MB ($\approx 11{,}8$ MB/Token)
+	\item \textbf{100 Token}: 1036,4 MB ($\approx 9{,}8$ MB/Token)
 \end{itemize}
 
 Die hohe Standardabweichung im Stress-Test-Szenario ($\sigma = 271{,}6$ MB) deutet auf variable Speicherallokation während der Benchmark-Iterationen hin, was im folgenden Abschnitt näher analysiert wird.
@@ -164,10 +167,10 @@ Die hohe Standardabweichung im Stress-Test-Szenario ($\sigma = 271{,}6$ MB) deut
 Die Analyse des Speicherverlaufs über die 500 Iterationen des Stress-Tests offenbart ein systematisches Speicherleck. Abbildung~\ref{fig:memory-leak} zeigt den linearen Anstieg des Heap-Verbrauchs.
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=0.9\textwidth]{bilder/memory_over_iterations.png}
-\caption{Heap-Speicherverlauf während des Stress-Tests (100 Token, 500 Iterationen). Die rote Trendlinie zeigt einen linearen Anstieg von ca. 1,8 MB pro Iteration.}
-\label{fig:memory-leak}
+	\centering
+	\includegraphics[width=0.9\textwidth]{bilder/memory_over_iterations.png}
+	\caption{Heap-Speicherverlauf während des Stress-Tests (100 Token, 500 Iterationen). Die rote Trendlinie zeigt einen linearen Anstieg von ca. 1,8 MB pro Iteration.}
+	\label{fig:memory-leak}
 \end{figure}
 
 Die Trendanalyse in Abbildung~\ref{fig:memory-leak} ergibt eine Leak-Rate von ca. 1,8 MB pro Iteration. Bei 100 Token pro Iteration entspricht dies etwa 18 KB pro Token, die nicht korrekt freigegeben werden. Der Speicherverbrauch steigt von initial 300 MB auf über 1.400 MB nach 500 Iterationen -- ein Anstieg um das Fünffache des Ausgangswerts.
@@ -179,79 +182,79 @@ Dieses Ergebnis demonstriert den Wert automatisierter Langzeit-Benchmarks: Ein M
 Um die Ursache des Memory Leaks zu lokalisieren, wurde der Benchmark-Iterationszyklus analysiert. Abbildung~\ref{fig:benchmark-flow} zeigt den Ablauf einer einzelnen Iteration mit den beteiligten Komponenten.
 
 \begin{figure}[htbp]
-\centering
-\begin{tikzpicture}[
-    node distance=0.6cm and 1.2cm,
-    box/.style={rectangle, draw, rounded corners, minimum width=2.4cm, minimum height=0.7cm, align=center, font=\scriptsize},
-    service/.style={box, fill=blue!15},
-    pixi/.style={box, fill=orange!15},
-    leak/.style={box, fill=red!25, draw=red, thick},
-    arrow/.style={->, >=stealth, thick},
-    dashedarrow/.style={->, >=stealth, dashed, gray}
-]
+	\centering
+	\begin{tikzpicture}[
+			node distance=0.6cm and 1.2cm,
+			box/.style={rectangle, draw, rounded corners, minimum width=2.4cm, minimum height=0.7cm, align=center, font=\scriptsize},
+			service/.style={box, fill=blue!15},
+			pixi/.style={box, fill=orange!15},
+			leak/.style={box, fill=red!25, draw=red, thick},
+			arrow/.style={->, >=stealth, thick},
+			dashedarrow/.style={->, >=stealth, dashed, gray}
+		]
 
-% Left column - Services
-\node[service] (benchmark) {BenchmarkService\\runIteration()};
-\node[service, below=of benchmark] (store) {Zustand Store\\setTokens()};
-\node[service, below=of store] (sync) {SyncService\\onTokensChanged()};
+		% Left column - Services
+		\node[service] (benchmark) {BenchmarkService\\runIteration()};
+		\node[service, below=of benchmark] (store) {Zustand Store\\setTokens()};
+		\node[service, below=of store] (sync) {SyncService\\onTokensChanged()};
 
-% Middle column - TokenRenderer
-\node[pixi, right=1.5cm of sync] (renderer) {TokenRenderer\\syncTokens()};
+		% Middle column - TokenRenderer
+		\node[pixi, right=1.5cm of sync] (renderer) {TokenRenderer\\syncTokens()};
 
-% Right column - Token Lifecycle
-\node[pixi, right=1.5cm of renderer, yshift=1.2cm] (create) {createTokenSprite()\\+ Graphics, Mask};
-\node[leak, right=1.5cm of renderer, yshift=-1.2cm] (destroy) {destroy()\\container.destroy()};
+		% Right column - Token Lifecycle
+		\node[pixi, right=1.5cm of renderer, yshift=1.2cm] (create) {createTokenSprite()\\+ Graphics, Mask};
+		\node[leak, right=1.5cm of renderer, yshift=-1.2cm] (destroy) {destroy()\\container.destroy()};
 
-% Cleanup detail
-\node[box, below=0.5cm of destroy, minimum width=2.2cm] (detail) {InteractionController\\removeHandlers()};
+		% Cleanup detail
+		\node[box, below=0.5cm of destroy, minimum width=2.2cm] (detail) {InteractionController\\removeHandlers()};
 
-% Arrows for flow
-\draw[arrow] (benchmark) -- node[left, font=\tiny] {1. spawn} (store);
-\draw[arrow] (store) -- node[left, font=\tiny] {2. subscribe} (sync);
-\draw[arrow] (sync) -- node[above, font=\tiny] {3. callback} (renderer);
-\draw[arrow] (renderer) -- node[above, font=\tiny, sloped] {4a. new} (create);
-\draw[arrow] (renderer) -- node[below, font=\tiny, sloped] {4b. delete} (destroy);
-\draw[dashedarrow] (destroy) -- (detail);
+		% Arrows for flow
+		\draw[arrow] (benchmark) -- node[left, font=\tiny] {1. spawn} (store);
+		\draw[arrow] (store) -- node[left, font=\tiny] {2. subscribe} (sync);
+		\draw[arrow] (sync) -- node[above, font=\tiny] {3. callback} (renderer);
+		\draw[arrow] (renderer) -- node[above, font=\tiny, sloped] {4a. new} (create);
+		\draw[arrow] (renderer) -- node[below, font=\tiny, sloped] {4b. delete} (destroy);
+		\draw[dashedarrow] (destroy) -- (detail);
 
-% Loop back
-\draw[arrow] (benchmark.west) -- ++(-0.6,0) |- node[near start, left, font=\tiny] {5. clear} (store.west);
+		% Loop back
+		\draw[arrow] (benchmark.west) -- ++(-0.6,0) |- node[near start, left, font=\tiny] {5. clear} (store.west);
 
-% Legend
-\node[below=2cm of renderer, font=\tiny] (legend) {
-    \begin{tabular}{cl}
-        \tikz\draw[fill=red!25, draw=red, thick] (0,0) rectangle (0.3,0.2); & Wahrscheinliche Leak-Quelle \\
-    \end{tabular}
-};
+		% Legend
+		\node[below=2cm of renderer, font=\tiny] (legend) {
+			\begin{tabular}{cl}
+				\tikz\draw[fill=red!25, draw=red, thick] (0,0) rectangle (0.3,0.2); & Wahrscheinliche Leak-Quelle \\
+			\end{tabular}
+		};
 
-\end{tikzpicture}
-\caption{Ablauf einer Benchmark-Iteration: Token werden über den Store erzeugt, vom TokenRenderer gerendert und gelöscht. Die rot markierte destroy()-Phase ist die wahrscheinliche Quelle des Memory Leaks.}
-\label{fig:benchmark-flow}
+	\end{tikzpicture}
+	\caption{Ablauf einer Benchmark-Iteration: Token werden über den Store erzeugt, vom TokenRenderer gerendert und gelöscht. Die rot markierte destroy()-Phase ist die wahrscheinliche Quelle des Memory Leaks.}
+	\label{fig:benchmark-flow}
 \end{figure}
 
 Der in Abbildung~\ref{fig:benchmark-flow} dargestellte Iterationszyklus durchläuft folgende Schritte:
 
 \begin{enumerate}
-    \item \textbf{Spawn (BenchmarkService $\rightarrow$ Store)}: Der \texttt{BenchmarkService.runIteration()} erzeugt 100 Token-Objekte mit zufälligen Positionen und übergibt sie via \texttt{setTokens()} an den Zustand-Store. Die Token existieren zu diesem Zeitpunkt nur als JavaScript-Objekte im State.
+	\item \textbf{Spawn (BenchmarkService $\rightarrow$ Store)}: Der \texttt{BenchmarkService.runIteration()} erzeugt 100 Token-Objekte mit zufälligen Positionen und übergibt sie via \texttt{setTokens()} an den Zustand-Store. Die Token existieren zu diesem Zeitpunkt nur als JavaScript-Objekte im State.
 
-    \item \textbf{Subscribe (Store $\rightarrow$ SyncService)}: Der Zustand-Store löst über sein Subscription-System ein Update aus. Der \texttt{SyncService} hat sich via \texttt{subscribeWithSelector} auf Änderungen am \texttt{objects.tokens}-Pfad registriert und empfängt die neuen Token-Daten.
+	\item \textbf{Subscribe (Store $\rightarrow$ SyncService)}: Der Zustand-Store löst über sein Subscription-System ein Update aus. Der \texttt{SyncService} hat sich via \texttt{subscribeWithSelector} auf Änderungen am \texttt{objects.tokens}-Pfad registriert und empfängt die neuen Token-Daten.
 
-    \item \textbf{Callback (SyncService $\rightarrow$ TokenRenderer)}: Der SyncService ruft den registrierten Callback \texttt{onTokensChanged} auf, der die Kontrolle an die \texttt{syncTokens()}-Methode des TokenRenderers übergibt.
+	\item \textbf{Callback (SyncService $\rightarrow$ TokenRenderer)}: Der SyncService ruft den registrierten Callback \texttt{onTokensChanged} auf, der die Kontrolle an die \texttt{syncTokens()}-Methode des TokenRenderers übergibt.
 
-    \item[4a.] \textbf{New (TokenRenderer $\rightarrow$ createTokenSprite)}: Für jeden neuen Token erstellt der TokenRenderer einen PIXI.js-Container mit: einem \texttt{Sprite} für die Textur, einem \texttt{Graphics}-Objekt als kreisförmige Maske, einem weiteren \texttt{Graphics}-Objekt als Hintergrund für Hit-Detection, sowie Event-Handlern für Interaktion.
+	\item[4a.] \textbf{New (TokenRenderer $\rightarrow$ createTokenSprite)}: Für jeden neuen Token erstellt der TokenRenderer einen PIXI.js-Container mit: einem \texttt{Sprite} für die Textur, einem \texttt{Graphics}-Objekt als kreisförmige Maske, einem weiteren \texttt{Graphics}-Objekt als Hintergrund für Hit-Detection, sowie Event-Handlern für Interaktion.
 
-    \item[4b.] \textbf{Delete (TokenRenderer $\rightarrow$ destroy)}: Am Ende der Iteration ruft der BenchmarkService \texttt{clearAllTokens()} auf. Der TokenRenderer identifiziert gelöschte Token und ruft für jeden \texttt{container.destroy(\{children: true\})} auf. Der \texttt{InteractionController.removeHandlers()} entfernt die registrierten Event-Listener.
+	\item[4b.] \textbf{Delete (TokenRenderer $\rightarrow$ destroy)}: Am Ende der Iteration ruft der BenchmarkService \texttt{clearAllTokens()} auf. Der TokenRenderer identifiziert gelöschte Token und ruft für jeden \texttt{container.destroy(\{children: true\})} auf. Der \texttt{InteractionController.removeHandlers()} entfernt die registrierten Event-Listener.
 
-    \item \textbf{Clear (Loop zurück zu Store)}: Nach dem Löschen aller Token beginnt der Zyklus erneut mit Schritt 1. Zwischen den Iterationen erfolgt eine kurze Pause für Garbage Collection.
+	\item \textbf{Clear (Loop zurück zu Store)}: Nach dem Löschen aller Token beginnt der Zyklus erneut mit Schritt 1. Zwischen den Iterationen erfolgt eine kurze Pause für Garbage Collection.
 \end{enumerate}
 
 Die rot markierte destroy()-Phase (Schritt 4b) ist die wahrscheinliche Quelle des Speicherlecks, da hier die Freigabe der in Schritt 4a allozierten Ressourcen erfolgen muss.
 
 Die Untersuchung des Token-Rendering-Codes identifiziert mehrere potenzielle Leak-Quellen in dieser Phase:
 \begin{itemize}
-    \item \textbf{PIXI.js Graphics Objects}: Jeder Token erstellt zwei \texttt{Graphics}-Objekte (Maske und Hintergrund). Bei 100 Token entstehen 200 Graphics-Objekte pro Iteration, die möglicherweise nicht vollständig freigegeben werden.
-    \item \textbf{Texture-Referenzen}: Obwohl Texturen gecacht werden, könnten interne PIXI.js-Referenzzähler nicht korrekt dekrementiert werden.
-    \item \textbf{Event-Listener}: Jeder Token registriert mehrere Interaction-Handler (\texttt{pointerdown}, \texttt{pointerover}, \texttt{pointerout}). Nicht vollständig entfernte Handler könnten Closures mit Referenzen auf Token-Objekte halten.
-    \item \textbf{Store-Subscriptions}: Die reaktiven Zustand-Subscriptions könnten Referenzen auf gelöschte Objekte im Closure-Scope halten.
+	\item \textbf{PIXI.js Graphics Objects}: Jeder Token erstellt zwei \texttt{Graphics}-Objekte (Maske und Hintergrund). Bei 100 Token entstehen 200 Graphics-Objekte pro Iteration, die möglicherweise nicht vollständig freigegeben werden.
+	\item \textbf{Texture-Referenzen}: Obwohl Texturen gecacht werden, könnten interne PIXI.js-Referenzzähler nicht korrekt dekrementiert werden.
+	\item \textbf{Event-Listener}: Jeder Token registriert mehrere Interaction-Handler (\texttt{pointerdown}, \texttt{pointerover}, \texttt{pointerout}). Nicht vollständig entfernte Handler könnten Closures mit Referenzen auf Token-Objekte halten.
+	\item \textbf{Store-Subscriptions}: Die reaktiven Zustand-Subscriptions könnten Referenzen auf gelöschte Objekte im Closure-Scope halten.
 \end{itemize}
 
 \paragraph{Hypothese zur wahrscheinlichsten Ursache}
@@ -259,37 +262,40 @@ Die Untersuchung des Token-Rendering-Codes identifiziert mehrere potenzielle Lea
 Aus der gemessenen Gesamt-Leak-Rate lässt sich der Speicherverlust pro Token herleiten:
 
 \begin{equation}
-\text{Leak}_{\text{Token}} = \frac{\text{Leak}_{\text{Iteration}}}{n_{\text{Token}}} = \frac{1{,}8 \text{ MB}}{100} = \frac{1800 \text{ KB}}{100} = 18 \text{ KB/Token}
+	\text{Leak}_{\text{Token}} = \frac{\text{Leak}_{\text{Iteration}}}{n_{\text{Token}}} = \frac{1{,}8 \text{ MB}}{100} = \frac{1800 \text{ KB}}{100} = 18 \text{ KB/Token}
 \end{equation}
 
-Diese 18 KB pro Token ermöglichen eine Zuordnung zu konkreten Objekten im Rendering-Code. Ein PIXI.js \texttt{Graphics}-Objekt belegt typischerweise 2--8 KB im Heap (abhängig von der Komplexität der gezeichneten Geometrie). Da jeder Token zwei Graphics-Objekte verwendet (Maske: $\sim$3 KB, Hintergrund: $\sim$3 KB), würde ein vollständiges Leak dieser Objekte etwa 6 KB pro Token erklären.
+Die Analyse des Token-Rendering-Codes sowie dokumentierte PIXI.js-Probleme deuten auf mehrere mögliche Leak-Quellen hin. PIXI.js v8 weist ein bekanntes Memory Leak bei der Zerstörung von Graphics-Objekten auf: Das \texttt{RenderableGCSystem} speichert Referenzen auf bereits zerstörte Objekte, was zu progressiver Speicherakkumulation führt\autocite{PixiIssue10586}. Obwohl dieser Bug in PIXI.js v8.3.0 teilweise behoben wurde, könnten bei intensiver Objekt-Manipulation Residual-Leaks persistieren.
 
-Die verbleibenden $\sim$12 KB pro Token deuten auf zusätzliche Leak-Quellen hin:
+Die beobachtete Leak-Rate von 18 KB/Token könnte auf folgende Komponenten zurückzuführen sein:
+
 \begin{itemize}
-    \item \textbf{Event-Handler Closures} ($\sim$4--6 KB): Jeder Handler-Closure hält Referenzen auf den Token-Container, Store-State und Callback-Funktionen
-    \item \textbf{PIXI.js Container-Metadaten} ($\sim$2--4 KB): Interne Datenstrukturen für Transformation, Bounds-Caching und Parent-Child-Beziehungen
-    \item \textbf{Zustand-Store Referenzen} ($\sim$2--4 KB): Nicht bereinigte Einträge in internen Maps oder WeakRef-Targets, die nicht garbage-collected werden
+	\item \textbf{Grafik-Objekte}: Jeder Token erstellt zwei PIXI.js \texttt{Graphics}-Objekte (kreisförmige Maske und rechteckiger Hintergrund für Klick-Erkennung). Laut PIXI.js-Dokumentation erfordern diese Objekte explizite Freigabe via \texttt{destroy()}\autocite{PixiGarbageCollection2024}, was im vorliegenden Code zwar aufgerufen wird, jedoch aufgrund der bekannten v8-Bugs möglicherweise nicht alle Ressourcen freigibt.
+
+	\item \textbf{Interaktions-Funktionen}: Jeder Token registriert Funktionen für Benutzerinteraktionen (Mausklick, Hover-Effekte, Maus-Verlassen). Nicht vollständig entfernte Interaktions-Funktionen verhindern die automatische Speicherfreigabe, da sie Verweise auf Token-Objekte und den zentralen Anwendungszustand halten\autocite{PixiGarbageCollection2024}. Der Code ruft eine Aufräum-Funktion auf, jedoch könnte die PIXI.js-interne Verwaltung zusätzliche Verweise halten.
+
+	\item \textbf{Verschachtelte Objektstruktur}: Die hierarchische Anordnung der Token-Komponenten (Container mit Bild, Maske und Hintergrund) erfordert rekursive Freigabe via \texttt{destroy(\{children: true\})}. Verbleibende Verweise innerhalb der Hierarchie oder gespeicherte Positions- und Rotationsdaten könnten nicht vollständig bereinigt werden.
 \end{itemize}
 
-Die Kombination aus nicht zerstörten Graphics-Objekten und persistierenden Event-Handler-Closures ist die wahrscheinlichste Erklärung für das beobachtete Leak von 18 KB/Token. Eine definitive Bestätigung würde Chrome DevTools Heap Snapshots oder die Electron-interne Memory-Profiling-API erfordern, was den Rahmen dieser Arbeit übersteigt.
+Die Kombination dieser Faktoren erklärt plausibel die beobachtete Leak-Rate. Eine quantitative Aufschlüsselung der einzelnen Komponenten würde detaillierte Speicheranalyse-Werkzeuge erfordern, was außerhalb des Scopes dieser Arbeit liegt. Die Konsistenz mit dem dokumentierten PIXI.js v8 Graphics-Leak legt jedoch nahe, dass der beobachtete Speicherverlust zumindest teilweise auf diesen bekannten Bug zurückzuführen sein könnte.
 
 \subsection{Skalierungsverhalten}
 
 Die Benchmark-Ergebnisse zeigen ein positives Skalierungsverhalten der Rendering-Performance (vgl. Abbildung~\ref{fig:scaling-analysis}).
 
 \begin{figure}[htbp]
-\centering
-\includegraphics[width=0.95\textwidth]{bilder/scaling_analysis.png}
-\caption{Skalierungsanalyse: FPS (links) und Speicherverbrauch (rechts) in Abhängigkeit von der Token-Anzahl.}
-\label{fig:scaling-analysis}
+	\centering
+	\includegraphics[width=0.95\textwidth]{bilder/scaling_analysis.png}
+	\caption{Skalierungsanalyse: FPS (links) und Speicherverbrauch (rechts) in Abhängigkeit von der Token-Anzahl.}
+	\label{fig:scaling-analysis}
 \end{figure}
 
 \paragraph{Lineare FPS-Stabilität}
 Entgegen der Erwartung einer Performance-Degradation bei steigender Token-Anzahl bleibt die FPS-Rate konstant bei 120 FPS. Dies bestätigt die Effektivität der in Kapitel 3 beschriebenen Optimierungen:
 \begin{itemize}
-    \item \textbf{Texture Caching}: Wiederverwendung identischer Token-Texturen reduziert GPU-Uploads
-    \item \textbf{Batch Rendering}: PIXI.js v8 fasst Sprites mit gleicher Textur in einzelne Draw Calls zusammen
-    \item \textbf{Viewport Culling}: Tokens außerhalb des sichtbaren Bereichs werden nicht gerendert
+	\item \textbf{Texture Caching}: Wiederverwendung identischer Token-Texturen reduziert GPU-Uploads
+	\item \textbf{Batch Rendering}: PIXI.js v8 fasst Sprites mit gleicher Textur in einzelne Draw Calls zusammen
+	\item \textbf{Viewport Culling}: Tokens außerhalb des sichtbaren Bereichs werden nicht gerendert
 \end{itemize}
 
 \paragraph{Speicher-Skalierung}
@@ -317,13 +323,13 @@ Für typische Spielsitzungen mit 20-30 Token und 2-3 Stunden Dauer ist die Perfo
 Die Performance-Evaluation liefert folgende zentrale Erkenntnisse:
 
 \begin{itemize}
-    \item \textbf{Rendering-Performance}: Die PIXI.js-v8-Integration erreicht konstant 120 FPS auch bei 100 Token. Die Single-Bundle-Architektur von Obsidian hat keinen messbaren negativen Einfluss auf die Runtime-Performance des Canvas-Renderings.
+	\item \textbf{Rendering-Performance}: Die PIXI.js-v8-Integration erreicht konstant 120 FPS auch bei 100 Token. Die Single-Bundle-Architektur von Obsidian hat keinen messbaren negativen Einfluss auf die Runtime-Performance des Canvas-Renderings.
 
-    \item \textbf{Speicherverbrauch}: Der Basis-Overhead von 52 MB für die leere Rendering-Pipeline ist akzeptabel. Der Token-bezogene Speicherverbrauch von ca. 10 MB/Token ist höher als optimal, aber für typische Szenarien (20-30 Token) praktikabel.
+	\item \textbf{Speicherverbrauch}: Der Basis-Overhead von 52 MB für die leere Rendering-Pipeline ist akzeptabel. Der Token-bezogene Speicherverbrauch von ca. 10 MB/Token ist höher als optimal, aber für typische Szenarien (20-30 Token) praktikabel.
 
-    \item \textbf{Memory Leak}: Bei intensiver Token-Manipulation (Spawning/Löschen) tritt ein Speicherleck von ca. 1,8 MB pro Iteration auf, das bei Langzeitnutzung relevant werden kann.
+	\item \textbf{Memory Leak}: Bei intensiver Token-Manipulation (Spawning/Löschen) tritt ein Speicherleck von ca. 1,8 MB pro Iteration auf, das bei Langzeitnutzung relevant werden kann.
 
-    \item \textbf{Benchmark-Infrastruktur}: Der implementierte \texttt{BenchmarkService} demonstriert, dass automatisierte Performance-Messungen auch innerhalb der Obsidian-Plugin-Architektur möglich sind.
+	\item \textbf{Benchmark-Infrastruktur}: Der implementierte \texttt{BenchmarkService} demonstriert, dass automatisierte Performance-Messungen auch innerhalb der Obsidian-Plugin-Architektur möglich sind.
 \end{itemize}
 
 Diese Ergebnisse fließen in die Beantwortung der Forschungsfrage in Kapitel~\ref{sec:fazit} ein.
@@ -335,31 +341,31 @@ Die Performance-Evaluation unterliegt mehreren methodischen und technischen Limi
 \paragraph{Methodische Limitationen}
 
 \begin{itemize}
-    \item \textbf{Single-Platform-Testing}: Die Messungen wurden ausschließlich auf einem macOS-System mit Apple Silicon durchgeführt. Performance-Charakteristika können auf Windows- oder Linux-Systemen sowie auf Intel/AMD-Prozessoren abweichen.
+	\item \textbf{Single-Platform-Testing}: Die Messungen wurden ausschließlich auf einem macOS-System mit Apple Silicon durchgeführt. Performance-Charakteristika können auf Windows- oder Linux-Systemen sowie auf Intel/AMD-Prozessoren abweichen.
 
-    \item \textbf{Automatisierte Messungen mit manueller Initiierung}: Obwohl der \texttt{BenchmarkService} die Messungen automatisiert durchführt (500 Iterationen), erfordert die Initiierung und Chart-Generierung manuelle Schritte. Die Erfassung zusätzlicher Metriken (z.B. GPU-Memory) über Chrome DevTools erfolgt separat.
+	\item \textbf{Automatisierte Messungen mit manueller Initiierung}: Obwohl der \texttt{BenchmarkService} die Messungen automatisiert durchführt (500 Iterationen), erfordert die Initiierung und Chart-Generierung manuelle Schritte.
 
-    \item \textbf{Fehlende Baseline-Vergleiche}: Die Messungen evaluieren ausschließlich verschiedene Feature-Kombinationen des Atlas VTT Plugins. Ein Vergleich mit anderen VTT-Lösungen (z.B. Foundry VTT, Roll20) oder anderen Obsidian-Plugins fehlt.
+	\item \textbf{Fehlende Baseline-Vergleiche}:  Ein Vergleich mit anderen VTT-Lösungen (z.B. Foundry VTT, Roll20) oder anderen Obsidian-Plugins fehlt.
 \end{itemize}
 
 \paragraph{Technische Limitationen}
 
 \begin{itemize}
-    \item \textbf{Electron-Version-Abhängigkeit}: Die Performance-Charakteristika sind spezifisch für die in Obsidian 1.7.7 gebündelte Electron-Version (32.2.5). Zukünftige Electron-Updates können die Ergebnisse beeinflussen.
+	\item \textbf{Electron-Version-Abhängigkeit}: Die Performance-Charakteristika sind spezifisch für die in Obsidian 1.7.7 gebündelte Electron-Version (32.2.5). Zukünftige Electron-Updates können die Ergebnisse beeinflussen.
 
-    \item \textbf{Synthetische Test-Szenarien}: Die verwendeten Test-Szenarien (Leere Map, Standard-Session, Stress-Test) sind konstruierte Nutzungsmuster. Reale Spielsitzungen können abweichende Performance-Profile aufweisen.
+	\item \textbf{Synthetische Test-Szenarien}: Die verwendeten Test-Szenarien (Leere Map, Standard-Session, Stress-Test) sind konstruierte Nutzungsmuster. Reale Spielsitzungen können abweichende Performance-Profile aufweisen.
 
-    \item \textbf{Benchmark-Overhead}: Der \texttt{BenchmarkService} selbst fügt minimalen Code-Overhead hinzu, der in den Messungen nicht vollständig eliminiert werden kann.
+	\item \textbf{Benchmark-Overhead}: Der \texttt{BenchmarkService} selbst fügt minimalen Code-Overhead hinzu, der in den Messungen nicht vollständig eliminiert werden kann.
 \end{itemize}
 
 \paragraph{Interpretationsgrenzen}
 
 \begin{itemize}
-    \item \textbf{Kausalität vs. Korrelation}: Die Messungen zeigen Performance-Unterschiede zwischen Feature-Kombinationen, jedoch nicht zwingend kausale Zusammenhänge. Interaktionen zwischen Features könnten nicht-additive Effekte erzeugen.
+	\item \textbf{Kausalität vs. Korrelation}: Die Messungen zeigen Performance-Unterschiede zwischen Feature-Kombinationen, jedoch nicht zwingend kausale Zusammenhänge. Interaktionen zwischen Features könnten nicht-additive Effekte erzeugen.
 
-    \item \textbf{Subjektive Schwellenwerte}: Die Bewertung, ab wann Performance-Unterschiede als \textit{„spürbar"} oder \textit{„akzeptabel"} gelten, unterliegt subjektiven Kriterien.
+	\item \textbf{Subjektive Schwellenwerte}: Die Bewertung, ab wann Performance-Unterschiede als spürbar oder akzeptabel gelten, unterliegt subjektiven Kriterien.
 
-    \item \textbf{Fehlende Langzeit-Messungen}: Die Evaluation fokussiert auf Startup und kurze Nutzungsszenarien. Performance-Degradation über längere Spielsitzungen (>2 Stunden) wurde nicht untersucht.
+	\item \textbf{Fehlende Langzeit-Messungen}: Die Evaluation fokussiert auf Startup und kurze Nutzungsszenarien. Performance-Degradation über längere Spielsitzungen (>2 Stunden) wurde nicht untersucht.
 \end{itemize}
 
 Diese Limitationen schmälern nicht die Aussagekraft der Evaluation für den definierten Scope (Performance-Charakteristika eines VTT-Plugins in Obsidian), verdeutlichen jedoch die Grenzen der Generalisierbarkeit der Ergebnisse.

@@ -1,0 +1,225 @@
+\chapter{Fazit und Ausblick}
+\label{sec:FazitAusblick}
+\label{sec:fazit}
+
+\section{Zusammenfassung der wesentlichen Erkenntnisse}
+
+Die vorliegende Arbeit untersuchte die Entwicklung und Performance-Optimierung eines Virtual Tabletop Plugins für Obsidian.md. Im Verlauf der Konzeption, Implementierung und Evaluation wurden mehrere zentrale Erkenntnisse gewonnen, die sowohl für das konkrete Projekt als auch für die allgemeine Plugin-Entwicklung in Electron-basierten Umgebungen relevant sind.
+
+\paragraph{Architekturentscheidungen}
+Die Wahl von PIXI.js v8 als Rendering-Engine erwies sich als fundiert. Die automatischen Optimierungen der WebGL-basierten Bibliothek -- insbesondere Sprite-Batching und Texture-Caching -- ermöglichen konstante 120 FPS selbst bei 100 gleichzeitig gerenderten Token. Die Entscheidung, PIXI.js v8 als eigenständige Dependency zu bundlen statt die in Obsidian global verfügbare v7-Version zu nutzen, war aufgrund der signifikanten Performance-Verbesserungen und API-Änderungen zwischen den Versionen notwendig.
+
+Die Single-Bundle-Architektur von Obsidian-Plugins stellt eine strukturelle Einschränkung dar, die Code-Splitting und Lazy Loading erschwert. Alle Features müssen beim Plugin-Start geladen werden, was sich jedoch in den Messungen nicht als kritischer Bottleneck für die Runtime-Performance erwies. Der Haupteinfluss liegt im initialen Bundle-Parsing und Startup-Overhead.
+
+\paragraph{Performance-Charakteristika}
+Die automatisierten Benchmark-Messungen mit 500 Iterationen pro Szenario lieferten statistisch valide Daten zur Performance des Plugins:
+
+\begin{itemize}
+    \item Die Rendering-Performance ist über alle getesteten Szenarien (0, 20, 100 Token) konstant und erreicht die Hardware-Obergrenze von 120 FPS
+    \item Die Frame Time von durchschnittlich 8,33 ms liegt weit unter den kritischen Schwellenwerten für flüssige Interaktion (16,67 ms für 60 FPS)
+    \item Der Speicherverbrauch skaliert mit der Token-Anzahl, wobei Texture-Sharing die Effizienz bei vielen gleichartigen Token erhöht
+\end{itemize}
+
+\paragraph{Identifizierte Probleme}
+Die Langzeit-Benchmarks offenbarten ein Memory Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von ca. 1,8 MB pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Dieses Problem wäre ohne automatisierte Benchmarks mit hoher Iterationszahl nicht identifiziert worden und unterstreicht den Wert systematischer Performance-Evaluation.
+
+\section{Beantwortung der Forschungsfrage}
+
+Die zentrale Forschungsfrage dieser Arbeit lautete: \textit{„Wie können Virtual Tabletop Plugins in der Electron-basierten Umgebung von Obsidian so implementiert werden, dass sie trotz der technischen Limitierungen eine für Echtzeit-Interaktionen ausreichende Performance erreichen?"}
+
+Die durchgeführte Untersuchung ermöglicht eine differenzierte Beantwortung dieser Frage:
+
+\paragraph{Technische Machbarkeit}
+Die Implementierung von Atlas VTT demonstriert, dass performante VTT-Plugins in Obsidian grundsätzlich realisierbar sind. Die gemessenen 120 FPS und Frame Times von 8,33 ms übertreffen die definierten Anforderungen (>30 FPS, <100ms Eingabelatenz) deutlich. Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
+
+\paragraph{Erfolgsfaktoren}
+Drei zentrale Faktoren ermöglichen die erreichte Performance:
+
+\begin{enumerate}
+    \item \textbf{Moderne Rendering-Engine}: PIXI.js v8 mit WebGL-Backend nutzt GPU-Beschleunigung effektiv aus. Die automatischen Optimierungen (Sprite-Batching, Texture-Atlasing, Culling) reduzieren den CPU-Overhead und die Anzahl der Draw Calls signifikant.
+
+    \item \textbf{Zustandsmanagement mit Zustand}: Die reaktive Store-Architektur mit \texttt{subscribeWithSelector} ermöglicht gezielte UI-Updates ohne vollständiges Re-Rendering. Die Trennung von Rendering-State und Persistenz-State vermeidet unnötige Disk-I/O während der Laufzeit.
+
+    \item \textbf{Asynchrone Ressourcenladung}: Textures werden asynchron geladen und gecacht, sodass der Main Thread nicht blockiert wird. Das Texture-Caching verhindert redundante Ladevorgänge bei wiederholter Token-Verwendung.
+\end{enumerate}
+
+\paragraph{Einschränkungen}
+Trotz der positiven Performance-Ergebnisse zeigt die Evaluation auch Grenzen auf:
+
+\begin{itemize}
+    \item Das identifizierte Memory Leak bei intensiver Token-Manipulation deutet auf Komplexität im Lifecycle-Management von PIXI.js-Objekten hin. Die korrekte Freigabe von Graphics-Objekten, Event-Listenern und Texture-Referenzen erfordert sorgfältige Implementierung.
+
+    \item Die Bundle-Größe des Plugins (ca. 2,8 MB) ist primär durch PIXI.js und React-Abhängigkeiten bedingt. Die Single-Bundle-Architektur von Obsidian verhindert eine Aufteilung in on-demand geladene Module.
+
+    \item Der Speicherverbrauch von ca. 10 MB pro Token ist höher als bei nativen Anwendungen, was bei sehr großen Szenarien (>100 Token) relevant werden kann.
+\end{itemize}
+
+\paragraph{Fazit zur Forschungsfrage}
+Die Forschungsfrage kann positiv beantwortet werden: VTT-Plugins können in Obsidian performant implementiert werden, wenn geeignete Technologien (WebGL-basiertes Rendering, reaktives State Management) und Best Practices (asynchrones Loading, Texture-Caching, inkrementelle Updates) angewendet werden. Die technischen Limitierungen von Electron sind für typische VTT-Szenarien nicht performance-kritisch. Die Herausforderungen liegen weniger in der Rendering-Performance als vielmehr im korrekten Memory Management und der Bundle-Größen-Optimierung.
+
+\section{Limitationen und kritische Reflexion}
+
+\subsection{Methodische Einschränkungen}
+
+Die gewählte Evaluationsmethodik unterliegt mehreren Einschränkungen, die bei der Interpretation der Ergebnisse berücksichtigt werden müssen.
+
+\paragraph{Single-Platform-Testing}
+Alle Messungen wurden ausschließlich auf einem Apple Silicon Mac (M1 Pro) unter macOS durchgeführt. Die Performance-Charakteristika können auf anderen Plattformen (Windows, Linux) und Prozessorarchitekturen (Intel, AMD) abweichen. Insbesondere die GPU-Integration von PIXI.js verhält sich möglicherweise unterschiedlich auf verschiedenen Grafiktreibern. Eine Cross-Platform-Evaluation wäre für generalisierbarer Aussagen erforderlich.
+
+\paragraph{Synthetische Benchmark-Szenarien}
+Die verwendeten Benchmark-Szenarien (0, 20, 100 Token) sind konstruierte Testfälle, die reale Spielsitzungen nur approximieren. Tatsächliche Nutzungsmuster umfassen komplexere Interaktionen: gleichzeitiges Scrollen und Token-Bewegen, Fog-of-War-Berechnungen, parallele Statblock-Updates und Netzwerksynchronisation. Die gemessenen Werte stellen daher eher Best-Case-Szenarien dar.
+
+\paragraph{Fokus auf Runtime-Performance}
+Die Evaluation konzentrierte sich primär auf Frame Rate und Speicherverbrauch während der Laufzeit. Andere relevante Metriken -- Startup-Zeit, Bundle-Parse-Duration, Time-to-Interactive -- wurden nicht systematisch erfasst. Diese Metriken sind für die wahrgenommene User Experience beim Plugin-Start jedoch ebenfalls relevant.
+
+\subsection{Technische Limitationen}
+
+\paragraph{Obsidian-API-Beschränkungen}
+Die Plugin-API von Obsidian bietet keinen Mechanismus für Code-Splitting oder Lazy Loading. Alle Plugin-Ressourcen müssen in einem einzelnen Bundle ausgeliefert werden, das beim Start vollständig geladen wird. Diese architektonische Einschränkung verhindert fortgeschrittene Optimierungsstrategien, die in modernen Web-Anwendungen üblich sind.
+
+\paragraph{Electron-Version-Bindung}
+Das Plugin ist an die in Obsidian gebündelte Electron-Version (32.2.5 zum Testzeitpunkt) gebunden. Neuere Electron-Versionen mit verbesserten V8- und Chromium-Engines stehen erst nach entsprechenden Obsidian-Updates zur Verfügung. Dies limitiert die Möglichkeit, von Performance-Verbesserungen in neueren Electron-Releases zu profitieren.
+
+\paragraph{PIXI.js-Versionskonflikt}
+Die Notwendigkeit, PIXI.js v8 separat zu bundlen (statt die globale v7-Version von Obsidian zu nutzen), erhöht die Bundle-Größe um ca. 500 KB. Dieser Trade-off zugunsten besserer Performance und API-Features ist für das Projekt gerechtfertigt, stellt jedoch eine suboptimale Ressourcennutzung dar.
+
+\subsection{Kritische Würdigung}
+
+\paragraph{Stärken der Arbeit}
+Die Arbeit leistet mehrere Beiträge zur Plugin-Entwicklung für Obsidian:
+
+\begin{itemize}
+    \item Die automatisierte Benchmark-Infrastruktur mit 500 Iterationen ermöglicht reproduzierbare, statistisch valide Performance-Messungen innerhalb der Obsidian-Umgebung
+    \item Die Identifikation des Memory Leaks demonstriert den praktischen Wert systematischer Langzeit-Benchmarks
+    \item Die dokumentierten Architekturentscheidungen (PIXI.js v8, Zustand, modulare Service-Architektur) können als Referenz für ähnliche Plugin-Projekte dienen
+\end{itemize}
+
+\paragraph{Schwächen und Verbesserungspotenzial}
+Rückblickend hätten einige Aspekte anders angegangen werden können:
+
+\begin{itemize}
+    \item Die Memory-Leak-Analyse hätte früher im Entwicklungsprozess erfolgen können, um den Fehler zeitnah zu beheben statt nur zu dokumentieren
+    \item Ein Vergleich mit alternativen Rendering-Ansätzen (Canvas 2D, SVG) hätte die Wahl von PIXI.js empirisch untermauern können
+    \item Die Evaluation hätte von Cross-Browser-Tests (Safari, Firefox in Electron-Varianten) profitiert
+\end{itemize}
+
+\paragraph{Lessons Learned}
+Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenntnisse:
+
+\begin{enumerate}
+    \item \textbf{Early Benchmarking}: Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation
+    \item \textbf{Hohe Iterationszahlen}: Erst bei ausreichend vielen Wiederholungen (>100) werden subtile Probleme wie Memory Leaks sichtbar
+    \item \textbf{Trennung von Concerns}: Die strikte Trennung von Rendering-State und Persistenz-State vereinfacht sowohl Performance-Optimierung als auch Debugging
+\end{enumerate}
+
+\section{Ausblick auf zukünftige Entwicklungen}
+
+\subsection{Weiterführende Forschung}
+
+Die Performance-Evaluation in Kapitel 4 identifizierte mehrere Ansatzpunkte für potenzielle Performance-Verbesserungen, die im Rahmen dieser Arbeit nicht umgesetzt wurden, jedoch für zukünftige Arbeiten relevant sein können.
+
+\paragraph{Potenzielle Optimierungsstrategien}
+
+Basierend auf den Messergebnissen könnten folgende Optimierungsansätze untersucht werden:
+
+\begin{itemize}
+    \item \textbf{Code-Splitting und Lazy Loading}: Eine Erweiterung der Obsidian-Plugin-API zur Unterstützung von dynamischen Imports könnte erhebliche Startup-Zeit-Verbesserungen ermöglichen, indem Features erst bei Bedarf geladen werden.
+
+    \item \textbf{Web Workers für CPU-intensive Operationen}: Rechenintensive Operationen wie Hexagonal-Grid-Berechnungen, Asset-Indexierung oder Fog-of-War-Algorithmen könnten in Web Workers ausgelagert werden, um Main-Thread-Blocking zu reduzieren\autocite{ElectronPerformanceGuide2024}.
+
+    \item \textbf{WebAssembly (WASM) für Performance-kritische Algorithmen}: Algorithmisch komplexe Berechnungen (z.B. Grid-Tessellation, Pathfinding) könnten in Rust oder C++ implementiert und als WASM-Module kompiliert werden, um Ausführungsgeschwindigkeiten zu erhöhen.
+
+    \item \textbf{Aggressive Tree-Shaking}: Eine detaillierte Analyse der Bundle-Zusammensetzung könnte ungenutzte Code-Pfade identifizieren, die durch verbessertes Tree-Shaking eliminiert werden könnten.
+
+    \item \textbf{Texture-Atlasing und Sprite-Batching}: Weitere Optimierungen der PIXI.js-Rendering-Pipeline durch systematisches Texture-Atlasing und optimiertes Sprite-Batching könnten Draw-Calls reduzieren.
+\end{itemize}
+
+\paragraph{Technologische Entwicklungen}
+
+Zukünftige technologische Entwicklungen könnten neue Optimierungsmöglichkeiten eröffnen:
+
+\begin{itemize}
+    \item \textbf{WebGPU}: Die aufkommende WebGPU-API könnte WebGL ablösen und direkteren Zugriff auf GPU-Ressourcen ermöglichen. Eine Migration von PIXI.js WebGL zu PIXI.js WebGPU könnte Performance-Verbesserungen bringen.
+
+    \item \textbf{Electron-Updates}: Zukünftige Electron-Versionen mit neueren Chromium- und V8-Releases könnten automatische Performance-Verbesserungen für JavaScript-Ausführung und Rendering liefern.
+
+    \item \textbf{Offscreen Canvas}: Die breitere Unterstützung von Offscreen Canvas könnte Canvas-Rendering in Web Workers ermöglichen und damit die Main-Thread-Last weiter reduzieren.
+\end{itemize}
+
+\paragraph{Offene Forschungsfragen}
+
+Mehrere Forschungsfragen bleiben offen für zukünftige Untersuchungen:
+
+\begin{itemize}
+    \item Wie verhalten sich die identifizierten Performance-Charakteristika auf anderen Hardware-Plattformen (Windows/Linux, Intel/AMD)?
+    \item Welche Performance-Trade-offs ergeben sich bei der Integration weiterer VTT-Features (z.B. Multiplayer-Synchronisation, erweiterte Fog-of-War-Algorithmen)?
+    \item Wie skaliert die Performance bei sehr großen Kampagnen mit hunderten Assets und dauerhaften Spielsitzungen über mehrere Stunden?
+    \item Welche automatisierten Testing-Frameworks eignen sich für kontinuierliches Performance-Monitoring von Obsidian-Plugins?
+\end{itemize}
+
+\subsection{Praktische Anwendung}
+
+Die entwickelte Lösung und die gewonnenen Erkenntnisse haben Implikationen über das konkrete Projekt hinaus.
+
+\paragraph{Integration in bestehende VTT-Ökosysteme}
+
+Atlas VTT positioniert sich als Ergänzung zu etablierten VTT-Plattformen wie FoundryVTT oder Roll20, nicht als deren Ersatz. Die Stärke liegt in der Integration mit dem Obsidian-Ökosystem: Kampagnennotizen, Charakterbögen und Session-Logs können direkt neben der virtuellen Spielfläche verwaltet werden. Eine potenzielle Weiterentwicklung könnte bidirektionale Synchronisation mit externen VTT-Systemen umfassen, etwa durch Import/Export von Foundry-Szenen oder Integration mit D\&D Beyond-Charakterdaten.
+
+\paragraph{Übertragbarkeit auf andere Plugin-Typen}
+
+Die dokumentierten Architekturmuster und Performance-Optimierungen sind auf andere Obsidian-Plugins mit hohen Rendering-Anforderungen übertragbar:
+
+\begin{itemize}
+    \item \textbf{Visualisierungs-Plugins}: Graph-Visualisierungen, Mindmaps oder Kanban-Boards könnten von der PIXI.js-Integration und dem reaktiven State Management profitieren
+    \item \textbf{Interaktive Editoren}: Diagramm-Editoren, Whiteboard-Plugins oder Flowchart-Tools stehen vor ähnlichen Performance-Herausforderungen
+    \item \textbf{Gaming-adjacent Plugins}: Initiative-Tracker, Würfel-Roller mit Animationen oder Character-Sheet-Manager können die entwickelten Patterns adaptieren
+\end{itemize}
+
+Die Benchmark-Infrastruktur könnte als Template für Performance-Testing anderer Obsidian-Plugins dienen.
+
+\paragraph{Community-Entwicklung}
+
+Als Open-Source-Projekt bietet Atlas VTT Möglichkeiten für Community-Beiträge. Die modulare Service-Architektur erleichtert das Hinzufügen neuer Features ohne Risiko für bestehende Funktionalität. Potenzielle Erweiterungsbereiche umfassen:
+
+\begin{itemize}
+    \item Zusätzliche Grid-Typen (isometrisch, 3D-Perspektive)
+    \item Integration weiterer Rollenspielsysteme (Pathfinder, Call of Cthulhu)
+    \item Erweiterte Fog-of-War-Algorithmen mit dynamischer Beleuchtung
+    \item Multiplayer-Funktionalität über WebRTC oder externe Server
+\end{itemize}
+
+\subsection{Technologische Trends}
+
+Die technologische Landschaft für Desktop-Web-Anwendungen entwickelt sich kontinuierlich weiter. Mehrere Trends könnten die zukünftige Entwicklung von Obsidian-Plugins beeinflussen.
+
+\paragraph{Entwicklung von Electron}
+
+Electron bleibt trotz Kritik an Ressourcenverbrauch die dominante Plattform für Cross-Platform-Desktop-Anwendungen. Neuere Versionen bringen kontinuierliche Performance-Verbesserungen durch aktualisierte Chromium- und V8-Engines. Alternative Frameworks wie Tauri (Rust-basiert mit nativen Webviews) versprechen geringeren Ressourcenverbrauch, sind jedoch für bestehende Electron-Anwendungen wie Obsidian nicht direkt relevant. Die Bindung an Obsidians Electron-Version bedeutet, dass Plugin-Entwickler von Verbesserungen erst nach entsprechenden Obsidian-Updates profitieren können.
+
+\paragraph{Neue Web-Standards}
+
+Mehrere aufkommende Web-Standards könnten zukünftige Plugin-Entwicklung beeinflussen:
+
+\begin{itemize}
+    \item \textbf{WebGPU}: Der Nachfolger von WebGL bietet direkteren Zugriff auf GPU-Ressourcen und könnte signifikante Performance-Verbesserungen für Rendering-intensive Anwendungen ermöglichen. PIXI.js arbeitet bereits an WebGPU-Unterstützung.
+
+    \item \textbf{Offscreen Canvas}: Ermöglicht Canvas-Rendering in Web Workers und könnte Main-Thread-Blocking weiter reduzieren. Die Unterstützung in Electron verbessert sich kontinuierlich.
+
+    \item \textbf{CSS Container Queries und Subgrid}: Vereinfachen responsive Layouts ohne JavaScript und könnten UI-Performance verbessern.
+
+    \item \textbf{View Transitions API}: Ermöglicht flüssige Animationen zwischen View-States mit minimaler Implementierungskomplexität.
+\end{itemize}
+
+\paragraph{Alternative Ansätze}
+
+Neben traditionellen Web-Technologien gewinnen alternative Ansätze an Bedeutung:
+
+\begin{itemize}
+    \item \textbf{WebAssembly (WASM)}: Ermöglicht die Ausführung von Code, der in Rust, C++ oder Go geschrieben wurde, mit nahezu nativer Performance. Besonders für algorithmisch komplexe Operationen (Pathfinding, physikalische Simulationen) könnte WASM in zukünftigen Versionen relevant werden.
+
+    \item \textbf{Hybrid-Rendering}: Die Kombination von Canvas-Rendering für Performance-kritische Elemente mit DOM-Rendering für UI-Komponenten, wie in Atlas VTT praktiziert, etabliert sich als Best Practice für komplexe Web-Anwendungen.
+\end{itemize}
+
+\paragraph{Ausblick}
+
+Die Entwicklung von Atlas VTT demonstriert, dass moderne Web-Technologien auch anspruchsvolle Echtzeit-Anwendungen in Plugin-Kontexten ermöglichen. Die identifizierten Patterns -- WebGL-basiertes Rendering, reaktives State Management, asynchrone Ressourcenladung -- werden voraussichtlich auch in zukünftigen Projekten relevant bleiben. Die kontinuierliche Evolution von Web-Standards und Rendering-Bibliotheken wird neue Optimierungsmöglichkeiten eröffnen, während die grundlegenden architektonischen Prinzipien Bestand haben dürften.

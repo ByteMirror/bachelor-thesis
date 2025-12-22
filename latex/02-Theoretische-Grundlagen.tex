@@ -34,7 +34,7 @@ Abbildung~\ref{fig:token-demo} zeigt die Token-Implementierung in Atlas VTT mit 
 
 Ein Statblock ist vergleichbar mit einem digitalen Steckbrief oder Datenblatt einer Spielfigur. Der Statblock enthält strukturiert alle spielrelevanten Informationen: Wie stark ist die Figur? Wie schnell kann sie sich bewegen? Welche besonderen Fähigkeiten besitzt sie? Wie viele Treffer kann sie einstecken, bevor sie kampfunfähig wird?
 
-Die Struktur eines Statblocks folgt dabei dem jeweiligen Regelsystem. In Dungeons \& Dragons 5e beispielsweise umfasst ein Statblock: Attribute (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma), abgeleitete Werte (Rüstungsklasse, Initiative, Geschwindigkeit), Fertigkeiten und Rettungswürfe, spezielle Fähigkeiten und verfügbare Aktionen. Moderne \ac{VTT}s ermöglichen es, diese Werte direkt anzuklicken – ein Klick auf „Schwertangriff" würfelt automatisch den Angriff und berechnet den Schaden unter Berücksichtigung aller Modifikatoren.
+Die Struktur eines Statblocks folgt dabei dem jeweiligen Regelsystem. In Dungeons \& Dragons 5e beispielsweise umfasst ein Statblock: Attribute (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma), abgeleitete Werte (Rüstungsklasse, Initiative, Geschwindigkeit), Fertigkeiten und Rettungswürfe, spezielle Fähigkeiten und verfügbare Aktionen. Moderne \ac{VTT}s ermöglichen es, diese Werte direkt anzuklicken – ein Klick auf eine Angriffsfähigkeit würfelt automatisch den Angriff und berechnet den Schaden unter Berücksichtigung aller Modifikatoren.
 
 Abbildung~\ref{fig:statblock-showcase} demonstriert die Statblock-Implementierung in Atlas VTT, die Obsidians Markdown-Fähigkeiten nutzt: Die editierbare Quelldatei (links) wird automatisch als interaktiver Statblock mit klickbaren Würfelformeln gerendert (rechts).
 
@@ -48,7 +48,7 @@ Abbildung~\ref{fig:statblock-showcase} demonstriert die Statblock-Implementierun
 
 \subsubsection{Fog of War – Sichtbarkeitsmanagement}
 
-Der „Fog of War" ist ein zentrales Element zur Simulation begrenzter Wahrnehmung in \ac{VTT}s. Das System verwaltet typischerweise drei Sichtbarkeitsebenen: unerforschte Bereiche (vollständig verborgen), bereits erkundete aber aktuell nicht sichtbare Bereiche (abgedunkelt), und aktuell sichtbare Bereiche. Fortgeschrittene Implementierungen integrieren dynamische Beleuchtung mit Berücksichtigung von Lichtquellen, Sichtlinien und Hindernissen. Die korrekte Implementation dieses Systems stellt hohe Anforderungen an die Rendering-Performance, da Sichtbarkeitsberechnungen in Echtzeit für alle Token durchgeführt werden müssen.
+Der Fog of War ist ein zentrales Element zur Simulation begrenzter Wahrnehmung in \ac{VTT}s. Das System verwaltet typischerweise drei Sichtbarkeitsebenen: unerforschte Bereiche (vollständig verborgen), bereits erkundete aber aktuell nicht sichtbare Bereiche (abgedunkelt), und aktuell sichtbare Bereiche. Fortgeschrittene Implementierungen integrieren dynamische Beleuchtung mit Berücksichtigung von Lichtquellen, Sichtlinien und Hindernissen. Die korrekte Implementation dieses Systems stellt hohe Anforderungen an die Rendering-Performance, da Sichtbarkeitsberechnungen in Echtzeit für alle Token durchgeführt werden müssen.
 
 Abbildung~\ref{fig:fog-of-war-demo} illustriert die Fog-of-War-Implementierung in Atlas VTT, bei der unerforschtes Terrain (schwarz) für Spieler vollständig verborgen bleibt.
 

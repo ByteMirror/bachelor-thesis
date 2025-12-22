@@ -1,0 +1,56 @@
+%Literatur einfügen     \cite[S.3]{bibkey}
+% In JabRef die zu zitierende Quelle auswählen und STRG+L (z.B. bei Verwendun von TeXstudio) oder STRG+K (hier wird direkt "\cite{bibkey}" kopiert) drücken. Dann mit STRG+V an der Stelle einfügen, an welcher man den Literaturverweis einfügen möchte.
+%\section*{Spervermerk} Nicht sichtbares Kapitel in der Gliederung
+
+% In TeXstudio
+% Strg+T  Kommentiert Abschnitte oder Zeilen aus
+% Strg+U  Entfernt die auskommentierung
+
+
+\chapter{Einleitung}
+\label{sec:Einleitung}
+
+\section{Hinführung zum Thema und Motivation}
+
+Ein \ac{TTRPG} ist „ein interaktives Erzählerlebnis, bei dem Spieler die Rollen von Charakteren in einer gemeinsamen Welt übernehmen und zusammenarbeiten, um eine Geschichte über diese Charaktere zu erzählen" \autocite[p. 4, eigene Übersetzung]{Daggerheart2025}. Typischerweise übernimmt eine Person die Rolle des Spielleiters (Game Master), der die Geschichte moderiert, Konsequenzen für Spielerentscheidungen festlegt und Nicht-Spieler-Charaktere verkörpert, während die anderen Spieler jeweils einen Charakter steuern. Würfel liefern dabei ein Element der Unvorhersehbarkeit für die Ergebnisse von Entscheidungen. \autocite[p.4]{Daggerheart2025} Seit der Veröffentlichung von Dungeons \& Dragons im Jahr 1974 haben sich \ac{TTRPG}s zu einem bedeutenden kulturellen Phänomen entwickelt. Für 2025 wird der globale Marktwert auf etwa 2,15 Milliarden US-Dollar geschätzt \autocite{BusinessResearchInsights2025}.
+
+Die zunehmende Digitalisierung und geografische Verteilung von Spielgruppen hat \ac{VTT}s zu einem essentiellen Bestandteil moderner \ac{TTRPG}s gemacht. Plattformen wie Roll20, Foundry VTT und Fantasy Grounds haben sich als feste Größe etabliert, wobei viele Gruppen auch nach der COVID-19-Pandemie \ac{VTT}s für Spielsitzungen mit geografisch verteilten Teilnehmern nutzen \autocite{RPGDrop2024Market}. \ac{VTT}s ermöglichen es, die klassischen Elemente des Tabletop-Rollenspiels -- taktische Karten, Charakterbewegungen, Würfelwürfe und gemeinsames Storytelling -- in einer digitalen Umgebung zu replizieren und dabei geografische Distanzen zu überbrücken.
+
+Obsidian.md hat sich in der \ac{TTRPG}-Community als beliebtes Werkzeug für Spielleiter etabliert, insbesondere für Worldbuilding und Session-Vorbereitung. Die Plattform wird bereits extensiv für die Organisation von Kampagnennotizen, Charakterbeschreibungen und Regelreferenzen genutzt. Das Plugin Fantasy Statblocks, das Statblocks für verschiedene Spielsysteme direkt in Obsidian rendert, verzeichnet über 250.000 Downloads \autocite{ValentineFantasyStatblocks2024}. Die Community hat ein umfangreiches Ökosystem spezialisierter Plugins entwickelt, darunter Initiative Tracker für Kampfbegegnungen \autocite{JavalentInitiativeTracker2024} und Dice Roller für Würfelsimulationen. Diese etablierte Nutzerbasis und die vorhandene Infrastruktur machen Obsidian zu einer idealen Plattform für die Integration vollwertiger \ac{VTT}-Funktionalität.
+
+Das im Rahmen dieser Arbeit zu entwickelnde \ac{VTT}-Plugin zielt darauf ab, Virtual-Tabletop-Funktionalität nahtlos in Obsidians bewährtes Markdown-Ökosystem zu integrieren. Unter Verwendung der Rendering-Engine PIXI.js v8 soll das Plugin interaktive Spielkarten, Token-Management und grundlegende Würfelfunktionalität direkt in der Obsidian-Umgebung ermöglichen. Die angestrebte Lösung würde es Spielleitern erlauben, ihre Kampagnennotizen, Weltenbeschreibungen und Regelreferenzen in derselben Anwendung zu verwalten, in der auch die taktischen Begegnungen durchgeführt werden. Diese Integration soll den sonst üblichen Kontextwechsel zwischen verschiedenen Anwendungen eliminieren und einen kohärenten digitalen Arbeitsbereich für Tabletop-Rollenspiele schaffen.
+\section{Darstellung der Problemstellung}
+
+Die technische Umsetzung von \ac{VTT}-Plugins in Electron-basierten Anwendungen wie Obsidian bringt erhebliche Performance-Herausforderungen mit sich. Electron-Anwendungen basieren auf Chromium und erfordern sorgfältige Optimierung, um eine akzeptable Performance zu erreichen \autocite{ElectronPerformance2024}. Bei \ac{VTT}-Plugins sind die Anforderungen besonders anspruchsvoll: Echtzeit-Rendering von komplexen Karten mit potentiell hunderten von Token, flüssige Animationen für Bewegungen und Effekte, sowie die gleichzeitige Verwaltung von Spielerzuständen und Regelberechnungen.
+
+Die Speicher- und CPU-Beschränkungen von Electron können zu spürbaren Performance-Einbußen führen, insbesondere bei längeren Spielsitzungen oder bei der Verwendung hochauflösender Kartenmaterialien. Frame-Drops unter 30 FPS beeinträchtigen die Spielerfahrung erheblich, während Eingabelatenzen über 100ms die Interaktion frustrierend machen können. Zusätzlich entstehen Skalierungsprobleme bei der Verwaltung großer Datenmengen, etwa wenn umfangreiche Kampagnenwelten mit hunderten von Karten, NPCs und Items verwaltet werden müssen.
+
+Bestehende \ac{VTT}-Lösungen für Obsidian sind meist auf einfache Visualisierungen beschränkt oder leiden unter Performance-Problemen bei komplexeren Szenarien. Die Integration von modernen Rendering-Technologien wie WebGL über PIXI.js v8 verspricht zwar bessere Performance, erfordert jedoch eine sorgfältige Architektur und Optimierung, um die Limitierungen der Electron-Umgebung zu überwinden. Die Herausforderung besteht darin, ein Gleichgewicht zwischen funktionalem Umfang, visueller Qualität und akzeptabler Performance zu finden.
+
+\section{Zielsetzung und Forschungsfrage}
+
+Das Ziel dieser Arbeit ist die systematische Untersuchung der Performance-Charakteristiken von \ac{VTT}-Plugins in Obsidian. Durch eine detaillierte Performance-Evaluation der implementierten Lösung und die Analyse der Rendering-Pipeline sollen Best Practices für die Entwicklung performanter Plugin-Architekturen etabliert werden.
+
+Die zentrale Forschungsfrage lautet: \textit{Wie können Virtual Tabletop Plugins in der Electron-basierten Umgebung von Obsidian so implementiert werden, dass sie trotz der technischen Limitierungen eine für Echtzeit-Interaktionen ausreichende Performance erreichen?}
+
+Daraus ergeben sich folgende Teilziele:
+\begin{itemize}
+    \item Evaluation verschiedener Rendering-Frameworks (Canvas 2D, WebGL) und fundierte Auswahl für die \ac{VTT}-Implementierung
+    \item Etablierung eines reproduzierbaren Frameworks für Performance-Benchmarks
+    \item Quantitative Evaluation der Performance-Charakteristiken der implementierten Lösung
+    \item Identifikation von Optimierungspotentialen und Best Practices
+\end{itemize}
+
+Die gewonnenen Erkenntnisse sind nicht nur für die Entwicklung des \ac{VTT}-Plugins relevant, sondern können auch auf andere rechenintensive Obsidian-Plugins übertragen werden. Angesichts der wachsenden Bedeutung von digitalen Werkzeugen für Tabletop-Rollenspiele und der steigenden Nutzerzahlen von Obsidian als \ac{TTRPG}-Plattform adressiert diese Arbeit ein praxisrelevantes Problem mit direktem Nutzen für eine aktive und wachsende Community.
+
+\section{Aufbau der Arbeit}
+
+Die vorliegende Arbeit gliedert sich in fünf Hauptkapitel:
+
+In Kapitel \autoref{sec:GrundlagenKapitel} werden die theoretischen Grundlagen erarbeitet. Dies umfasst die konzeptuellen Grundlagen von Virtual Tabletop Tools und Plugin-Architekturen und die technischen Rahmenbedingungen von Obsidian und Electron.
+
+Kapitel \autoref{sec:KonzeptionImplementierung} beschreibt die Konzeption und Implementierung des \ac{VTT}-Plugins. Hier werden die Anforderungsanalyse, das Systemdesign, und verschiedene Lösungsansätze dokumentiert.
+
+In Kapitel \autoref{sec:EvaluationErgebnisse} erfolgt die Evaluation der implementierten Lösung. Die durchgeführten Performance-Messungen werden ausgewertet und verschiedene Optimierungsstrategien verglichen.
+
+Kapitel \autoref{sec:FazitAusblick} fasst die wesentlichen Erkenntnisse zusammen, beantwortet die Forschungsfrage und gibt einen Ausblick auf zukünftige Entwicklungsmöglichkeiten.
