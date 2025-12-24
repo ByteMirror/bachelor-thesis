@@ -1,0 +1,27 @@
+flowchart TB
+    React["<b>React Components</b><br/>Hook: useAtlasStore()"]
+    Zustand["<b>Zustand Store</b><br/>Subscriptions & Re-render Notification"]
+    Temporal["<b>Temporal Middleware (Zundo)</b><br/>Undo/Redo History (max 50 Steps)"]
+    Immer["<b>Immer Middleware</b><br/>Immutability via Copy-on-Write"]
+    State["<b>State:</b><br/>currentMap<br/>mapObjects[]<br/>selectedObjects[]<br/>activeTool<br/>zoom, pan"]
+    Actions["<b>Actions:</b><br/>addObject()<br/>removeObject()<br/>updateObject()<br/>setActiveTool()"]
+
+    State -->|"1"| Immer
+    Immer -->|"2"| Temporal
+    Temporal -->|"3"| Zustand
+    Zustand -->|"4 Read"| React
+
+    React -->|"5 Call"| Zustand
+    Zustand -->|"6"| Temporal
+    Temporal -->|"7"| Immer
+    Immer -->|"8"| Actions
+
+    Actions -->|"modify"| State
+    State -.->|"9 Notify"| Zustand
+
+    style React fill:#e3f2fd
+    style Zustand fill:#f5f5f5
+    style Temporal fill:#f3e5f5
+    style Immer fill:#fce4ec
+    style State fill:#e8f5e9
+    style Actions fill:#fff3e0

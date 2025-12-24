@@ -1,3 +1,4 @@
+% !TEX root = Arbeit.tex
 %Literatur einfügen     \cite[S.3]{bibkey}
 % In JabRef die zu zitierende Quelle auswählen und STRG+L (z.B. bei Verwendun von TeXstudio) oder STRG+K (hier wird direkt "\cite{bibkey}" kopiert) drücken. Dann mit STRG+V an der Stelle einfügen, an welcher man den Literaturverweis einfügen möchte.
 %\section*{Spervermerk} Nicht sichtbares Kapitel in der Gliederung
@@ -23,9 +24,9 @@ Das im Rahmen dieser Arbeit zu entwickelnde \ac{VTT}-Plugin zielt darauf ab, Vir
 
 Die technische Umsetzung von \ac{VTT}-Plugins in Electron-basierten Anwendungen wie Obsidian bringt erhebliche Performance-Herausforderungen mit sich. Electron-Anwendungen basieren auf Chromium und erfordern sorgfältige Optimierung, um eine akzeptable Performance zu erreichen \autocite{ElectronPerformance2024}. Bei \ac{VTT}-Plugins sind die Anforderungen besonders anspruchsvoll: Echtzeit-Rendering von komplexen Karten mit potentiell hunderten von Token, flüssige Animationen für Bewegungen und Effekte, sowie die gleichzeitige Verwaltung von Spielerzuständen und Regelberechnungen.
 
-Die Speicher- und CPU-Beschränkungen von Electron können zu spürbaren Performance-Einbußen führen, insbesondere bei längeren Spielsitzungen oder bei der Verwendung hochauflösender Kartenmaterialien. Frame-Drops unter 30 FPS beeinträchtigen die Spielerfahrung erheblich, während Eingabelatenzen über 100ms die Interaktion frustrierend machen können. Zusätzlich entstehen Skalierungsprobleme bei der Verwaltung großer Datenmengen, etwa wenn umfangreiche Kampagnenwelten mit hunderten von Karten, NPCs und Items verwaltet werden müssen.
+Die Speicher- und \ac{CPU}-Beschränkungen von Electron können zu spürbaren Performance-Einbußen führen, insbesondere bei längeren Spielsitzungen oder bei der Verwendung hochauflösender Kartenmaterialien. Frame-Drops unter 30 \ac{FPS} beeinträchtigen die Spielerfahrung erheblich, während Eingabelatenzen über 100ms die Interaktion frustrierend machen können. Zusätzlich entstehen Skalierungsprobleme bei der Verwaltung großer Datenmengen, etwa wenn umfangreiche Kampagnenwelten mit hunderten von Karten, NPCs und Items verwaltet werden müssen.
 
-Bestehende \ac{VTT}-Lösungen für Obsidian sind meist auf einfache Visualisierungen beschränkt oder leiden unter Performance-Problemen bei komplexeren Szenarien. Die Integration von modernen Rendering-Technologien wie WebGL über PIXI.js v8 verspricht zwar bessere Performance, erfordert jedoch eine sorgfältige Architektur und Optimierung, um die Limitierungen der Electron-Umgebung zu überwinden. Die Herausforderung besteht darin, ein Gleichgewicht zwischen funktionalem Umfang, visueller Qualität und akzeptabler Performance zu finden.
+Bestehende \ac{VTT}-Lösungen für Obsidian sind meist auf einfache Visualisierungen beschränkt oder leiden unter Performance-Problemen bei komplexeren Szenarien. Die Integration von modernen Rendering-Technologien wie \ac{WebGL} über PIXI.js v8 verspricht zwar bessere Performance, erfordert jedoch eine sorgfältige Architektur und Optimierung, um die Limitierungen der Electron-Umgebung zu überwinden. Die Herausforderung besteht darin, ein Gleichgewicht zwischen funktionalem Umfang, visueller Qualität und akzeptabler Performance zu finden.
 
 \section{Zielsetzung und Forschungsfrage}
 
@@ -35,7 +36,7 @@ Die zentrale Forschungsfrage lautet: \textit{Wie können Virtual Tabletop Plugin
 
 Daraus ergeben sich folgende Teilziele:
 \begin{itemize}
-    \item Evaluation verschiedener Rendering-Frameworks (Canvas 2D, WebGL) und fundierte Auswahl für die \ac{VTT}-Implementierung
+    \item Evaluation verschiedener Rendering-Frameworks (Canvas 2D, \ac{WebGL}) und fundierte Auswahl für die \ac{VTT}-Implementierung
     \item Etablierung eines reproduzierbaren Frameworks für Performance-Benchmarks
     \item Quantitative Evaluation der Performance-Charakteristiken der implementierten Lösung
     \item Identifikation von Optimierungspotentialen und Best Practices

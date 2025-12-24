@@ -1,0 +1,24 @@
+flowchart TD
+    Start["linkTokenToStatblock(token, statblock)"]
+    Check{Statblock bereits<br/>verlinkt?}
+    Unlink["Alten Token entlinken"]
+    Update1["AssetService Metadata aktualisieren"]
+    Update2["Statblock YAML Frontmatter aktualisieren"]
+    Emit["Events emittieren<br/>(link-changed, refresh-assets)"]
+    Return["Return true"]
+
+    Start --> Check
+    Check -->|Ja| Unlink
+    Check -->|Nein| Update1
+    Unlink --> Update1
+    Update1 --> Update2
+    Update2 --> Emit
+    Emit --> Return
+
+    style Start fill:#e3f2fd
+    style Check fill:#fff3e0
+    style Unlink fill:#ffebee
+    style Update1 fill:#e8f5e9
+    style Update2 fill:#e8f5e9
+    style Emit fill:#f3e5f5
+    style Return fill:#e3f2fd

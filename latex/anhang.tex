@@ -1,2 +1,236 @@
-% Anhang - currently empty
-% Add appendix content here if needed
+% !TEX root = ../Arbeit.tex
+\chapter{Anhang}
+\label{ch:anhang}
+
+\section{Implementierungsdetails}
+
+\subsection{Plugin Lifecycle Integration}
+\label{sec:anhang-plugin-lifecycle}
+
+Die vollständige Plugin-Initialisierung aus \texttt{main.ts} mit allen Lifecycle Hooks:
+
+\begin{lstlisting}[language=TypeScript,caption={Plugin Lifecycle Integration (vollständige Implementierung)},label=lst:plugin-lifecycle-full]
+// main.ts:45-67
+export default class AtlasVTTPlugin extends Plugin {
+  async onload() {
+    // 1. Register Custom View Types
+    this.registerView("atlas-vtt", (leaf) => new AtlasView(leaf, this));
+
+    // 2. Initialize Singleton Services
+    this.assetService = AssetService.getInstance(this.app);
+    this.linkService = new TokenStatblockLinkService(this.app);
+
+    // 3. Register Commands & Ribbon Icons
+    this.addRibbonIcon("map", "Open Atlas VTT", () => {
+      this.activateView();
+    });
+
+    // 4. Register Event Handlers
+    this.registerEvent(
+      this.app.workspace.on("atlas-vtt:refresh-assets", () => {
+        this.assetService.refreshMetadata();
+      })
+    );
+  }
+
+  async onunload() {
+    // Cleanup: Detach views, close connections
+    this.app.workspace.detachLeavesOfType("atlas-vtt");
+  }
+}
+\end{lstlisting}
+
+\subsection{Map Data Format}
+\label{sec:anhang-map-format}
+
+Das vollständige \texttt{.atlasmap} JSON-Schema mit Beispieldaten:
+
+\begin{lstlisting}[language={},caption={.atlasmap JSON Schema (vollständiges Beispiel)},label=lst:atlasmap-schema-full]
+{
+  "version": 1,
+  "name": "Dungeon Level 1",
+  "background": {
+    "image": "atlas-vtt/maps/dungeon1.jpg",
+    "grid": {
+      "type": "square",
+      "size": 70,
+      "distance": 5,
+      "units": "ft"
+    }
+  },
+  "objects": [
+    {
+      "type": "Token",
+      "id": "uuid-abc-123",
+      "x": 350,
+      "y": 280,
+      "image": "atlas-vtt/tokens/goblin.png",
+      "rotation": 0,
+      "size": 1,
+      "statblockPath": "statblocks/Goblin.md"
+    },
+    {
+      "type": "FogRegion",
+      "id": "uuid-def-456",
+      "shape": "rect",
+      "x": 100,
+      "y": 100,
+      "width": 200,
+      "height": 150
+    }
+  ]
+}
+\end{lstlisting}
+
+\subsection{MapObject Class Hierarchy}
+\label{sec:anhang-mapobject-hierarchy}
+
+Die vollständige TypeScript-Klassenhierarchie für Map-Objekte aus \texttt{types.ts}:
+
+\begin{lstlisting}[language=TypeScript,caption={MapObject Class Hierarchy (vollständige Implementierung)},label=lst:mapobject-hierarchy-full]
+// src/app/types.ts:89-125
+abstract class MapObject {
+  id: string;
+  x: number;
+  y: number;
+  gmOnly?: boolean;
+  draggable: boolean = true;
+
+  abstract serialize(): object;
+}
+
+class Token extends MapObject {
+  image: string;
+  rotation: number = 0;
+  size: number = 1;
+  statblockPath?: string;
+
+  serialize(): object {
+    return { type: "Token", ...this };
+  }
+}
+
+class FogRegion extends MapObject {
+  shape: "rect" | "poly";
+  points: number[];
+
+  serialize(): object {
+    return { type: "FogRegion", ...this };
+  }
+}
+\end{lstlisting}
+
+\subsection{AssetService Singleton}
+\label{sec:anhang-asset-service}
+
+Die vollständige Singleton-Implementierung des \texttt{AssetService} aus \texttt{AssetService.ts}:
+
+\begin{lstlisting}[language=TypeScript,caption={AssetService Singleton Implementation (vollständige Implementierung)},label=lst:asset-service-singleton-full]
+// src/app/services/AssetService.ts:23-45
+export class AssetService {
+  private static instance: AssetService | null = null;
+  private metadata: AssetMetadata | null = null;
+
+  private constructor(private app: App) {}
+
+  public static getInstance(app: App): AssetService {
+    if (!AssetService.instance) {
+      AssetService.instance = new AssetService(app);
+    }
+    return AssetService.instance;
+  }
+
+  async getAssets(): Promise<Asset[]> {
+    if (!this.metadata) {
+      await this.loadMetadata();
+    }
+    return this.metadata.tokens.concat(
+      this.metadata.maps,
+      this.metadata.sounds
+    );
+  }
+}
+\end{lstlisting}
+
+\subsection{Bidirektionale Token-Statblock-Verlinkung}
+\label{sec:anhang-bidirectional-linking}
+
+Der vollständige Quellcode der \texttt{linkTokenToStatblock}-Methode aus \texttt{TokenStatblockLinkService.ts}:
+
+\begin{lstlisting}[language=TypeScript,caption={Bidirectional Linking Logic (vollständige Implementierung)},label=lst:bidirectional-linking-full]
+// src/app/services/TokenStatblockLinkService.ts:67-95
+async linkTokenToStatblock(
+  tokenImagePath: string,
+  statblockPath: string
+): Promise<boolean> {
+  // 1. Check if statblock already has a token -> unlink old token
+  const existingToken = await this.getTokenLinkedToStatblock(statblockPath);
+  if (existingToken) {
+    await this.unlinkToken(existingToken);
+  }
+
+  // 2. Update AssetService metadata
+  await this.assetService.updateAsset(tokenImagePath, {
+    statblockPath: statblockPath
+  });
+
+  // 3. Update statblock frontmatter
+  await this.updateStatblockFrontmatter(statblockPath, {
+    "token-image": tokenImagePath
+  });
+
+  // 4. Emit events for synchronization
+  this.emit("link-changed", { tokenImagePath, statblockPath });
+  this.app.workspace.trigger("atlas-vtt:refresh-assets");
+
+  return true;
+}
+\end{lstlisting}
+
+\subsection{State Management Store}
+\label{sec:anhang-state-management}
+
+Die vollständige \texttt{AtlasState}-Interface-Definition und Store-Konfiguration aus \texttt{atlasStore.ts}:
+
+\begin{lstlisting}[language=TypeScript,caption={Atlas Store Structure (vollständige Implementierung)},label=lst:atlas-store-full]
+// src/app/atlasStore.ts:34-67
+interface AtlasState {
+  // Map State
+  currentMap: MapData | null;
+  mapObjects: MapObject[];
+  selectedObjects: string[];
+
+  // Tool State
+  activeTool: ToolType;
+
+  // UI State
+  sidebarOpen: boolean;
+  assetBrowserTab: string;
+
+  // Player Mode
+  isPlayerMode: boolean;
+
+  // Viewport State
+  zoom: number;
+  pan: { x: number; y: number };
+
+  // Actions
+  addObject: (obj: MapObject) => void;
+  removeObject: (id: string) => void;
+  updateObject: (id: string, updates: Partial<MapObject>) => void;
+  setActiveTool: (tool: ToolType) => void;
+}
+
+export const useAtlasStore = create<AtlasState>()(
+  temporal( // zundo middleware for undo/redo
+    immer((set) => ({ // immer middleware for immutability
+      currentMap: null,
+      mapObjects: [],
+      // ... initial state
+      addObject: (obj) => set((state) => {
+        state.mapObjects.push(obj);
+      }),
+    }))
+  )
+);
+\end{lstlisting}
