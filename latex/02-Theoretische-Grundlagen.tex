@@ -1,76 +1,68 @@
+% !TEX root = Arbeit.tex
 \chapter{Theoretische Grundlagen}
 \label{sec:GrundlagenKapitel}
 
 \section{Konzeptuelle Grundlagen}
 
-\subsection{Virtual Tabletop Tools (VTTs)}
+\subsection{\ac{VTT} Tools}
 
 \ac{VTT}s repräsentieren die digitale Evolution des klassischen Spieltischs für Pen-and-Paper-Rollenspiele. Im Kern handelt es sich um webbasierte oder Desktop-Anwendungen, die die physische Spielumgebung in einem digitalen Raum simulieren und dabei die essentiellen Elemente des Tabletop-Rollenspiels – Karten, Miniaturen, Würfel und Charakterbögen – durch interaktive digitale Komponenten ersetzen. Die primäre Funktion besteht darin, räumlich getrennte Spielgruppen zusammenzuführen und ihnen eine gemeinsame, synchronisierte Spielumgebung zu bieten.
-
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.85\textwidth]{bilder/token-demo.jpeg}
-    \caption{Token-Interaktion in Atlas VTT mit Ressourcenbalken, Statuseffekten und Kontextmenü.}
-    \label{fig:token-demo}
-\end{figure}
 
 \subsubsection{Token – Digitale Spielfiguren}
 
 Token sind die digitalen Entsprechungen der klassischen Miniaturen oder Spielsteine auf einem physischen Spielbrett. Sie sind bewegliche Bilder oder Symbole, die darstellen, wo sich Spielercharaktere, Gegner oder wichtige Objekte auf der Spielkarte befinden. Jeder Token repräsentiert eine Entität in der Spielwelt – sei es der heldenhafte Ritter eines Spielers, ein gefährlicher Drache oder eine verschlossene Schatztruhe.
 
-Die technische Implementierung von Token geht jedoch weit über simple Bilddarstellungen hinaus. Moderne \ac{VTT}-Systeme verknüpfen Token mit umfangreichen Metadaten: Gesundheitspunkte werden als farbige Balken visualisiert, Statuseffekte als kleine Icons dargestellt, und Bewegungsreichweiten durch farbige Überlagerungen angezeigt. Token können verschiedene Sichtbarkeitsebenen haben – für Spieler sichtbar, nur für den Spielleiter sichtbar, oder temporär versteckt. Die Größe eines Tokens auf dem Spielfeld korrespondiert mit der Größenkategorie der Kreatur im Regelwerk, wodurch räumliche Verhältnisse korrekt abgebildet werden.
+Die technische Implementierung von Token geht jedoch weit über simple Bilddarstellungen hinaus. Moderne \ac{VTT}-Systeme verknüpfen Token mit umfangreichen Metadaten: Gesundheitspunkte werden als farbige Balken visualisiert, Statuseffekte als kleine Icons dargestellt, und Bewegungsreichweiten durch farbige Überlagerungen angezeigt. Token können verschiedene Sichtbarkeitsebenen haben – für Spieler sichtbar, nur für den Spielleiter sichtbar, oder temporär versteckt. Die Größe eines Tokens auf dem Spielfeld korrespondiert mit der Größenkategorie der Kreatur im Regelwerk, wodurch räumliche Verhältnisse korrekt abgebildet werden. \autoref{fig:token-demo} zeigt die Token-Implementierung in Atlas \ac{VTT} mit konfigurierbaren Ressourcenbalken, Statuseffekt-Tags und einem Kontextmenü für häufige Operationen.
 
-Abbildung~\ref{fig:token-demo} zeigt die Token-Implementierung in Atlas VTT mit konfigurierbaren Ressourcenbalken, Statuseffekt-Tags und einem Kontextmenü für häufige Operationen.
-
-\clearpage
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.95\textwidth]{bilder/statblock-showcase.png}
-    \caption{Statblock-Integration in Atlas VTT: Markdown-Quelldatei (links) und gerenderter Statblock (rechts).}
-    \label{fig:statblock-showcase}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.85\textwidth]{bilder/token-demo.jpeg}
+	\caption{Token-Interaktion in Atlas \ac{VTT} mit Ressourcenbalken, Statuseffekten und Kontextmenü.}
+	\label{fig:token-demo}
 \end{figure}
 
 \subsubsection{Statblocks – Charakterdatenblätter}
 
 Ein Statblock ist vergleichbar mit einem digitalen Steckbrief oder Datenblatt einer Spielfigur. Der Statblock enthält strukturiert alle spielrelevanten Informationen: Wie stark ist die Figur? Wie schnell kann sie sich bewegen? Welche besonderen Fähigkeiten besitzt sie? Wie viele Treffer kann sie einstecken, bevor sie kampfunfähig wird?
 
-Die Struktur eines Statblocks folgt dabei dem jeweiligen Regelsystem. In Dungeons \& Dragons 5e beispielsweise umfasst ein Statblock: Attribute (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma), abgeleitete Werte (Rüstungsklasse, Initiative, Geschwindigkeit), Fertigkeiten und Rettungswürfe, spezielle Fähigkeiten und verfügbare Aktionen. Moderne \ac{VTT}s ermöglichen es, diese Werte direkt anzuklicken – ein Klick auf „Schwertangriff" würfelt automatisch den Angriff und berechnet den Schaden unter Berücksichtigung aller Modifikatoren.
+Die Struktur eines Statblocks folgt dabei dem jeweiligen Regelsystem. In Dungeons \& Dragons 5e beispielsweise umfasst ein Statblock: Attribute (Stärke, Geschicklichkeit, Konstitution, Intelligenz, Weisheit, Charisma), abgeleitete Werte (Rüstungsklasse, Initiative, Geschwindigkeit), Fertigkeiten und Rettungswürfe, spezielle Fähigkeiten und verfügbare Aktionen. Moderne \ac{VTT}s ermöglichen es, diese Werte direkt anzuklicken – ein Klick auf eine Angriffsfähigkeit würfelt automatisch den Angriff und berechnet den Schaden unter Berücksichtigung aller Modifikatoren. Abbildung~\autoref{fig:statblock-showcase} demonstriert die Statblock-Implementierung in Atlas \ac{VTT}, die Obsidians Markdown-Fähigkeiten nutzt: Die editierbare Quelldatei (links) wird automatisch als interaktiver Statblock mit klickbaren Würfelformeln gerendert (rechts).
 
-Abbildung~\ref{fig:statblock-showcase} demonstriert die Statblock-Implementierung in Atlas VTT, die Obsidians Markdown-Fähigkeiten nutzt: Die editierbare Quelldatei (links) wird automatisch als interaktiver Statblock mit klickbaren Würfelformeln gerendert (rechts).
-
-\clearpage
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.9\textwidth]{bilder/fog-of-war-demo.jpeg}
-    \caption{Fog of War in Atlas VTT: Unerforschte Bereiche werden für Spieler verborgen.}
-    \label{fig:fog-of-war-demo}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{bilder/statblock-showcase.png}
+	\caption{Statblock-Integration in Atlas \ac{VTT}: Markdown-Quelldatei (links) und gerenderter Statblock (rechts).}
+	\label{fig:statblock-showcase}
 \end{figure}
 
 \subsubsection{Fog of War – Sichtbarkeitsmanagement}
 
-Der „Fog of War" ist ein zentrales Element zur Simulation begrenzter Wahrnehmung in \ac{VTT}s. Das System verwaltet typischerweise drei Sichtbarkeitsebenen: unerforschte Bereiche (vollständig verborgen), bereits erkundete aber aktuell nicht sichtbare Bereiche (abgedunkelt), und aktuell sichtbare Bereiche. Fortgeschrittene Implementierungen integrieren dynamische Beleuchtung mit Berücksichtigung von Lichtquellen, Sichtlinien und Hindernissen. Die korrekte Implementation dieses Systems stellt hohe Anforderungen an die Rendering-Performance, da Sichtbarkeitsberechnungen in Echtzeit für alle Token durchgeführt werden müssen.
+Der Fog of War ist ein zentrales Element zur Simulation begrenzter Wahrnehmung in \ac{VTT}s. Das System verwaltet typischerweise drei Sichtbarkeitsebenen: unerforschte Bereiche (vollständig verborgen), bereits erkundete aber aktuell nicht sichtbare Bereiche (abgedunkelt), und aktuell sichtbare Bereiche. Fortgeschrittene Implementierungen integrieren dynamische Beleuchtung mit Berücksichtigung von Lichtquellen, Sichtlinien und Hindernissen. Die korrekte Implementation dieses Systems stellt hohe Anforderungen an die Rendering-Performance, da Sichtbarkeitsberechnungen in Echtzeit für alle Token durchgeführt werden müssen. Abbildung~\autoref{fig:fog-of-war-demo} illustriert die Fog-of-War-Implementierung in Atlas \ac{VTT}, bei der unerforschtes Terrain (schwarz) für Spieler vollständig verborgen bleibt.
 
-Abbildung~\ref{fig:fog-of-war-demo} illustriert die Fog-of-War-Implementierung in Atlas VTT, bei der unerforschtes Terrain (schwarz) für Spieler vollständig verborgen bleibt.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{bilder/fog-of-war-demo.jpeg}
+	\caption{Fog of War in Atlas \ac{VTT}: Unerforschte Bereiche werden für Spieler verborgen.}
+	\label{fig:fog-of-war-demo}
+\end{figure}
 
 \subsubsection{Spielmechanische Hilfssysteme}
 
 Neben den visuellen Komponenten integrieren \ac{VTT}s verschiedene Hilfssysteme zur Automatisierung spielmechanischer Abläufe. Das \textit{Initiative-Tracking} verwaltet die Zugreihenfolge in rundenbasierten Kämpfen, indem es Teilnehmer nach ihrem Initiativwert sortiert und den Spielfluss koordiniert. \textit{Digitale Würfelsysteme} ersetzen physische Würfel durch Zufallsgeneratoren und bieten dabei automatische Erfolgsberechnungen sowie komplexe Würfelausdrücke. Weitere Automatisierungsfunktionen umfassen Rundenzähler, Statuseffekt-Verwaltung, automatische Schadensberechnung und Ressourcen-Tracking. Diese Systeme reduzieren den Verwaltungsaufwand erheblich und ermöglichen es Spielleitern, sich stärker auf die narrative Gestaltung zu konzentrieren.
 
-\clearpage
-\begin{figure}[t!]
-    \centering
-    \includegraphics[width=0.95\textwidth]{bilder/asset-manager.jpeg}
-    \caption{Asset Manager in Atlas VTT mit Collection-Sidebar, Tab-Navigation und Grid-Ansicht.}
-    \label{fig:asset-manager}
-\end{figure}
-
 \subsubsection{Asset-Management}
 
-Ein oft unterschätzter Aspekt von \ac{VTT}s ist das Management digitaler Assets. Kampagnen akkumulieren über Monate hinweg hunderte bis tausende Ressourcen: Token-Grafiken, Kartenbilder, Statblocks und Handouts. Ohne effizientes Asset-Management wird die Verwaltung umfangreicher Kampagnen schnell unübersichtlich. Abbildung~\ref{fig:asset-manager} zeigt den Asset Manager von Atlas VTT mit Collection-basierter Organisation, Tag-Kategorisierung und Grid-Ansicht.
+Ein oft unterschätzter Aspekt von \ac{VTT}s ist das Management digitaler Assets. Kampagnen akkumulieren über Monate hinweg hunderte bis tausende Ressourcen: Token-Grafiken, Kartenbilder, Statblocks und Handouts. Ohne effizientes Asset-Management wird die Verwaltung umfangreicher Kampagnen schnell unübersichtlich. Abbildung~\autoref{fig:asset-manager} zeigt den Asset Manager von Atlas VTT mit Collection-basierter Organisation, Tag-Kategorisierung und Grid-Ansicht.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{bilder/asset-manager.jpeg}
+	\caption{Asset Manager in Atlas \ac{VTT} mit Collection-Sidebar, Tab-Navigation und Grid-Ansicht.}
+	\label{fig:asset-manager}
+\end{figure}
 
 \subsubsection{Performance-Anforderungen}
 
-Die technischen Anforderungen an ein \ac{VTT}-System sind erheblich. Für eine flüssige Spielerfahrung müssen mindestens 30 Bilder pro Sekunde (FPS) gerendert werden – vergleichbar mit der Bildwiederholrate eines Films. Die Reaktionszeit zwischen Eingabe und sichtbarer Reaktion darf 100 Millisekunden nicht überschreiten, da sonst die Steuerung als träge wahrgenommen wird – ein Schwellenwert, der auf Nielsens grundlegender Forschung zu Response Times basiert \autocite{Nielsen1993ResponseTimes}. Bei mehreren Spielern müssen alle Aktionen in Echtzeit synchronisiert werden, sodass alle Teilnehmer stets denselben Spielzustand sehen.
+Die technischen Anforderungen an ein \ac{VTT}-System sind erheblich. Für eine flüssige Spielerfahrung müssen mindestens 30 Bilder pro Sekunde (\ac{FPS}) gerendert werden – vergleichbar mit der Bildwiederholrate eines Films. Die Reaktionszeit zwischen Eingabe und sichtbarer Reaktion darf 100 Millisekunden nicht überschreiten, da sonst die Steuerung als träge wahrgenommen wird – ein Schwellenwert, der auf Nielsens grundlegender Forschung zu Response Times basiert \autocite{Nielsen1993ResponseTimes}. Bei mehreren Spielern müssen alle Aktionen in Echtzeit synchronisiert werden, sodass alle Teilnehmer stets denselben Spielzustand sehen.
 
 \subsubsection{Marktübersicht und Architekturen}
 
@@ -92,35 +84,47 @@ Als proprietäre Wissensdatenbank-Anwendung implementiert Obsidian ein Konzept v
 
 Technisch folgt die Vault-Architektur einer hierarchischen Ordnerstruktur, in der jede Notiz als separate \texttt{.md}-Datei abgelegt wird. Interessanterweise generiert das System automatisch einen Metadaten-Index, der Links, Einbettungen, Tags und Frontmatter erfasst – Elemente, die für die semantische Navigation essentiell sind. Diese Metadaten residieren im \textit{MetadataCache}, einer In-Memory-Datenstruktur, die schnelle Abfragen ohne wiederholtes Parsen ermöglicht. Durch inkrementelle Updates bei Dateiänderungen und Event-Emission für File-System-Operationen entsteht ein reaktives System, das Plugins unmittelbare Reaktion auf Änderungen gestattet \autocite{ObsidianAPI2024}.
 
-Das Plugin-System unterscheidet zwei Kategorien: \textit{Core Plugins}, die vom Obsidian-Team entwickelt und gewartet werden, sowie \textit{Community Plugins}, die als Open-Source-Erweiterungen über GitHub distribuiert werden. Die TypeScript-basierte Plugin-API exponiert drei zentrale Schnittstellen, die komplementäre Aspekte der Systeminteraktion abdecken. Während \texttt{Vault} Dateisystem-Operationen verwaltet und \texttt{Workspace} UI-Interaktion mit Panes und Layouts orchestriert, bietet \texttt{MetadataCache} Zugriff auf indizierte Markdown-Metadaten. Plugins erweitern die abstrakte \texttt{Plugin}-Klasse und implementieren Lifecycle-Hooks – \texttt{onload()} für Initialisierung, \texttt{onunload()} für Cleanup.
+Das Plugin-System unterscheidet zwei Kategorien: \textit{Core Plugins}, die vom Obsidian-Team entwickelt und gewartet werden, sowie \textit{Community Plugins}, die als Open-Source-Erweiterungen über GitHub distribuiert werden. Die TypeScript-basierte Plugin-\ac{API} exponiert drei zentrale Schnittstellen, die komplementäre Aspekte der Systeminteraktion abdecken. Während \texttt{Vault} Dateisystem-Operationen verwaltet und \texttt{Workspace} UI-Interaktion mit Panes und Layouts orchestriert, bietet \texttt{MetadataCache} Zugriff auf indizierte Markdown-Metadaten. Plugins erweitern die abstrakte \texttt{Plugin}-Klasse und implementieren Lifecycle-Hooks – \texttt{onload()} für Initialisierung, \texttt{onunload()} für Cleanup.
 
-Besonders relevant für die Plugin-Entwicklung ist die Event-basierte Architektur, die lose Kopplung zwischen Plugins und Kernsystem gewährleistet. Das \texttt{EventRef}-Pattern bietet sichere Event-Registration mit automatischem Cleanup beim Plugin-Unload, wodurch Memory Leaks systematisch vermieden werden. Konzeptionell folgt die API dem Observer-Pattern: Plugins registrieren Handler für spezifische Events (beispielsweise \texttt{vault.on('modify', callback)}) und werden bei entsprechenden Systemereignissen asynchron benachrichtigt. Diese asynchrone Kommunikation ist kritisch für die Responsivität, da sie Blockierung des UI-Threads verhindert – ein fundamentales Requirement für Desktop-Applikationen.
+Besonders relevant für die Plugin-Entwicklung ist die Event-basierte Architektur, die lose Kopplung zwischen Plugins und Kernsystem gewährleistet. Das \texttt{EventRef}-Pattern bietet sichere Event-Registration mit automatischem Cleanup beim Plugin-Unload, wodurch Memory Leaks systematisch vermieden werden. Konzeptionell folgt die \ac{API} dem Observer-Pattern: Plugins registrieren Handler für spezifische Events (beispielsweise \texttt{vault.on('modify', callback)}) und werden bei entsprechenden Systemereignissen asynchron benachrichtigt. Diese asynchrone Kommunikation ist kritisch für die Responsivität, da sie Blockierung des \ac{UI}-Threads verhindert – ein fundamentales Requirement für Desktop-Applikationen.
 
-Für ein \ac{VTT}-Plugin ergeben sich daraus konkrete Integrationspunkte. Der \texttt{Workspace} gestattet das Rendern custom Views in dedizierten Panes, während die \texttt{ItemView}-Klasse Mounting-Points für komplexe UI-Frameworks wie React oder reine DOM-Manipulation bereitstellt. Die Datenpersistierung erfolgt über \texttt{Plugin.loadData()} und \texttt{Plugin.saveData()}, die JSON-serialisierte Objekte im Plugin-Verzeichnis ablegen. Von besonderem Interesse ist die Vault-API, die das Lesen von Markdown-Dateien erlaubt – beispielsweise um Statblocks oder Encounter-Definitionen aus Notizen zu extrahieren und nahtlos in die VTT-Session zu importieren. Diese Integration von Notizen und Spielmechanik demonstriert das Potenzial von Obsidian als Plattform für spezialisierte Domänenanwendungen.
+Für ein \ac{VTT}-Plugin ergeben sich daraus konkrete Integrationspunkte. Der \texttt{Workspace} gestattet das Rendern custom Views in dedizierten Panes, während die \texttt{ItemView}-Klasse Mounting-Points für komplexe \ac{UI}-Frameworks wie React oder reine \ac{DOM}-Manipulation bereitstellt. Die Datenpersistierung erfolgt über \texttt{Plugin.loadData()} und \texttt{Plugin.saveData()}, die \ac{JSON}-serialisierte Objekte im Plugin-Verzeichnis ablegen. Von besonderem Interesse ist die Vault-\ac{API}, die das Lesen von Markdown-Dateien erlaubt – beispielsweise um Statblocks oder Encounter-Definitionen aus Notizen zu extrahieren und nahtlos in die VTT-Session zu importieren. Diese Integration von Notizen und Spielmechanik demonstriert das Potenzial von Obsidian als Plattform für spezialisierte Domänenanwendungen.
 
 \subsection{Electron Framework}
 
-Als Open-Source-Framework für plattformübergreifende Desktop-Applikationen vereint Electron Webtechnologien (HTML, CSS, JavaScript) mit nativen Betriebssystem-Capabilities. Die technologische Basis bildet eine Fusion aus Chromiums Rendering Engine und der Node.js-Runtime \autocite{ElectronWiki2024} – eine Kombination, die sowohl Zugriff auf native OS-APIs (Dateisystem, Systemtray, native Dialoge) als auch Nutzung moderner Web-Platform-APIs für UI-Rendering gestattet. Da Electron die technologische Grundlage von Obsidian darstellt, determiniert seine Architektur maßgeblich die Performance-Charakteristika und Constraints eines darauf basierenden \ac{VTT}-Plugins.
+Als Open-Source-Framework für plattformübergreifende Desktop-Applikationen vereint Electron Webtechnologien (\ac{HTML}, \ac{CSS}, JavaScript) mit nativen Betriebssystem-Capabilities. Die technologische Basis bildet eine Fusion aus Chromiums Rendering Engine und der Node.js-Runtime \autocite{ElectronWiki2024} – eine Kombination, die sowohl Zugriff auf native \ac{OS}-APIs (Dateisystem, Systemtray, native Dialoge) als auch Nutzung moderner Web-Platform-APIs für \ac{UI}-Rendering gestattet. Da Electron die technologische Grundlage von Obsidian darstellt, determiniert seine Architektur maßgeblich die Performance-Charakteristika und Constraints eines darauf basierenden \ac{VTT}-Plugins.
 
-Architektonisch folgt Electron dem Multi-Process-Modell von Chromium, das zwischen zwei fundamentalen Prozesstypen differenziert: dem \textit{Main Process} und einem oder mehreren \textit{Renderer Processes}. Diese Prozessisolation entstammt Chromiums Sicherheits- und Stabilitätsarchitektur, in der jeder Tab in einem separaten Prozess operiert – eine Designentscheidung, die verhindert, dass der Absturz eines Tabs die gesamte Browser-Instanz kompromittiert \autocite{ElectronProcessModel2024}. Für Electron-Applikationen ergeben sich daraus spezifische Implikationen hinsichtlich Memory-Consumption und IPC-Overhead.
+Architektonisch folgt Electron dem Multi-Process-Modell von Chromium, das zwischen zwei fundamentalen Prozesstypen differenziert: dem \textit{Main Process} und einem oder mehreren \textit{Renderer Processes}. Diese Prozessisolation entstammt Chromiums Sicherheits- und Stabilitätsarchitektur, in der jeder Tab in einem separaten Prozess operiert – eine Designentscheidung, die verhindert, dass der Absturz eines Tabs die gesamte Browser-Instanz kompromittiert \autocite{ElectronProcessModel2024}. Für Electron-Applikationen ergeben sich daraus spezifische Implikationen hinsichtlich Memory-Consumption und \ac{IPC}-Overhead.
 
-Der \textit{Main Process} fungiert als Backend der Applikation mit Zugriff auf Node.js-APIs und native Module, während \textit{Renderer Processes} pro Fenster die UI-Logik kapseln und HTML/CSS/JavaScript rendern. Aus Sicherheitsgründen ist der Node.js-API-Zugriff in Renderer Processes standardmäßig deaktiviert – der Zugriff auf privilegierte APIs erfordert explizite Freigabe via \texttt{preload}-Script.
+Der \textit{Main Process} fungiert als Backend der Applikation mit Zugriff auf Node.js-APIs und native Module, während \textit{Renderer Processes} pro Fenster die \ac{UI}-Logik kapseln und \ac{HTML}/CSS/JavaScript rendern. Aus Sicherheitsgründen ist der Node.js-\ac{API}-Zugriff in Renderer Processes standardmäßig deaktiviert – der Zugriff auf privilegierte APIs erfordert explizite Freigabe via \texttt{preload}-Script.
 
-Die Kommunikation zwischen isolierten Prozessen erfolgt über \textit{Inter-Process Communication} (IPC) \autocite{ElectronIPC2024}. Die API-Module \texttt{ipcMain} und \texttt{ipcRenderer} ermöglichen bidirektionale Kommunikation, wobei das \textit{Request-Response}-Pattern (\texttt{invoke()/handle()}) besonders relevant für \ac{VTT}-Plugins ist, die Datensynchronisation zwischen UI und Backend erfordern.
+Die Kommunikation zwischen isolierten Prozessen erfolgt über \textit{Inter-Process Communication} (\ac{IPC}) \autocite{ElectronIPC2024}. Die API-Module \texttt{ipcMain} und \texttt{ipcRenderer} ermöglichen bidirektionale Kommunikation, wobei das \textit{Request-Response}-Pattern (\texttt{invoke()/handle()}) besonders relevant für \ac{VTT}-Plugins ist, die Datensynchronisation zwischen \ac{UI} und Backend erfordern.
 
-Ein kritischer Aspekt ist der Chromium-Overhead: Der initiale Memory-Footprint einer Electron-App beträgt typischerweise 80-120 MB, wovon circa 60\% auf Chromium-Infrastruktur entfallen. Die V8 JavaScript Engine führt Garbage Collection durch, wobei Major GC-Zyklen spürbare Latenzen verursachen können, die sich als Frame-Drops manifestieren \autocite{V8MemoryOptimization2016}. Dies ist problematisch für \ac{VTT}s mit flüssigen Token-Bewegungen, da bereits kurze Pausen die 16,6ms-Schwelle eines 60-FPS-Frames überschreiten. Optimierungsstrategien umfassen Object-Pooling zur Minimierung von Allokationen und rigoroses Vermeiden von Memory-Leaks.
+Ein kritischer Aspekt ist der Chromium-Overhead: Der initiale Memory-Footprint einer Electron-App beträgt typischerweise 80-120 \ac{MB}, wovon circa 60\% auf Chromium-Infrastruktur entfallen. Die V8 JavaScript Engine führt Garbage Collection durch, wobei Major \ac{GC}-Zyklen spürbare Latenzen verursachen können, die sich als Frame-Drops manifestieren \autocite{V8MemoryOptimization2016}. Dies ist problematisch für \ac{VTT}s mit flüssigen Token-Bewegungen, da bereits kurze Pausen die 16,6ms-Schwelle eines 60-\ac{FPS}-Frames überschreiten. Optimierungsstrategien umfassen Object-Pooling zur Minimierung von Allokationen und rigoroses Vermeiden von Memory-Leaks.
 
 \subsection{PIXI.js v8 als Rendering-Engine}
 
-Als performante Alternative zum nativen Canvas-2D-Rendering positioniert sich PIXI.js – eine Open-Source 2D-Rendering-Engine, die low-level WebGL-APIs durch eine high-level, objektorientierte Schnittstelle abstrahiert. Nach einem Jahrzehnt kontinuierlicher Entwicklung markiert Version 8 (März 2024) einen signifikanten Evolutionsschritt: Die Integration von WebGPU als first-class Renderer, die Modernisierung der JavaScript-Syntax sowie umfassende Performance-Optimierungen transformieren die Library in eine zukunftsfähige Rendering-Plattform \autocite{PixiJS2024Launch}. Für \ac{VTT}-Plugins bildet diese technologische Basis das Fundament für Map-Rendering, Token-Visualisierung und interaktive Spielelemente – Komponenten, deren Performance-Charakteristik maßgeblich die User-Experience determiniert.
+\subsubsection{Browser-basierte Rendering-APIs}
+
+Moderne Webbrowser stellen zwei fundamentale Ansätze für grafisches Rendering bereit, die sich in ihrer Ausführungsarchitektur unterscheiden:
+
+Die \textbf{HTML5 Canvas API} bietet eine auflösungsabhängige Bitmap-Zeichenfläche für 2D-Rendering\autocite{WikiCanvas2024}. Das \texttt{<canvas>}-Element ermöglicht skriptbasiertes Zeichnen von Formen, Text und Bildern über die \texttt{CanvasRenderingContext2D}-Schnittstelle. Die Rendering-Operationen werden dabei auf der \ac{CPU} ausgeführt, was bei objektreichen Szenarien zu Performance-Limitierungen führen kann.
+
+\textbf{WebGL (Web Graphics Library)} ist eine JavaScript-\ac{API} für Hardware-beschleunigtes 2D- und 3D-Rendering, die auf OpenGL ES basiert\autocite{WikiWebGL2024}. Im Gegensatz zur Canvas 2D \ac{API} nutzt WebGL die Graphics Processing Unit (\ac{GPU}) des Systems, wodurch deutlich mehr Objekte parallel verarbeitet werden können. WebGL 1.0 basiert auf OpenGL ES 2.0, während WebGL 2.0 auf OpenGL ES 3.0 aufsetzt.
+
+\textbf{WebGPU} stellt die nächste Generation der Browser-\ac{GPU}-\ac{API}s dar und ist als Nachfolger von WebGL konzipiert\autocite{WikiWebGPU2024}. Die \ac{API} bietet verbesserte Kompatibilität mit modernen \ac{GPU}s, Unterstützung für General-Purpose \ac{GPU} Computations und Zugriff auf erweiterte \ac{GPU}-Features. WebGPU befindet sich seit 2024 im W3C Candidate Recommendation Status.
+
+\subsubsection{PIXI.js Architektur und Features}
+
+Als performante Alternative zum nativen Canvas-2D-Rendering positioniert sich PIXI.js – eine Open-Source 2D-Rendering-Engine, die low-level \ac{WebGL}-APIs durch eine high-level, objektorientierte Schnittstelle abstrahiert. Nach einem Jahrzehnt kontinuierlicher Entwicklung markiert Version 8 (März 2024) einen signifikanten Evolutionsschritt: Die Integration von WebGPU als first-class Renderer, die Modernisierung der JavaScript-Syntax sowie umfassende Performance-Optimierungen transformieren die Library in eine zukunftsfähige Rendering-Plattform \autocite{PixiJS2024Launch}. Für \ac{VTT}-Plugins bildet diese technologische Basis das Fundament für Map-Rendering, Token-Visualisierung und interaktive Spielelemente – Komponenten, deren Performance-Charakteristik maßgeblich die User-Experience determiniert.
 
 Konzeptionell organisiert PIXI.js Grafikobjekte in einem \textit{Scene Graph}, einer hierarchischen Baumstruktur aus \texttt{DisplayObject}-Instanzen. Wurzel dieses Graphen bildet \texttt{Application.stage}, ein \texttt{Container}-Objekt als Root-Node. Pro Frame traversiert die Engine den Scene Graph top-down und akkumuliert dabei Transformationen (Position, Rotation, Skalierung), Sichtbarkeits- und Transparenz-States. Diese hierarchische Komposition ermöglicht elegante Objektgruppierung: Ein Token-\texttt{Container} kann beispielsweise Sprite (Charakter-Avatar), Graphics (Sichtweite-Kreis) und Text (Namen-Label) als Kinder aggregieren, wobei eine Transformation des Parent-Containers automatisch alle Children affiziert \autocite{PixiJSSceneGraph2024}. Solche Kompositionen reduzieren Code-Komplexität erheblich, da Transformations-Logik nicht für jedes Child individuell implementiert werden muss.
 
-Als fundamentales Render-Primitive fungiert der \texttt{Sprite} – ein 2D-Bild-Objekt, das eine \texttt{Texture} referenziert und Transformation- sowie Display-State enkapsuliert. Mehrere \texttt{Texture}-Instanzen können sich eine gemeinsame \texttt{TextureSource} teilen, wie es bei Sprite Sheets oder Texture Atlases der Fall ist. Letztere aggregieren multiple Einzelgrafiken in einem konsolidierten Bild, wobei jede \texttt{Texture} lediglich eine Teilregion definiert. Diese Technik erweist sich als performance-kritisch, da sie \textit{Batch Rendering} ermöglicht: Sprites, die denselben Atlas verwenden, lassen sich in einem einzigen WebGL-Draw-Call rendern – im Gegensatz zu separaten Calls pro Sprite bei individuellen Textures.
+Als fundamentales Render-Primitive fungiert der \texttt{Sprite} – ein 2D-Bild-Objekt, das eine \texttt{Texture} referenziert und Transformation- sowie Display-State enkapsuliert. Mehrere \texttt{Texture}-Instanzen können sich eine gemeinsame \texttt{TextureSource} teilen, wie es bei Sprite Sheets oder Texture Atlases der Fall ist. Letztere aggregieren multiple Einzelgrafiken in einem konsolidierten Bild, wobei jede \texttt{Texture} lediglich eine Teilregion definiert. Diese Technik erweist sich als performance-kritisch, da sie \textit{Batch Rendering} ermöglicht: Sprites, die denselben Atlas verwenden, lassen sich in einem einzigen \ac{WebGL}-Draw-Call rendern – im Gegensatz zu separaten Calls pro Sprite bei individuellen Textures.
 
-Batch Rendering konstituiert die zentrale Performance-Optimierung der Engine. Draw-Calls repräsentieren kostspielige CPU-GPU-Operationen, da State-Changes (Texture-Bindings, Shader-Wechsel) substantielle GPU-Latenz induzieren. PIXI.js' \texttt{BatchRenderer} aggregiert Sprites mit identischer Texture und verarbeitet deren Vertices in einem gemeinsamen Buffer, wobei Batch-Flushes ausschließlich bei Texture-Wechsel oder Batch-Limit (typischerweise 16.000 Sprites) erfolgen. Die Performance-Implikation ist dramatisch: 1.000 Sprites im selben Atlas benötigen einen Draw-Call, 1.000 Sprites mit individuellen Textures jedoch 1.000 separate Calls. Letzteres Szenario resultiert in erheblichem Performance-Einbruch, insbesondere auf mobilen GPUs mit inhärent höherer Draw-Call-Latenz – eine Restriktion, die Texture-Atlas-Design zu einer kritischen Architekturentscheidung für \ac{VTT}-Implementierungen macht.
+Batch Rendering konstituiert die zentrale Performance-Optimierung der Engine. Draw-Calls repräsentieren kostspielige \ac{CPU}-GPU-Operationen, da State-Changes (Texture-Bindings, Shader-Wechsel) substantielle \ac{GPU}-Latenz induzieren. PIXI.js' \texttt{BatchRenderer} aggregiert Sprites mit identischer Texture und verarbeitet deren Vertices in einem gemeinsamen Buffer, wobei Batch-Flushes ausschließlich bei Texture-Wechsel oder Batch-Limit (typischerweise 16.000 Sprites) erfolgen. Die Performance-Implikation ist dramatisch: 1.000 Sprites im selben Atlas benötigen einen Draw-Call, 1.000 Sprites mit individuellen Textures jedoch 1.000 separate Calls. Letzteres Szenario resultiert in erheblichem Performance-Einbruch, insbesondere auf mobilen GPUs mit inhärent höherer Draw-Call-Latenz – eine Restriktion, die Texture-Atlas-Design zu einer kritischen Architekturentscheidung für \ac{VTT}-Implementierungen macht.
 
-Reaktivität und Lazy-Evaluation charakterisieren die Rendering-Pipeline von v8: Das Dirty-Flag-System updated ausschließlich Objekte mit modifiziertem State, während statische Szenen nahezu CPU-kostenfrei bleiben. Benchmarks demonstrieren diese Effizienz eindrucksvoll – 100.000 statische Sprites konsumieren lediglich 0,12ms CPU-Zeit pro Frame, wohingegen bewegte Sprites 15ms beanspruchen \autocite{PixiJSV8Performance2024}. Für \ac{VTT}-Anwendungen, deren Maps typischerweise hunderte statischer Tiles enthalten während nur wenige Token aktiv bewegt werden, erweist sich diese Optimierung als essenziell. Die asymmetrische Performance-Charakteristik ermöglicht komplexe Szenen mit minimalem Overhead, solange Bewegung auf relevante Spielelemente beschränkt bleibt.
+Reaktivität und Lazy-Evaluation charakterisieren die Rendering-Pipeline von v8: Das Dirty-Flag-System updated ausschließlich Objekte mit modifiziertem State, während statische Szenen nahezu \ac{CPU}-kostenfrei bleiben. Benchmarks demonstrieren diese Effizienz eindrucksvoll – 100.000 statische Sprites konsumieren lediglich 0,12ms \ac{CPU}-Zeit pro Frame, wohingegen bewegte Sprites 15ms beanspruchen \autocite{PixiJSV8Performance2024}. Für \ac{VTT}-Anwendungen, deren Maps typischerweise hunderte statischer Tiles enthalten während nur wenige Token aktiv bewegt werden, erweist sich diese Optimierung als essenziell. Die asymmetrische Performance-Charakteristik ermöglicht komplexe Szenen mit minimalem Overhead, solange Bewegung auf relevante Spielelemente beschränkt bleibt.
 
-Für \ac{VTT}-Plugins sind spezifische PIXI.js-Features relevant: Das \texttt{EventSystem} implementiert Mouse/Touch-Events mit Bubble-Propagation entlang des Scene-Graphs für interaktive Hit-Detection. Culling optimiert die Performance bei großflächigen Maps, indem Objekte außerhalb des Viewports vom Rendering exkludiert werden (\texttt{visible = false}). Version 8 unterstützt zusätzlich WebGPU als alternativen Renderer mit automatischem WebGL-Fallback.
+Für \ac{VTT}-Plugins sind spezifische PIXI.js-Features relevant: Das \texttt{EventSystem} implementiert Mouse/Touch-Events mit Bubble-Propagation entlang des Scene-Graphs für interaktive Hit-Detection. Culling optimiert die Performance bei großflächigen Maps, indem Objekte außerhalb des Viewports vom Rendering exkludiert werden (\texttt{visible = false}). Version 8 unterstützt zusätzlich WebGPU als alternativen Renderer mit automatischem \ac{WebGL}-Fallback.
 

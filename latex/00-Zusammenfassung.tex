@@ -1,8 +1,14 @@
+% !TEX root = Arbeit.tex
 \cleardoublepage
 \chapter*{Zusammenfassung}
 
-Hier steht eine kurze Inhaltszusammenfassung von etwa einer Seite.
-Es soll der komplette Inhalt zusammengefasst werden, also insbesondere können auch bereits Ergebnisse genannt werden.
+Virtual Tabletops (VTTs) digitalisieren traditionelles Tabletop-Rollenspiel durch interaktive Karten, Token-basiertes Movement und Fog of War. Diese Arbeit untersucht die Herausforderungen bei der Entwicklung eines VTT-Plugins für Obsidian.md und deren Einfluss auf Performance, Wartbarkeit und Entwicklungsaufwand.
+
+Atlas VTT wurde als vollständiges Virtual-Tabletop-Plugin für Obsidian konzipiert und implementiert. Die Arbeit dokumentiert zentrale technische Entscheidungen auf Basis wissenschaftlicher Evaluation: Die Wahl des Rendering-Frameworks erfolgte durch Benchmark-Vergleich von Konva.js (23 FPS), Fabric.js (9 FPS) und PIXI.js (60 FPS) bei 8000 Objekten. PIXI.js Version 8 wurde gewählt, um Namespace-Kollisionen mit Obsidians globalem v7-Bundle zu vermeiden. Das Grid-System wurde durch das TilingSprite-Pattern optimiert, wodurch Draw Calls um 99,9\% reduziert (1000 → 1) und die Frame-Rate um 43\% verbessert wurde. Das Token-Management kombiniert vier PIXI.js-Best-Practices: Viewport Culling, Sprite Batching, Texture Caching und Object Pooling.
+
+Die Performance-Evaluation erfolgte durch ein automatisiertes Benchmark-System mit 500 Iterationen über drei Szenarien (0, 20, 100 Token). Die Messungen zeigen konstante 120 FPS über alle Szenarien mit einer Frame Time von 8,33 ms -- deutlich unter dem 60-FPS-Zielwert von 16,67 ms. Die niedrige Standardabweichung ($\sigma < 1$ FPS) belegt die Konsistenz der Rendering-Pipeline. Die Langzeit-Analyse identifizierte jedoch ein systematisches Speicherleck von 1,8 MB pro Iteration, konsistent mit dokumentierten PIXI.js v8 Graphics-Bugs.
+
+Die identifizierten Herausforderungen umfassen Obsidians Single-Bundle-Architektur, den PIXI.js-Versionskonflikt sowie Performance-Optimierungsbedarf bei objektreichen Szenarien. Die Arbeit zeigt, dass WebGL-basierte Rendering-Engines für VTT-Anwendungen in Electron-Plattformen geeignet sind, wenn systematische Performance-Optimierung durch Profiling erfolgt. Der implementierte BenchmarkService demonstriert, dass automatisierte Messungen kritische Erkenntnisse liefern, die bei manuellen Tests nicht aufgefallen wären.
 
 % \cleardoublepage
 % \chapter*{Abstract}
