@@ -104,6 +104,18 @@ Ein kritischer Aspekt ist der Chromium-Overhead: Der initiale Memory-Footprint e
 
 \subsection{PIXI.js v8 als Rendering-Engine}
 
+\subsubsection{Browser-basierte Rendering-APIs}
+
+Moderne Webbrowser stellen zwei fundamentale Ansätze für grafisches Rendering bereit, die sich in ihrer Ausführungsarchitektur unterscheiden:
+
+Die \textbf{HTML5 Canvas API} bietet eine auflösungsabhängige Bitmap-Zeichenfläche für 2D-Rendering\autocite{WikiCanvas2024}. Das \texttt{<canvas>}-Element ermöglicht skriptbasiertes Zeichnen von Formen, Text und Bildern über die \texttt{CanvasRenderingContext2D}-Schnittstelle. Die Rendering-Operationen werden dabei auf der \ac{CPU} ausgeführt, was bei objektreichen Szenarien zu Performance-Limitierungen führen kann.
+
+\textbf{WebGL (Web Graphics Library)} ist eine JavaScript-\ac{API} für Hardware-beschleunigtes 2D- und 3D-Rendering, die auf OpenGL ES basiert\autocite{WikiWebGL2024}. Im Gegensatz zur Canvas 2D \ac{API} nutzt WebGL die Graphics Processing Unit (\ac{GPU}) des Systems, wodurch deutlich mehr Objekte parallel verarbeitet werden können. WebGL 1.0 basiert auf OpenGL ES 2.0, während WebGL 2.0 auf OpenGL ES 3.0 aufsetzt.
+
+\textbf{WebGPU} stellt die nächste Generation der Browser-\ac{GPU}-\ac{API}s dar und ist als Nachfolger von WebGL konzipiert\autocite{WikiWebGPU2024}. Die \ac{API} bietet verbesserte Kompatibilität mit modernen \ac{GPU}s, Unterstützung für General-Purpose \ac{GPU} Computations und Zugriff auf erweiterte \ac{GPU}-Features. WebGPU befindet sich seit 2024 im W3C Candidate Recommendation Status.
+
+\subsubsection{PIXI.js Architektur und Features}
+
 Als performante Alternative zum nativen Canvas-2D-Rendering positioniert sich PIXI.js – eine Open-Source 2D-Rendering-Engine, die low-level \ac{WebGL}-APIs durch eine high-level, objektorientierte Schnittstelle abstrahiert. Nach einem Jahrzehnt kontinuierlicher Entwicklung markiert Version 8 (März 2024) einen signifikanten Evolutionsschritt: Die Integration von WebGPU als first-class Renderer, die Modernisierung der JavaScript-Syntax sowie umfassende Performance-Optimierungen transformieren die Library in eine zukunftsfähige Rendering-Plattform \autocite{PixiJS2024Launch}. Für \ac{VTT}-Plugins bildet diese technologische Basis das Fundament für Map-Rendering, Token-Visualisierung und interaktive Spielelemente – Komponenten, deren Performance-Charakteristik maßgeblich die User-Experience determiniert.
 
 Konzeptionell organisiert PIXI.js Grafikobjekte in einem \textit{Scene Graph}, einer hierarchischen Baumstruktur aus \texttt{DisplayObject}-Instanzen. Wurzel dieses Graphen bildet \texttt{Application.stage}, ein \texttt{Container}-Objekt als Root-Node. Pro Frame traversiert die Engine den Scene Graph top-down und akkumuliert dabei Transformationen (Position, Rotation, Skalierung), Sichtbarkeits- und Transparenz-States. Diese hierarchische Komposition ermöglicht elegante Objektgruppierung: Ein Token-\texttt{Container} kann beispielsweise Sprite (Charakter-Avatar), Graphics (Sichtweite-Kreis) und Text (Namen-Label) als Kinder aggregieren, wobei eine Transformation des Parent-Containers automatisch alle Children affiziert \autocite{PixiJSSceneGraph2024}. Solche Kompositionen reduzieren Code-Komplexität erheblich, da Transformations-Logik nicht für jedes Child individuell implementiert werden muss.
