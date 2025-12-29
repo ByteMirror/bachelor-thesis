@@ -1,0 +1,28 @@
+{
+  "source_key": "Kopp2016JabRef",
+  "url": "https://www.jabref.org/",
+  "original_url": "http://www.jabref.org/",
+  "capture_timestamp": "2025-12-29T12:00:00Z",
+  "capture_method": "WebFetch",
+  "status": "success",
+  "http_status": 200,
+  "redirected": true,
+  "redirect_url": "https://www.jabref.org/",
+  "content_type": "text/html",
+  "page_title": "JabRef - Free Reference Manager",
+  "description": "JabRef is a free, open-source reference management software for researchers and students, founded in 2003. Supports BibTeX/BibLaTeX with features for collecting, organizing, and citing academic literature.",
+  "verified_topic": "JabRef reference manager",
+  "topic_match": true,
+  "artifacts": {
+    "content_md": "content.md",
+    "snapshot_html": "snapshot.html",
+    "screenshot": "not_available_webfetch_fallback"
+  },
+  "notes": "Playwright browser tools were not available. Captured using WebFetch as fallback. Screenshot not available with this method.",
+  "verification": {
+    "page_loaded": true,
+    "content_present": true,
+    "matches_expected_topic": true,
+    "no_errors": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "citation_key": "Stickel-Wolf2013WissenschaftlichesWie",
+  "source_url": "https://books.google.de/books?id=A7vwmQEACAAJ",
+  "source_type": "google_books",
+  "capture_date": "2025-12-29",
+  "capture_tool": "WebFetch",
+  "book_metadata": {
+    "title": "Wissenschaftliches Arbeiten und Lerntechniken: Erfolgreich studieren - gewusst wie!",
+    "authors": [
+      "Christine Stickel-Wolf",
+      "Joachim Wolf"
+    ],
+    "isbn_10": "3658017139",
+    "isbn_13": "9783658017132",
+    "publisher": "Springer Fachmedien Wiesbaden",
+    "publication_date": "2013-05-03",
+    "publication_year": 2013,
+    "edition": "7th edition",
+    "page_count": 387,
+    "format": "physical_book",
+    "language": "German",
+    "ebook_available": false
+  },
+  "authors_info": {
+    "christine_stickel_wolf": "Diploma educator and independent corporate trainer",
+    "joachim_wolf": "Professor and chair holder at Christian-Albrechts-University Kiel"
+  },
+  "verification": {
+    "page_accessible": true,
+    "title_visible": true,
+    "author_visible": true,
+    "metadata_captured": true,
+    "content_type": "book_listing_page"
+  }
+}

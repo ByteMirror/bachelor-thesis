@@ -3,7 +3,10 @@
 \label{sec:FazitAusblick}
 \label{sec:fazit}
 
+Dieses abschließende Kapitel fasst die Ergebnisse der Arbeit zusammen und ordnet sie in den wissenschaftlichen Kontext ein. \autoref{sec:Zusammenfassung} rekapituliert die wesentlichen Erkenntnisse aus Konzeption, Implementierung und Evaluation. \autoref{sec:BeantwortungForschungsfrage} beantwortet die zentrale Forschungsfrage auf Basis der gewonnenen Ergebnisse. \autoref{sec:Limitationen} reflektiert kritisch die methodischen und technischen Einschränkungen der Arbeit. Abschließend gibt \autoref{sec:Ausblick} einen Ausblick auf zukünftige Entwicklungsmöglichkeiten und offene Forschungsfragen.
+
 \section{Zusammenfassung der wesentlichen Erkenntnisse}
+\label{sec:Zusammenfassung}
 
 Die vorliegende Arbeit untersuchte die Entwicklung und Performance-Optimierung eines Virtual Tabletop Plugins für Obsidian.md. Im Verlauf der Konzeption, Implementierung und Evaluation wurden mehrere zentrale Erkenntnisse gewonnen, die sowohl für das konkrete Projekt als auch für die allgemeine Plugin-Entwicklung in Electron-basierten Umgebungen relevant sind.
 
@@ -22,16 +25,17 @@ Die automatisierten Benchmark-Messungen mit 500 Iterationen pro Szenario liefert
 \end{itemize}
 
 \paragraph{Identifizierte Probleme}
-Die Langzeit-Benchmarks offenbarten ein Memory Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von ca. 1,8 \ac{MB} pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Dieses Problem wäre ohne automatisierte Benchmarks mit hoher Iterationszahl nicht identifiziert worden und unterstreicht den Wert systematischer Performance-Evaluation.
+Die Langzeit-Benchmarks offenbarten ein Memory-Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von ca. 1,8 \ac{MB} pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Dieses Problem wäre ohne automatisierte Benchmarks mit hoher Iterationszahl nicht identifiziert worden und unterstreicht den Wert systematischer Performance-Evaluation.
 
 \section{Beantwortung der Forschungsfrage}
+\label{sec:BeantwortungForschungsfrage}
 
 Die zentrale Forschungsfrage dieser Arbeit lautete: Wie können Virtual Tabletop Plugins in der Electron-basierten Umgebung von Obsidian so implementiert werden, dass sie trotz der technischen Limitierungen eine für Echtzeit-Interaktionen ausreichende Performance erreichen?
 
 Die durchgeführte Untersuchung ermöglicht eine differenzierte Beantwortung dieser Frage:
 
 \paragraph{Technische Machbarkeit}
-Die Implementierung von Atlas \ac{VTT} demonstriert, dass performante \ac{VTT}-Plugins in Obsidian grundsätzlich realisierbar sind. Die gemessenen 120 \ac{FPS} und Frame Times von 8,33 \ac{ms} übertreffen die definierten Anforderungen (>30 \ac{FPS}, <100ms Eingabelatenz) deutlich. Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
+Die Implementierung von Atlas \ac{VTT} demonstriert, dass performante \ac{VTT}-Plugins in Obsidian grundsätzlich realisierbar sind. Die gemessenen 120 \ac{FPS} und Frame Times von 8,33 \ac{ms} übertreffen die definierten Anforderungen (>30 \ac{FPS}, <100 \ac{ms} Eingabelatenz) deutlich. Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
 
 \paragraph{Erfolgsfaktoren}
 Drei zentrale Faktoren ermöglichen die erreichte Performance:
@@ -59,13 +63,17 @@ Trotz der positiven Performance-Ergebnisse zeigt die Evaluation auch Grenzen auf
 Die Forschungsfrage kann positiv beantwortet werden: \ac{VTT}-Plugins können in Obsidian performant implementiert werden, wenn geeignete Technologien (\ac{WebGL}-basiertes Rendering, reaktives State Management) und Best Practices (asynchrones Loading, Texture-Caching, inkrementelle Updates) angewendet werden. Die technischen Limitierungen von Electron sind für typische \ac{VTT}-Szenarien nicht performance-kritisch. Die Herausforderungen liegen weniger in der Rendering-Performance als vielmehr im korrekten Memory Management und der Bundle-Größen-Optimierung.
 
 \section{Limitationen und kritische Reflexion}
+\label{sec:Limitationen}
+
+Die Aussagekraft der Ergebnisse wird durch methodische und technische Einschränkungen begrenzt. \autoref{subsec:MethodischeEinschraenkungen} diskutiert die Grenzen der gewählten Evaluationsmethodik. \autoref{subsec:TechnischeLimitationen} beschreibt technische Constraints der Obsidian-Plattform. \autoref{subsec:KritischeWuerdigung} reflektiert Stärken und Schwächen der Arbeit.
 
 \subsection{Methodische Einschränkungen}
+\label{subsec:MethodischeEinschraenkungen}
 
 Die gewählte Evaluationsmethodik unterliegt mehreren Einschränkungen, die bei der Interpretation der Ergebnisse berücksichtigt werden müssen.
 
 \paragraph{Single-Platform-Testing}
-Alle Messungen wurden ausschließlich auf einem Apple Silicon Mac (M1 Pro) unter macOS durchgeführt. Die Performance-Charakteristika können auf anderen Plattformen (Windows, Linux) und Prozessorarchitekturen (Intel, AMD) abweichen. Insbesondere die \ac{GPU}-Integration von PIXI.js verhält sich möglicherweise unterschiedlich auf verschiedenen Grafiktreibern. Eine Cross-Platform-Evaluation wäre für generalisierbarer Aussagen erforderlich.
+Alle Messungen wurden ausschließlich auf einem Apple Silicon Mac (M1 Pro) unter macOS durchgeführt. Die Performance-Charakteristika können auf anderen Plattformen (Windows, Linux) und Prozessorarchitekturen (Intel, AMD) abweichen. Insbesondere die \ac{GPU}-Integration von PIXI.js verhält sich möglicherweise unterschiedlich auf verschiedenen Grafiktreibern. Eine Cross-Platform-Evaluation wäre für besser generalisierbare Aussagen erforderlich.
 
 \paragraph{Synthetische Benchmark-Szenarien}
 Die verwendeten Benchmark-Szenarien (0, 20, 100 Token) sind konstruierte Testfälle, die reale Spielsitzungen nur approximieren. Tatsächliche Nutzungsmuster umfassen komplexere Interaktionen: gleichzeitiges Scrollen und Token-Bewegen, Fog-of-War-Berechnungen, parallele Statblock-Updates und Netzwerksynchronisation. Die gemessenen Werte stellen daher eher Best-Case-Szenarien dar.
@@ -74,6 +82,7 @@ Die verwendeten Benchmark-Szenarien (0, 20, 100 Token) sind konstruierte Testfä
 Die Evaluation konzentrierte sich primär auf Frame Rate und Speicherverbrauch während der Laufzeit. Andere relevante Metriken -- Startup-Zeit, Bundle-Parse-Duration, Time-to-Interactive -- wurden nicht systematisch erfasst. Diese Metriken sind für die wahrgenommene User Experience beim Plugin-Start jedoch ebenfalls relevant.
 
 \subsection{Technische Limitationen}
+\label{subsec:TechnischeLimitationen}
 
 \paragraph{Obsidian-\ac{API}-Beschränkungen}
 Die Plugin-\ac{API} von Obsidian bietet keinen Mechanismus für Code-Splitting oder Lazy Loading. Alle Plugin-Ressourcen müssen in einem einzelnen Bundle ausgeliefert werden, das beim Start vollständig geladen wird. Diese architektonische Einschränkung verhindert fortgeschrittene Optimierungsstrategien, die in modernen Web-Anwendungen üblich sind.
@@ -85,6 +94,7 @@ Das Plugin ist an die in Obsidian gebündelte Electron-Version (32.2.5 zum Testz
 Die Notwendigkeit, PIXI.js v8 separat zu bundlen (statt die globale v7-Version von Obsidian zu nutzen), erhöht die Bundle-Größe um ca. 500 \ac{KB}. Dieser Trade-off zugunsten besserer Performance und \ac{API}-Features ist für das Projekt gerechtfertigt, stellt jedoch eine suboptimale Ressourcennutzung dar.
 
 \subsection{Kritische Würdigung}
+\label{subsec:KritischeWuerdigung}
 
 \paragraph{Stärken der Arbeit}
 Die Arbeit leistet mehrere Beiträge zur Plugin-Entwicklung für Obsidian:
@@ -99,7 +109,7 @@ Die Arbeit leistet mehrere Beiträge zur Plugin-Entwicklung für Obsidian:
 Rückblickend hätten einige Aspekte anders angegangen werden können:
 
 \begin{itemize}
-    \item Die Memory-Leak-Analyse hätte früher im Entwicklungsprozess erfolgen können, um den Fehler zeitnah zu beheben statt nur zu dokumentieren
+    \item Die Memory-Leak-Analyse hätte früher im Entwicklungsprozess erfolgen können, um den Fehler zeitnah zu beheben, statt ihn nur zu dokumentieren
     \item Ein Vergleich mit alternativen Rendering-Ansätzen (Canvas 2D, SVG) hätte die Wahl von PIXI.js empirisch untermauern können
     \item Die Evaluation hätte von Cross-Browser-Tests (Safari, Firefox in Electron-Varianten) profitiert
 \end{itemize}
@@ -114,8 +124,12 @@ Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenn
 \end{enumerate}
 
 \section{Ausblick auf zukünftige Entwicklungen}
+\label{sec:Ausblick}
+
+Dieser Abschnitt skizziert mögliche Weiterentwicklungen und offene Forschungsfragen. \autoref{subsec:WeiterfuehrendeForschung} identifiziert potenzielle Optimierungsstrategien und offene Forschungsfragen. \autoref{subsec:PraktischeAnwendung} diskutiert die praktische Anwendbarkeit der Ergebnisse. \autoref{subsec:TechnologischeTrends} ordnet die Arbeit in aktuelle technologische Entwicklungen ein.
 
 \subsection{Weiterführende Forschung}
+\label{subsec:WeiterfuehrendeForschung}
 
 Die Performance-Evaluation in Kapitel 4 identifizierte mehrere Ansatzpunkte für potenzielle Performance-Verbesserungen, die im Rahmen dieser Arbeit nicht umgesetzt wurden, jedoch für zukünftige Arbeiten relevant sein können.
 
@@ -159,6 +173,7 @@ Mehrere Forschungsfragen bleiben offen für zukünftige Untersuchungen:
 \end{itemize}
 
 \subsection{Praktische Anwendung}
+\label{subsec:PraktischeAnwendung}
 
 Die entwickelte Lösung und die gewonnenen Erkenntnisse haben Implikationen über das konkrete Projekt hinaus.
 
@@ -173,7 +188,7 @@ Die dokumentierten Architekturmuster und Performance-Optimierungen sind auf ande
 \begin{itemize}
     \item \textbf{Visualisierungs-Plugins}: Graph-Visualisierungen, Mindmaps oder Kanban-Boards könnten von der PIXI.js-Integration und dem reaktiven State Management profitieren
     \item \textbf{Interaktive Editoren}: Diagramm-Editoren, Whiteboard-Plugins oder Flowchart-Tools stehen vor ähnlichen Performance-Herausforderungen
-    \item \textbf{Gaming-adjacent Plugins}: Initiative-Tracker, Würfel-Roller mit Animationen oder Character-Sheet-Manager können die entwickelten Patterns adaptieren
+    \item \textbf{Spielnahe Plugins}: Initiative-Tracker, Würfel-Roller mit Animationen oder Character-Sheet-Manager können die entwickelten Patterns adaptieren
 \end{itemize}
 
 Die Benchmark-Infrastruktur könnte als Template für Performance-Testing anderer Obsidian-Plugins dienen.
@@ -190,6 +205,7 @@ Als Open-Source-Projekt bietet Atlas \ac{VTT} Möglichkeiten für Community-Beit
 \end{itemize}
 
 \subsection{Technologische Trends}
+\label{subsec:TechnologischeTrends}
 
 Die technologische Landschaft für Desktop-Web-Anwendungen entwickelt sich kontinuierlich weiter. Mehrere Trends könnten die zukünftige Entwicklung von Obsidian-Plugins beeinflussen.
 

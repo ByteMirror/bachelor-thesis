@@ -4,9 +4,13 @@
 
 ## Active Claims
 
-| Section ID | Agent ID | Batch | Claimed At | Status |
-|------------|----------|-------|------------|--------|
-| (none) | - | - | - | - |
+| Section ID | Orchestrator | Batch | Claimed At | Status |
+|------------|--------------|-------|------------|--------|
+| 03-1.1 | orch-20251229-0250 | batch-003 | 2025-12-29 02:50 | correcting |
+| 03-1.2 | orch-20251229-0250 | batch-003 | 2025-12-29 02:50 | correcting |
+| 03-2.1 | orch-20251229-0250 | batch-003 | 2025-12-29 02:50 | correcting |
+| 03-2.2 | orch-20251229-0250 | batch-003 | 2025-12-29 02:50 | correcting |
+| 03-3.1 | orch-20251229-0250 | batch-003 | 2025-12-29 02:50 | correcting |
 
 ---
 

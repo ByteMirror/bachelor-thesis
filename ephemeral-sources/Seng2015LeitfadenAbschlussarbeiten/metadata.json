@@ -1,0 +1,41 @@
+{
+  "citation_key": "Seng2015LeitfadenAbschlussarbeiten",
+  "original_url": "https://campus.bildungscentrum.de/nfcampus/dc/523/Leitfaden_zur_formalen_Gestaltung_von_Seminar_und_Abschlussarbeiten.pdf",
+  "original_url_status": "INACCESSIBLE - requires FOM campus authentication",
+  "capture_date": "2025-12-29T02:48:00Z",
+  "title": "Leitfaden zur formalen Gestaltung von Seminar- und Abschlussarbeiten",
+  "authors": [
+    "Prof. Dr. Anja Seng",
+    "Prof. Dr. Thomas Kuempel"
+  ],
+  "cited_year": 2015,
+  "cited_month": "February",
+  "files": [
+    {
+      "filename": "Leitfaden_formales_Arbeiten.pdf",
+      "source_url": "http://www.laukamm.nl/fomweb/Formales%20Arbeiten.pdf",
+      "file_size_bytes": 309496,
+      "pages": 35,
+      "version_date": "June 2009",
+      "notes": "Earlier version of the FOM thesis guide. Authors: Prof. Dr. Anja Seng, Prof. Dr. Thomas Kuempel. This is an earlier version than the one cited (Feb 2015)."
+    },
+    {
+      "filename": "Leitfaden_FOM_acadwriter.pdf",
+      "source_url": "https://acadwriter.de/wp-content/uploads/2024/12/Leitfaden-FOM.pdf",
+      "file_size_bytes": 2887395,
+      "pages": 73,
+      "version_date": "January 2024",
+      "notes": "Updated version with additional author Prof. Dr. Dr. habil. Clemens Jaeger. Includes section on AI usage in academic works."
+    }
+  ],
+  "document_type": "PDF",
+  "institution": "FOM Hochschule fuer Oekonomie & Management",
+  "topic": "Academic writing guide for seminar and thesis papers",
+  "verification": {
+    "wayback_available": false,
+    "alternative_sources_found": true,
+    "content_verified": true,
+    "exact_cited_version_available": false,
+    "note": "The exact February 2015 version cited in references.bib was not found. Two alternative versions were captured: June 2009 (earlier) and January 2024 (later). The document content and authorship are consistent with the citation."
+  }
+}

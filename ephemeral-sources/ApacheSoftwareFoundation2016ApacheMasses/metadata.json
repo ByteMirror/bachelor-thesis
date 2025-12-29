@@ -1,0 +1,22 @@
+{
+  "citation_key": "ApacheSoftwareFoundation2016ApacheMasses",
+  "url": "https://subversion.apache.org/",
+  "capture_timestamp": "2025-12-29T12:00:00Z",
+  "capture_method": "WebFetch",
+  "status": "success",
+  "http_status": 200,
+  "page_title": "Apache Subversion - Enterprise-class centralized version control for the masses",
+  "content_type": "text/html",
+  "content_verified": true,
+  "topic_match": true,
+  "expected_topic": "Apache Subversion",
+  "notes": "Page successfully captured via WebFetch. Contains current release information (1.14.5 from December 2024). Playwright was unavailable, so HTML and screenshot could not be captured directly.",
+  "files_created": [
+    "content.md",
+    "metadata.json"
+  ],
+  "missing_files": [
+    "snapshot.html (Playwright unavailable)",
+    "screenshot.png (Playwright unavailable)"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "source_key": "Mercurialcommunity2016MercurialManagement",
+  "url": "https://www.mercurial-scm.org/about",
+  "title": "Mercurial: A Distributed Version Control System - About",
+  "capture_date": "2025-12-29",
+  "capture_method": "curl + WebFetch",
+  "content_type": "text/html",
+  "file_size_bytes": 24345,
+  "status": "success",
+  "topic": "Mercurial version control system",
+  "description": "Official about page for Mercurial, a free distributed source control management tool. Covers core features including distributed architecture, performance, cross-platform support, extensibility, and licensing under GPL v2+.",
+  "files": [
+    "page.html",
+    "content.md",
+    "metadata.json"
+  ]
+}

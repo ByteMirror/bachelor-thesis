@@ -1,0 +1,30 @@
+{
+  "citation_key": "SwissAcademicSoftwareGmbH2016CitaviOrganisieren",
+  "original_url": "http://www.citavi.de/de/index.html",
+  "final_url": "https://lumivero.com/products/citavi/",
+  "redirect_chain": [
+    "http://www.citavi.de/de/index.html",
+    "https://citavi.com/",
+    "https://www.citavi.com/en",
+    "https://lumivero.com/products/citavi/"
+  ],
+  "capture_timestamp": "2025-12-29T00:00:00Z",
+  "capture_method": "WebFetch",
+  "status": "success_with_redirect",
+  "http_status": 200,
+  "content_type": "text/html",
+  "notes": "Original Citavi website (Swiss Academic Software GmbH) now redirects to Lumivero. Citavi was acquired by Lumivero. Content captured from the current live page.",
+  "verification": {
+    "page_loaded": true,
+    "content_present": true,
+    "topic_matches": true,
+    "topic_description": "Citavi reference management software - matches expected topic"
+  },
+  "files_created": [
+    "content.md",
+    "metadata.json",
+    "snapshot.html"
+  ],
+  "screenshot_available": false,
+  "screenshot_note": "Playwright browser tools not available; screenshot not captured"
+}

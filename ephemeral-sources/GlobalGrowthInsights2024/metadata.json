@@ -1,0 +1,59 @@
+{
+  "source_id": "GlobalGrowthInsights2024",
+  "url": "https://www.globalgrowthinsights.com/market-reports/tabletop-role-playing-game-ttrpg-market-103239",
+  "capture_date": "2025-12-29",
+  "capture_timestamp_utc": "2025-12-29T00:00:00Z",
+  "source_type": "market_research_report",
+  "publisher": "Global Growth Insights",
+  "title": "Tabletop Role-Playing Game (TTRPG) Market Report",
+  "content_status": "partial",
+  "paywall_status": "paywalled",
+  "notes": "Full report requires purchase/registration. Public summary and key statistics available.",
+  "files": {
+    "html_snapshot": "page.html",
+    "extracted_content": "content.md",
+    "html_size_bytes": 300602
+  },
+  "extracted_data": {
+    "market_size_2025_usd_millions": 2153.7,
+    "market_size_2026_usd_millions": 2408.7,
+    "market_size_2035_usd_millions": 6594,
+    "cagr_2026_2035_percent": 11.84,
+    "key_players": [
+      {"name": "Wizards of the Coast", "market_share_percent": 38.5},
+      {"name": "Paizo", "market_share_percent": 11.7},
+      {"name": "Chaosium", "market_share_percent": null},
+      {"name": "Modiphius", "market_share_percent": null},
+      {"name": "Magpie Games", "market_share_percent": null}
+    ],
+    "demographics": {
+      "below_18_percent": 11,
+      "age_18_35_percent": 53,
+      "age_36_49_percent": 24,
+      "above_50_percent": 12
+    },
+    "distribution_channels": {
+      "retailers_percent": 57,
+      "direct_to_consumer_percent": 43
+    },
+    "regional_breakdown": {
+      "north_america_percent": 42,
+      "europe_percent": 28,
+      "asia_pacific_percent": 21,
+      "middle_east_africa_percent": 9
+    },
+    "growth_drivers": {
+      "player_led_campaigns_percent": 62,
+      "digital_content_integration_percent": 58,
+      "indie_system_demand_percent": 46,
+      "crowdfunding_support_percent": 41
+    }
+  },
+  "verification": {
+    "page_accessible": true,
+    "content_visible": true,
+    "ttrpg_content_found": true,
+    "market_statistics_extracted": true,
+    "full_content_paywalled": true
+  }
+}

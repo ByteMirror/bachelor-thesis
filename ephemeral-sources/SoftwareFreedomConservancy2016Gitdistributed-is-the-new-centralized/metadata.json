@@ -1,0 +1,20 @@
+{
+  "citation_key": "SoftwareFreedomConservancy2016Gitdistributed-is-the-new-centralized",
+  "url": "https://git-scm.com/",
+  "capture_timestamp": "2025-12-29T00:00:00Z",
+  "capture_method": "WebFetch + curl",
+  "status": "success",
+  "page_title": "Git - Distributed Version Control System",
+  "description": "Official website for Git, the free and open-source distributed version control system",
+  "organization": "Software Freedom Conservancy",
+  "latest_version": "2.52.0",
+  "latest_release_date": "2025-11-17",
+  "content_verified": true,
+  "content_matches_topic": true,
+  "files_created": [
+    "snapshot.html",
+    "content.md",
+    "metadata.json"
+  ],
+  "notes": "Playwright browser tools were unavailable; used WebFetch and curl as fallback. Screenshot could not be captured without browser automation."
+}

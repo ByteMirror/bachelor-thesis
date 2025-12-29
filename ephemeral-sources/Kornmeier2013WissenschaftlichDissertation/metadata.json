@@ -1,0 +1,33 @@
+{
+  "source_key": "Kornmeier2013WissenschaftlichDissertation",
+  "url": "https://books.google.de/books?id=zWRCAgAAQBAJ",
+  "capture_date": "2025-12-29",
+  "capture_method": "WebFetch",
+  "source_type": "google_books",
+  "book_metadata": {
+    "title": "Wissenschaftlich schreiben leicht gemacht: fur Bachelor, Master und Dissertation",
+    "author": "Martin Kornmeier",
+    "publisher": "Haupt Verlag",
+    "publication_year": 2013,
+    "isbn_10": "3825240738",
+    "isbn_13": "9783825240738",
+    "page_count": 342,
+    "language": "de",
+    "format": "physical_book",
+    "ebook_available": false
+  },
+  "content_availability": {
+    "preview_available": false,
+    "full_text_available": false,
+    "metadata_available": true,
+    "table_of_contents_available": false,
+    "description_available": false
+  },
+  "verification": {
+    "page_accessible": true,
+    "title_verified": true,
+    "author_verified": true,
+    "metadata_captured": true
+  },
+  "notes": "Google Books page with limited content - no e-book or preview available. Basic bibliographic metadata successfully captured."
+}

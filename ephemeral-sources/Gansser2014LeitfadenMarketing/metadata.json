@@ -1,0 +1,43 @@
+{
+  "citation_key": "Gansser2014LeitfadenMarketing",
+  "original_url": "https://www.fom.de/fileadmin/ifes/publikationen/140320_Leitfaden_wissenschaftliche_Arbeiten.pdf",
+  "wayback_url": "http://web.archive.org/web/20140801005256/http://www.fom.de/fileadmin/ifes/publikationen/140320_Leitfaden_wissenschaftliche_Arbeiten.pdf",
+  "alternate_source_url": "https://gansser.de/Leitfaden_Prof.Gansser.pdf",
+  "captured_at": "2025-12-29T02:32:00Z",
+  "file_type": "pdf",
+  "http_status": {
+    "original_url": "200 (redirects to HTML homepage - PDF no longer available)",
+    "wayback_url": "200",
+    "alternate_source": "200"
+  },
+  "files": {
+    "document_2014_original.pdf": {
+      "source": "Wayback Machine (August 1, 2014 snapshot)",
+      "title": "Leitfaden zur Erstellung von wissenschaftlichen Arbeiten im Fach Marketing",
+      "author": "Prof. Dr. Oliver Gansser",
+      "co_author": "Prof. Dr. Bianca Krol",
+      "institution": "ifes Institut für Empirie & Statistik, FOM Hochschule für Oekonomie & Management",
+      "pages": 67,
+      "file_size_bytes": 1783744,
+      "creation_date": "2014-03-20",
+      "pdf_version": "1.6",
+      "creator": "Acrobat PDFMaker 10.1 for PowerPoint",
+      "keywords": "ifes Institut für Empirie & Statistik; Leitfaden; wissenschaftliches Arbeiten; Prof. Dr. Oliver Gansser; Prof. Dr. Bianca Krol; FOM Hochschule für Oekonomie & Management",
+      "recommended_for_citation": true
+    },
+    "document.pdf": {
+      "source": "gansser.de (current version)",
+      "title": "Leitfaden zur Erstellung von wissenschaftlichen Arbeiten",
+      "author": "Prof. Dr. Oliver A. Gansser",
+      "pages": 11,
+      "file_size_bytes": 250253,
+      "creation_date": "2021-04-14",
+      "pdf_version": "1.5",
+      "creator": "LaTeX via pandoc",
+      "keywords": "Leitfaden, wissenschaftliche Arbeiten, Zitierweise, Literaturrecherche, Gliederung, Aufbau, Einleitung, Forschungsstand, Theoretischer Hintergrund, Methode, Untersuchungsdesign, Operationalisierung, Studienergebnisse, Fazit, Diskussion",
+      "recommended_for_citation": false,
+      "note": "Updated 2021 version - different format and scope from 2014 original"
+    }
+  },
+  "notes": "Original FOM URL no longer serves the PDF. Successfully retrieved BOTH versions: (1) The original 2014 document from Wayback Machine archive, and (2) the updated 2021 version from author's personal website. The 2014 version (document_2014_original.pdf) should be used for the citation as it matches the citation key year."
+}
