@@ -4,9 +4,9 @@
 
 ## Statistics
 - Total Sections: 38
-- Completed: 9 (batch-001, batch-002)
+- Completed: 16 (batch-001 to batch-004)
 - Claimed: 0
-- Available: 29
+- Available: 22
 - **Agents per batch**: 5
 - **Total batches**: 8
 

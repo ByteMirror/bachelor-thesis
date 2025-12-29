@@ -3,9 +3,9 @@
 > Append-only log of all completed section corrections.
 
 ## Summary
-- Total Completed: 9
-- Issues Found: 24
-- Issues Fixed: 24
+- Total Completed: 16
+- Issues Found: 60
+- Issues Fixed: 60
 
 ---
 
@@ -22,6 +22,13 @@
 | 02-2.1 | Obsidian als Markdown-Editor | 1 | 1 | batch-002 | 2025-12-29 | sections/02-2.1.md |
 | 02-2.2 | Electron Framework | 2 | 2 | batch-002 | 2025-12-29 | sections/02-2.2.md |
 | 02-2.3 | PIXI.js v8 als Rendering-Engine | 2 | 2 | batch-002 | 2025-12-29 | sections/02-2.3.md |
+| 03-1.1 | Funktionale Anforderungen | 0 | 0 | batch-003 | 2025-12-29 | sections/03-1.1.md |
+| 03-1.2 | Nicht-funktionale Anforderungen | 1 | 1 | batch-003 | 2025-12-29 | sections/03-1.2.md |
+| 03-2.1 | Architekturentwurf | 5 | 5 | batch-003 | 2025-12-29 | sections/03-2.1.md |
+| 03-2.2 | Datenmodell | 9 | 9 | batch-003 | 2025-12-29 | sections/03-2.2.md |
+| 03-3.1 | Rendering Engine: PIXI.js | 9 | 9 | batch-003 | 2025-12-29 | sections/03-3.1.md |
+| 03-3.2 | Grid System: Draw Call Reduktion | 3 | 3 | batch-004 | 2025-12-29 | sections/03-3.2.md |
+| 03-3.3 | Token Management | 9 | 9 | batch-004 | 2025-12-29 | sections/03-3.3.md |
 
 ---
 

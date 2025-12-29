@@ -8,40 +8,40 @@ Dieses abschließende Kapitel fasst die Ergebnisse der Arbeit zusammen und ordne
 \section{Zusammenfassung der wesentlichen Erkenntnisse}
 \label{sec:Zusammenfassung}
 
-Die vorliegende Arbeit untersuchte die Entwicklung und Performance-Optimierung eines Virtual Tabletop Plugins für Obsidian.md. Im Verlauf der Konzeption, Implementierung und Evaluation wurden mehrere zentrale Erkenntnisse gewonnen, die sowohl für das konkrete Projekt als auch für die allgemeine Plugin-Entwicklung in Electron-basierten Umgebungen relevant sind.
+Die vorliegende Arbeit untersuchte die Entwicklung und Performance-Optimierung eines Virtual-Tabletop-Plugins für Obsidian.md. Im Verlauf der Konzeption, Implementierung und Evaluation wurden mehrere zentrale Erkenntnisse gewonnen, die sowohl für das konkrete Projekt als auch für die allgemeine Plugin-Entwicklung in Electron-basierten Umgebungen relevant sind.
 
 \paragraph{Architekturentscheidungen}
-Die Wahl von PIXI.js v8 als Rendering-Engine erwies sich als fundiert. Die automatischen Optimierungen der \ac{WebGL}-basierten Bibliothek -- insbesondere Sprite-Batching und Texture-Caching -- ermöglichen konstante 120 \ac{FPS} selbst bei 100 gleichzeitig gerenderten Token. Die Entscheidung, PIXI.js v8 als eigenständige Dependency zu bundlen statt die in Obsidian global verfügbare v7-Version zu nutzen, war aufgrund der signifikanten Performance-Verbesserungen und \ac{API}-Änderungen zwischen den Versionen notwendig.
+Die Wahl von PIXI.js v8 als Rendering-Engine erwies sich als leistungsfähig. Die automatischen Optimierungen der \ac{WebGL}-basierten Bibliothek -- insbesondere Sprite-Batching und Texture-Caching -- ermöglichen konstante 120 \ac{FPS} selbst bei 100 gleichzeitig gerenderten Token. Die Entscheidung, PIXI.js v8 als eigenständige Dependency zu bundlen statt die in Obsidian global verfügbare v7-Version zu nutzen, war aufgrund der in \autoref{subsec:rendering-engine-pixi} dokumentierten \ac{API}-Änderungen und modernen Features der Version 8 notwendig.
 
-Die Single-Bundle-Architektur von Obsidian-Plugins stellt eine strukturelle Einschränkung dar, die Code-Splitting und Lazy Loading erschwert. Alle Features müssen beim Plugin-Start geladen werden, was sich jedoch in den Messungen nicht als kritischer Bottleneck für die Runtime-Performance erwies. Der Haupteinfluss liegt im initialen Bundle-Parsing und Startup-Overhead.
+Die Single-Bundle-Architektur von Obsidian-Plugins stellt eine strukturelle Einschränkung dar, die Code-Splitting und Lazy Loading erschwert. Alle Features müssen beim Plugin-Start geladen werden, was sich jedoch in den Messungen nicht als Engpass für die Runtime-Performance erwies. Der Haupteinfluss liegt im initialen Bundle-Parsing und Startup-Overhead.
 
 \paragraph{Performance-Charakteristika}
 Die automatisierten Benchmark-Messungen mit 500 Iterationen pro Szenario lieferten statistisch valide Daten zur Performance des Plugins:
 
 \begin{itemize}
     \item Die Rendering-Performance ist über alle getesteten Szenarien (0, 20, 100 Token) konstant und erreicht die Hardware-Obergrenze von 120 \ac{FPS}
-    \item Die Frame Time von durchschnittlich 8,33 \ac{ms} liegt weit unter den kritischen Schwellenwerten für flüssige Interaktion (16,67 \ac{ms} für 60 \ac{FPS})
+    \item Die Frame Time von durchschnittlich 8,33 \ac{ms} liegt unter dem Schwellenwert für flüssige Interaktion (16,67 \ac{ms} für 60 \ac{FPS}\autocite{Nielsen1993ResponseTimes})
     \item Der Speicherverbrauch skaliert mit der Token-Anzahl, wobei Texture-Sharing die Effizienz bei vielen gleichartigen Token erhöht
 \end{itemize}
 
 \paragraph{Identifizierte Probleme}
-Die Langzeit-Benchmarks offenbarten ein Memory-Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von ca. 1,8 \ac{MB} pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Dieses Problem wäre ohne automatisierte Benchmarks mit hoher Iterationszahl nicht identifiziert worden und unterstreicht den Wert systematischer Performance-Evaluation.
+Die Langzeit-Benchmarks offenbarten ein Memory-Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von 1,8 \ac{MB} pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Dieses Problem wäre ohne automatisierte Benchmarks mit hoher Iterationszahl nicht identifiziert worden und unterstreicht den Wert systematischer Performance-Evaluation.
 
 \section{Beantwortung der Forschungsfrage}
 \label{sec:BeantwortungForschungsfrage}
 
-Die zentrale Forschungsfrage dieser Arbeit lautete: Wie können Virtual Tabletop Plugins in der Electron-basierten Umgebung von Obsidian so implementiert werden, dass sie trotz der technischen Limitierungen eine für Echtzeit-Interaktionen ausreichende Performance erreichen?
+Die zentrale Forschungsfrage dieser Arbeit lautete: Wie können Virtual-Tabletop-Plugins in der Electron-basierten Umgebung von Obsidian so implementiert werden, dass sie trotz der technischen Limitierungen eine für Echtzeit-Interaktionen ausreichende Performance erreichen?
 
 Die durchgeführte Untersuchung ermöglicht eine differenzierte Beantwortung dieser Frage:
 
 \paragraph{Technische Machbarkeit}
-Die Implementierung von Atlas \ac{VTT} demonstriert, dass performante \ac{VTT}-Plugins in Obsidian grundsätzlich realisierbar sind. Die gemessenen 120 \ac{FPS} und Frame Times von 8,33 \ac{ms} übertreffen die definierten Anforderungen (>30 \ac{FPS}, <100 \ac{ms} Eingabelatenz) deutlich. Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
+Die Implementierung von Atlas \ac{VTT} demonstriert, dass performante \ac{VTT}-Plugins in Obsidian grundsätzlich realisierbar sind. Die gemessenen 120 \ac{FPS} und Frame Times von 8,33 \ac{ms} übertreffen die in \autoref{sec:Anforderungsanalyse} definierten Anforderungen (>30 \ac{FPS}, <100 \ac{ms} Eingabelatenz). Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
 
 \paragraph{Erfolgsfaktoren}
 Drei zentrale Faktoren ermöglichen die erreichte Performance:
 
 \begin{enumerate}
-    \item \textbf{Moderne Rendering-Engine}: PIXI.js v8 mit \ac{WebGL}-Backend nutzt \ac{GPU}-Beschleunigung effektiv aus. Die automatischen Optimierungen (Sprite-Batching, Texture-Atlasing, Culling) reduzieren den \ac{CPU}-Overhead und die Anzahl der Draw Calls signifikant.
+    \item \textbf{Moderne Rendering-Engine}: PIXI.js v8 mit \ac{WebGL}-Backend nutzt \ac{GPU}-Beschleunigung effektiv aus. Die automatischen Optimierungen wie Sprite-Batching und Culling\autocite{PixiPerf2024} sowie die TilingSprite-basierte Grid-Implementierung (vgl. \autoref{subsec:grid-system}) reduzieren den \ac{CPU}-Overhead und die Anzahl der Draw-Calls.
 
     \item \textbf{Zustandsmanagement mit Zustand}: Die reaktive Store-Architektur mit \texttt{subscribeWithSelector} ermöglicht gezielte \ac{UI}-Updates ohne vollständiges Re-Rendering. Die Trennung von Rendering-State und Persistenz-State vermeidet unnötige Disk-\ac{I/O} während der Laufzeit.
 
@@ -49,18 +49,18 @@ Drei zentrale Faktoren ermöglichen die erreichte Performance:
 \end{enumerate}
 
 \paragraph{Einschränkungen}
-Trotz der positiven Performance-Ergebnisse zeigt die Evaluation auch Grenzen auf:
+Neben den erreichten Performance-Werten zeigt die Evaluation auch Grenzen auf:
 
 \begin{itemize}
-    \item Das identifizierte Memory Leak bei intensiver Token-Manipulation deutet auf Komplexität im Lifecycle-Management von PIXI.js-Objekten hin. Die korrekte Freigabe von Graphics-Objekten, Event-Listenern und Texture-Referenzen erfordert sorgfältige Implementierung.
+    \item Das identifizierte Memory Leak bei intensiver Token-Manipulation deutet auf Komplexität im Lifecycle-Management von PIXI.js-Objekten hin. Die korrekte Freigabe von Graphics-Objekten, Event-Listenern und Texture-Referenzen erfordert präzise Implementierung.
 
     \item Die Bundle-Größe des Plugins (ca. 2,8 \ac{MB}) ist primär durch PIXI.js und React-Abhängigkeiten bedingt. Die Single-Bundle-Architektur von Obsidian verhindert eine Aufteilung in on-demand geladene Module.
 
-    \item Der Speicherverbrauch von ca. 10 \ac{MB} pro Token ist höher als bei nativen Anwendungen, was bei sehr großen Szenarien (>100 Token) relevant werden kann.
+    \item Der Speicherverbrauch von ca. 10 \ac{MB} pro Token kann bei sehr großen Szenarien (>100 Token) relevant werden.
 \end{itemize}
 
 \paragraph{Fazit zur Forschungsfrage}
-Die Forschungsfrage kann positiv beantwortet werden: \ac{VTT}-Plugins können in Obsidian performant implementiert werden, wenn geeignete Technologien (\ac{WebGL}-basiertes Rendering, reaktives State Management) und Best Practices (asynchrones Loading, Texture-Caching, inkrementelle Updates) angewendet werden. Die technischen Limitierungen von Electron sind für typische \ac{VTT}-Szenarien nicht performance-kritisch. Die Herausforderungen liegen weniger in der Rendering-Performance als vielmehr im korrekten Memory Management und der Bundle-Größen-Optimierung.
+Die Forschungsfrage kann wie folgt beantwortet werden: \ac{VTT}-Plugins können in Obsidian performant implementiert werden, wenn geeignete Technologien (\ac{WebGL}-basiertes Rendering, reaktives State Management) und Best Practices (asynchrones Loading, Texture-Caching, inkrementelle Updates) angewendet werden. Die technischen Limitierungen von Electron sind für die getesteten Szenarien mit bis zu 100 Token nicht performance-kritisch. Die Herausforderungen liegen weniger in der Rendering-Performance als vielmehr im korrekten Memory Management und der Bundle-Größen-Optimierung.
 
 \section{Limitationen und kritische Reflexion}
 \label{sec:Limitationen}
@@ -88,10 +88,10 @@ Die Evaluation konzentrierte sich primär auf Frame Rate und Speicherverbrauch w
 Die Plugin-\ac{API} von Obsidian bietet keinen Mechanismus für Code-Splitting oder Lazy Loading. Alle Plugin-Ressourcen müssen in einem einzelnen Bundle ausgeliefert werden, das beim Start vollständig geladen wird. Diese architektonische Einschränkung verhindert fortgeschrittene Optimierungsstrategien, die in modernen Web-Anwendungen üblich sind.
 
 \paragraph{Electron-Version-Bindung}
-Das Plugin ist an die in Obsidian gebündelte Electron-Version (32.2.5 zum Testzeitpunkt) gebunden. Neuere Electron-Versionen mit verbesserten V8- und Chromium-Engines stehen erst nach entsprechenden Obsidian-Updates zur Verfügung. Dies limitiert die Möglichkeit, von Performance-Verbesserungen in neueren Electron-Releases zu profitieren.
+Das Plugin ist an die in Obsidian gebündelte Electron-Version (32.2.5 zum Testzeitpunkt) gebunden. Neuere Electron-Versionen mit verbesserten V8- und Chromium-Engines stehen erst nach entsprechenden Obsidian-Updates zur Verfügung\autocite{ElectronPerformanceGuide2024}. Dies limitiert die Möglichkeit, von Performance-Verbesserungen in neueren Electron-Releases zu profitieren.
 
 \paragraph{PIXI.js-Versionskonflikt}
-Die Notwendigkeit, PIXI.js v8 separat zu bundlen (statt die globale v7-Version von Obsidian zu nutzen), erhöht die Bundle-Größe um ca. 500 \ac{KB}. Dieser Trade-off zugunsten besserer Performance und \ac{API}-Features ist für das Projekt gerechtfertigt, stellt jedoch eine suboptimale Ressourcennutzung dar.
+Die Notwendigkeit, PIXI.js v8 separat zu bundlen (statt die globale v7-Version von Obsidian zu nutzen), erhöht die Bundle-Größe um ca. 500 \ac{KB}. Dieser Trade-off zugunsten höherer Performance und erweiterter \ac{API}-Features führt zu erhöhtem Ressourcenverbrauch.
 
 \subsection{Kritische Würdigung}
 \label{subsec:KritischeWuerdigung}
@@ -110,15 +110,15 @@ Rückblickend hätten einige Aspekte anders angegangen werden können:
 
 \begin{itemize}
     \item Die Memory-Leak-Analyse hätte früher im Entwicklungsprozess erfolgen können, um den Fehler zeitnah zu beheben, statt ihn nur zu dokumentieren
-    \item Ein Vergleich mit alternativen Rendering-Ansätzen (Canvas 2D, SVG) hätte die Wahl von PIXI.js empirisch untermauern können
+    \item Ein Vergleich mit alternativen Rendering-Ansätzen (Canvas-2D, SVG) hätte die Wahl von PIXI.js empirisch untermauern können
     \item Die Evaluation hätte von Cross-Browser-Tests (Safari, Firefox in Electron-Varianten) profitiert
 \end{itemize}
 
-\paragraph{Lessons Learned}
+\paragraph{Gewonnene Erkenntnisse}
 Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenntnisse:
 
 \begin{enumerate}
-    \item \textbf{Early Benchmarking}: Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation
+    \item \textbf{Frühzeitige Performance-Tests}: Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation
     \item \textbf{Hohe Iterationszahlen}: Erst bei ausreichend vielen Wiederholungen (>100) werden subtile Probleme wie Memory Leaks sichtbar
     \item \textbf{Trennung von Concerns}: Die strikte Trennung von Rendering-State und Persistenz-State vereinfacht sowohl Performance-Optimierung als auch Debugging
 \end{enumerate}
@@ -211,7 +211,7 @@ Die technologische Landschaft für Desktop-Web-Anwendungen entwickelt sich konti
 
 \paragraph{Entwicklung von Electron}
 
-Electron bleibt trotz Kritik an Ressourcenverbrauch die dominante Plattform für Cross-Platform-Desktop-Anwendungen. Neuere Versionen bringen kontinuierliche Performance-Verbesserungen durch aktualisierte Chromium- und V8-Engines. Alternative Frameworks wie Tauri (Rust-basiert mit nativen Webviews) versprechen geringeren Ressourcenverbrauch, sind jedoch für bestehende Electron-Anwendungen wie Obsidian nicht direkt relevant. Die Bindung an Obsidians Electron-Version bedeutet, dass Plugin-Entwickler von Verbesserungen erst nach entsprechenden Obsidian-Updates profitieren können.
+Electron bleibt trotz Kritik an Ressourcenverbrauch eine verbreitete Plattform für Cross-Platform-Desktop-Anwendungen\autocite{ElectronWiki2024}. Neuere Versionen bringen kontinuierliche Performance-Verbesserungen durch aktualisierte Chromium- und V8-Engines. Alternative Frameworks wie Tauri (Rust-basiert mit nativen Webviews) versprechen geringeren Ressourcenverbrauch, sind jedoch für bestehende Electron-Anwendungen wie Obsidian nicht direkt relevant. Die Bindung an Obsidians Electron-Version bedeutet, dass Plugin-Entwickler von Verbesserungen erst nach entsprechenden Obsidian-Updates profitieren können.
 
 \paragraph{Neue Web-Standards}
 
@@ -232,7 +232,7 @@ Mehrere aufkommende Web-Standards könnten zukünftige Plugin-Entwicklung beeinf
 Neben traditionellen Web-Technologien gewinnen alternative Ansätze an Bedeutung:
 
 \begin{itemize}
-    \item \textbf{WebAssembly (WASM)}: Ermöglicht die Ausführung von Code, der in Rust, C++ oder Go geschrieben wurde, mit nahezu nativer Performance. Besonders für algorithmisch komplexe Operationen (Pathfinding, physikalische Simulationen) könnte WASM in zukünftigen Versionen relevant werden.
+    \item \textbf{WebAssembly (WASM)}: Ermöglicht die Ausführung von Code, der in Rust, C++ oder Go geschrieben wurde, mit höherer Ausführungsgeschwindigkeit als JavaScript. Besonders für algorithmisch komplexe Operationen (Pathfinding, physikalische Simulationen) könnte WASM in zukünftigen Versionen relevant werden.
 
     \item \textbf{Hybrid-Rendering}: Die Kombination von Canvas-Rendering für Performance-kritische Elemente mit \ac{DOM}-Rendering für \ac{UI}-Komponenten, wie in Atlas \ac{VTT} praktiziert, etabliert sich als Best Practice für komplexe Web-Anwendungen.
 \end{itemize}

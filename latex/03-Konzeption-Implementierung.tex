@@ -17,7 +17,7 @@ VTTs digitalisieren klassisches Tabletop-RPG-Gameplay durch interaktive Karten, 
 
 Die Anforderungen werden nach ihrer Kritikalität für die Kern-Funktionalität in zwei Prioritätsstufen kategorisiert:
 
-\textbf{P0 (Kritisch)} umfasst Features, die in etablierten \ac{VTT}-Lösungen als unverzichtbar gelten und ohne die grundlegendes \ac{VTT}-Gameplay nicht möglich ist. Die Klassifikation als P0 erfolgt, wenn mindestens eines der folgenden Kriterien erfüllt ist: (1) Das Feature ist in allen marktführenden \ac{VTT}-Lösungen (Foundry \ac{VTT}, Roll20) als Kern-Feature implementiert\autocite{FoundryVTT2024,Roll202024}, (2) das Feature ist für die Umsetzung grundlegender D\&D 5e-Spielregeln erforderlich\autocite{DnDBasicRules2014}, oder (3) das Feature ist technisch notwendig für die Persistenz und Session-Continuity.
+\textbf{P0 (Kritisch)} umfasst Features, die in etablierten \ac{VTT}-Lösungen als grundlegend gelten und ohne die grundlegendes \ac{VTT}-Gameplay nicht möglich ist. Die Klassifikation als P0 erfolgt, wenn mindestens eines der folgenden Kriterien erfüllt ist: (1) Das Feature ist in allen marktführenden \ac{VTT}-Lösungen (Foundry \ac{VTT}, Roll20) als Kern-Feature implementiert\autocite{FoundryVTT2024,Roll202024}, (2) das Feature ist für die Umsetzung grundlegender D\&D 5e-Spielregeln erforderlich\autocite{DnDBasicRules2014}, oder (3) das Feature ist technisch notwendig für die Persistenz und Session-Continuity.
 
 \textbf{P1 (Erweitert)} umfasst Features, die die Benutzererfahrung verbessern oder Obsidian-spezifische Integration bieten, jedoch nicht für grundlegendes \ac{VTT}-Gameplay erforderlich sind. Diese Features werden oft als optionale Erweiterungen in etablierten VTTs angeboten oder dienen der Differenzierung von Atlas \ac{VTT} durch vault-native Integration.
 
@@ -27,7 +27,7 @@ Das Karten-Management bildet die Basis jeder \ac{VTT}-Session. Atlas \ac{VTT} mu
 
 Die Persistenz erfolgt durch ein benutzerdefiniertes \texttt{.atlasmap}-Dateiformat, das Map-Konfiguration und platzierte Objekte als \ac{JSON} speichert. Dies ermöglicht Session-Continuity und Integration in Obsidians Vault-Struktur. Multi-Scene-Support ermöglicht den Wechsel zwischen verschiedenen Locations innerhalb einer Kampagne.
 
-Die Anforderungen F1.1-F1.4 sind als P0 klassifiziert, da sie in beiden marktführenden \ac{VTT}-Plattformen als Kern-Features implementiert sind und ohne diese Features grundlegendes taktisches Gameplay auf Basis von D\&D 5e-Bewegungsregeln nicht möglich wäre. Die Klassifikation basiert auf folgender Feature-Analyse:
+Die Anforderungen F1.1-F1.4 sind als P0 klassifiziert, da sie in beiden etablierten \ac{VTT}-Plattformen als Kern-Features implementiert sind und ohne diese Features grundlegendes taktisches Gameplay auf Basis von D\&D 5e-Bewegungsregeln nicht möglich wäre. Die Klassifikation basiert auf folgender Feature-Analyse:
 
 \textbf{Foundry \ac{VTT}} implementiert Grid-Konfiguration mit Unterstützung für Square, Hexagonal und Gridless Layouts sowie konfigurierbarer Grid-Größe und Offset-Anpassung\autocite{FoundryScenes2024}. Map-Import erfolgt über Drag \& Drop mit Unterstützung für \ac{JPEG}, \ac{PNG} und \ac{WebP} Formate. Die Scene-Konfiguration ermöglicht präzise Anpassung von Grid-Typ, Größe und Ausrichtung, was für die korrekte Darstellung verschiedener Battle-Map-Formate erforderlich ist.
 
@@ -61,7 +61,7 @@ Tokens repräsentieren Spielfiguren, NPCs und Monster auf der Map und sind die z
 
 Erweiterte Funktionen umfassen Multi-Selection für Gruppenbewegung, Health Bar Display für visuelles \ac{HP}-Tracking und Status Icons für Conditions wie Prone oder Stunned. Die Token-Statblock Linking-Funktion ermöglicht bidirektionale Verlinkung zwischen Tokens und Markdown-basierten Character Sheets im Obsidian Vault, wodurch ein Click auf einen Token die zugehörigen Stats anzeigt. Diese Vault-native Integration unterscheidet Atlas \ac{VTT} von cloud-basierten Lösungen.
 
-Die Anforderungen F2.1-F2.5 sind als P0 klassifiziert, da sie die minimale Funktionalität für Token-basiertes Gameplay darstellen und in beiden marktführenden \ac{VTT}-Plattformen als essenzielle Features implementiert sind:
+Die Anforderungen F2.1-F2.5 sind als P0 klassifiziert, da sie die minimale Funktionalität für Token-basiertes Gameplay darstellen und in beiden etablierten \ac{VTT}-Plattformen als Kern-Features implementiert sind:
 
 \textbf{Foundry \ac{VTT}} implementiert Token-Manipulation als Kern-Feature mit folgenden Funktionen: Token Creation durch Drag \& Drop von Akteuren auf die Canvas, Placement mit präziser Positionierung über X/Y-Koordinaten, Movement mit automatischer Distanzmessung beim Ziehen, Grid-Snapping für taktische Positionierung sowie Rotation in Grad-Schritten mit Shift+WASD/Mausrad-Kontrolle\autocite{FoundryTokens2024}. Multi-Selection wird durch das Select Tokens Tool mit Shift-Click und Bounding-Box-Auswahl unterstützt.
 
@@ -96,7 +96,7 @@ Die erweiterten Features F2.6-F2.8 (Health Bars, Status Icons, Statblock-Linking
 
 Fog of War ermöglicht das Verbergen nicht-entdeckter Bereiche einer Map und ist ein Standard-Feature in VTTs wie Foundry \ac{VTT} und Roll20\autocite{FoundryScenes2024,Roll20FogOfWar2024}. Die Anforderungen umfassen das Erstellen von Fog Regions (Rectangle, Polygon), das progressive Aufdecken durch Fog Removal sowie separate Rendering-Modi: Der \ac{GM} sieht die vollständige Map (\ac{GM}-Only Preview) zur Fog-Planung, während die Player View Fog opaque rendert.
 
-Alle Fog of War-Anforderungen (F3.1-F3.4) sind als P0 klassifiziert, da Fog of War in beiden marktführenden \ac{VTT}-Plattformen als Kern-Feature für Dungeon-Exploration implementiert ist und ohne diese Funktionalität eine zentrale Mechanik des Tabletop-Gameplays -- das schrittweise Erkunden unbekannter Gebiete -- nicht umsetzbar wäre:
+Alle Fog of War-Anforderungen (F3.1-F3.4) sind als P0 klassifiziert, da Fog of War in beiden etablierten \ac{VTT}-Plattformen als Kern-Feature für Dungeon-Exploration implementiert ist und ohne diese Funktionalität eine zentrale Mechanik des Tabletop-Gameplays -- das schrittweise Erkunden unbekannter Gebiete -- nicht umsetzbar wäre:
 
 \textbf{Foundry \ac{VTT}} implementiert Fog of War als Vision-System, bei dem Fog Exploration per User-Basis getrackt und in der Datenbank persistiert wird\autocite{FoundryScenes2024}. Das System unterscheidet zwischen GM-View (vollständige Map-Sichtbarkeit für Planung) und Token-basierter Player-Vision (limitiert auf aktuell sichtbare Bereiche). Fog wird automatisch aufgedeckt, wenn Tokens mit aktivierter Vision durch Bereiche bewegen.
 
@@ -125,7 +125,7 @@ Die Unterscheidung zwischen \ac{GM}- und Player-View (F3.3, F3.4) ist technisch 
 
 Interaktive Werkzeuge unterstützen taktisches Gameplay und Map-Annotation. Das Measure Tool ermöglicht Distanzmessungen für D\&D 5e Movement und Spell Ranges. D\&D 5e definiert standardisierte Reichweiten für bestimmte Spielmechaniken, die in einem Virtual-Tabletop-System nachvollzogen werden müssen\autocite{DnDBasicRules2014}. Note Pins verlinken Map-Positionen mit Obsidian Notes und integrieren \ac{VTT}-Gameplay mit Vault Knowledge -- diese Obsidian-spezifische Integration unterscheidet Atlas \ac{VTT} von anderen \ac{VTT}-Lösungen. Drawing Tools und Text Placement ermöglichen zusätzliche Map-Annotationen.
 
-Das Measure Tool (F4.1) ist als P0 klassifiziert, da Distanzmessung für die Umsetzung der D\&D 5e-Spielregeln unverzichtbar ist: Bewegungsreichweiten, Zauberreichweiten und Waffenreichweiten sind in Fuß definiert\autocite{DnDBasicRules2014}, was präzise Grid-basierte Messung erfordert. Die Implementierung in beiden marktführenden \ac{VTT}-Plattformen als Kern-Feature bestätigt diese Einstufung:
+Das Measure Tool (F4.1) ist als P0 klassifiziert, da Distanzmessung für die Umsetzung der D\&D 5e-Spielregeln erforderlich ist: Bewegungsreichweiten, Zauberreichweiten und Waffenreichweiten sind in Fuß definiert\autocite{DnDBasicRules2014}, was präzise Grid-basierte Messung erfordert. Die Implementierung in beiden etablierten \ac{VTT}-Plattformen als Kern-Feature bestätigt diese Einstufung:
 
 \textbf{Foundry \ac{VTT}} implementiert ein Distance Measurement Ruler Tool (aktivierbar per R-Taste), das Waypoint-Unterstützung bietet: Ctrl+Click ermöglicht das Setzen mehrerer Wegpunkte für komplexe Messungen oder Elevation-Berücksichtigungen\autocite{FoundryMeasurement2024}. Das Tool unterscheidet zwischen Distance Measurement (reine Entfernung) und Token Drag Measurement (Movement Cost unter Berücksichtigung von schwierigem Terrain). Templates für Area-of-Effect-Berechnungen werden ebenfalls unterstützt (Circle, Cone, Rectangle, Ray).
 
@@ -160,7 +160,7 @@ Die nicht-funktionalen Anforderungen definieren messbare Qualitätsattribute fü
 
 \subsubsection{Performance-Anforderungen}
 
-Performance ist kritisch für flüssige Interaktionen in Desktop-Anwendungen. Nielsen beschreibt, dass Nutzer bei einer Reaktionszeit von 0,1 Sekunden (100ms) das System als augenblicklich reagierend wahrnehmen\autocite{Nielsen1993ResponseTimes}. Für Animationen und kontinuierliches Rendering gilt 60 \ac{FPS} als Desktop-Standard, während 30 \ac{FPS} als Minimum für flüssige Interaktionen definiert wird.
+Performance stellt einen zentralen Faktor für flüssige Interaktionen in Desktop-Anwendungen dar. Nielsen beschreibt, dass Nutzer bei einer Reaktionszeit von 0,1 Sekunden (100ms) das System als augenblicklich reagierend wahrnehmen\autocite{Nielsen1993ResponseTimes}. Für Animationen und kontinuierliches Rendering gilt 60 \ac{FPS} als Desktop-Standard, während 30 \ac{FPS} als Minimum für flüssige Interaktionen definiert wird.
 
 VTTs müssen große Maps und viele Tokens performant handhaben. Die PIXI.js-Dokumentation betont, dass die Szenen-Komplexität direkt die Performance beeinflusst und das System mit zunehmender Objektanzahl langsamer wird\autocite{PixiPerf2024}, was bei typischen \ac{VTT}-Szenarien mit 50-100+ Tokens bei großen Encounters relevant ist. Die Memory-Anforderungen werden durch Electron-Limits auf maximal 500 \ac{MB} für typische Szenarien begrenzt.
 
@@ -223,7 +223,7 @@ Die Architektur folgt Service-Oriented Architecture mit Event-Driven Communicati
 
 \subsubsection{Benutzerfreundlichkeit}
 
-Usability-Anforderungen fokussieren auf intuitive \ac{UI}, Keyboard Shortcuts für Power-User, Drag \& Drop für Standard-\ac{VTT}-Interaktionen und Undo/Redo (Ctrl+Z/Ctrl+Y) für Error Recovery. Die Implementierung nutzt Zustand mit Zundo für Undo/Redo-Funktionalität, React-DnD für Drag \& Drop und eine Toolbar mit Tool-Modus-Switching. Das Ziel ist, dass Game Masters ohne Tutorial mit dem System arbeiten können, was niedrige Einstiegshürden voraussetzt.
+Usability-Anforderungen fokussieren auf eine benutzerfreundliche \ac{UI}, Keyboard Shortcuts für Power-User, Drag \& Drop für Standard-\ac{VTT}-Interaktionen und Undo/Redo (Ctrl+Z/Ctrl+Y) für Error Recovery. Die Implementierung nutzt Zustand mit Zundo für Undo/Redo-Funktionalität, React-DnD für Drag \& Drop und eine Toolbar mit Tool-Modus-Switching. Das Ziel ist, dass Game Masters ohne Tutorial mit dem System arbeiten können, was niedrige Einstiegshürden voraussetzt.
 
 \section{Systemdesign}
 \label{sec:Systemdesign}
@@ -404,9 +404,9 @@ Asset-Metadaten werden vault-wide in \texttt{assets-metadata.json} gespeichert, 
 }
 \end{lstlisting}
 
-Die Entscheidung für eine zentrale Metadata-Datei statt verteilter Metadaten (z.B. Sidecar-Files pro Asset) wurde durch eine zentrale Anforderung motiviert: Asset-Metadaten müssen vault-weit konsistent sein, sodass die Verlinkung eines Tokens zu einem Statblock über alle Maps hinweg identisch bleibt. Eine dezentrale Lösung würde bei Änderungen (z.B. Statblock-Link-Update) alle Maps durchsuchen und aktualisieren müssen, was bei großen Vaults mit vielen Maps zu erheblichen Performance-Problemen führen würde, da jede Änderung alle Map-Dateien lesen und schreiben müsste. Die zentrale Lösung ermöglicht direkten Zugriff auf Metadaten über \texttt{AssetService} als Singleton, ohne dass Maps durchsucht werden müssen.
+Die Entscheidung für eine zentrale Metadata-Datei statt verteilter Metadaten (z.B. Sidecar-Files pro Asset) wurde durch eine zentrale Anforderung motiviert: Asset-Metadaten müssen vault-weit konsistent sein, sodass die Verlinkung eines Tokens zu einem Statblock über alle Maps hinweg identisch bleibt. Eine dezentrale Lösung würde bei Änderungen (z.B. Statblock-Link-Update) alle Maps durchsuchen und aktualisieren müssen, was bei großen Vaults mit vielen Maps zu Performance-Problemen führen würde, da jede Änderung alle Map-Dateien lesen und schreiben müsste. Die zentrale Lösung ermöglicht direkten Zugriff auf Metadaten über \texttt{AssetService} als Singleton, ohne dass Maps durchsucht werden müssen.
 
-Der Trade-off ist Skalierbarkeit: Bei sehr großen Vaults (>10.000 Assets) kann das Laden der gesamten Metadata-Datei Memory-intensiv werden. Für typische \ac{VTT}-Vaults mit 100-500 Assets ist dieser Overhead vernachlässigbar (ca. 50--250 \ac{KB} \ac{JSON}).
+Der Trade-off ist Skalierbarkeit: Bei sehr großen Vaults (>10.000 Assets) kann das Laden der gesamten Metadata-Datei Memory-intensiv werden. Für typische \ac{VTT}-Vaults mit 100-500 Assets bleibt dieser Overhead gering (ca. 50--250 \ac{KB} \ac{JSON}).
 
 \paragraph{Singleton AssetService}
 
@@ -544,7 +544,7 @@ Die folgenden Abschnitte beschreiben vier zentrale Features von Atlas \ac{VTT}, 
 
 \subsubsection{Anforderungen und Kontext}
 
-Die Wahl des Rendering-Frameworks ist die grundlegendste technische Entscheidung für ein \ac{VTT}-Plugin. Ein \ac{VTT} muss viele interaktive Objekte gleichzeitig darstellen. Die PIXI.js-Dokumentation definiert einen Performance-kritischen Schwellenwert bei Hunderten komplexer Graphics-Objekte\autocite{PixiPerf2024}. Die Electron-Plattform von Obsidian bietet sowohl HTML5 Canvas 2D als auch \ac{WebGL}-Unterstützung, wodurch grundsätzlich verschiedene Rendering-Ansätze möglich sind.
+Die Wahl des Rendering-Frameworks ist die grundlegendste technische Entscheidung für ein \ac{VTT}-Plugin. Ein \ac{VTT} muss viele interaktive Objekte gleichzeitig darstellen. Die PIXI.js-Dokumentation definiert einen Performance-kritischen Schwellenwert bei Hunderten komplexer Graphics-Objekte\autocite{PixiPerf2024}. Die Electron-Plattform von Obsidian bietet sowohl HTML5-Canvas-2D als auch \ac{WebGL}-Unterstützung, wodurch grundsätzlich verschiedene Rendering-Ansätze möglich sind.
 
 Basierend auf etablierten \ac{UI}-Performance-Standards wurden folgende Anforderungen definiert: Die Rendering-Performance sollte eine responsive Benutzeroberfläche mit 60 Frames pro Sekunde ermöglichen\autocite{MDNAnimPerf2024}, wobei als Minimum-Schwellenwert für flüssige Animationen 30 \ac{FPS} angesetzt wird. Für Benutzerinteraktionen gilt der HCI-Standard, dass Systeme innerhalb von 0,1 Sekunden (100ms) reagieren sollten, damit Nutzer das System als augenblicklich reagierend wahrnehmen\autocite{Nielsen1993ResponseTimes}. Zusätzlich muss das Framework Unterstützung für Transformationen (Rotation, Skalierung, Transparenz) sowie ein Event-System für Interaktivität mit den gerenderten Objekten bieten.
 
@@ -552,17 +552,17 @@ Basierend auf etablierten \ac{UI}-Performance-Standards wurden folgende Anforder
 
 Für die Evaluation wurden drei JavaScript-Rendering-Frameworks anhand veröffentlichter Benchmarks und technischer Dokumentation verglichen:
 
-\textbf{Konva.js} basiert auf der Canvas 2D \ac{API} und bietet eine einfache, deklarative \ac{API} für interaktive Grafiken. In Performance-Benchmarks mit 8000 Objekten erreichte Konva.js durchschnittlich 23 \ac{FPS} in Chrome auf einem MacBook Pro 2019\autocite{Canvas2025}. Die Hauptlimitation besteht darin, dass Konva.js keine native \ac{WebGL}-Hardware-Beschleunigung nutzt und stattdessen ausschließlich auf der Canvas 2D \ac{API} aufsetzt, was bei mehr als 100 gleichzeitigen Objekten zu Performance-Problemen führt.
+\textbf{Konva.js} basiert auf der Canvas-2D-\ac{API} und bietet eine einfache, deklarative \ac{API} für interaktive Grafiken. In Performance-Benchmarks mit 8000 Objekten erreichte Konva.js durchschnittlich 23 \ac{FPS} in Chrome auf einem MacBook Pro 2019\autocite{Canvas2025}. Die Hauptlimitation besteht darin, dass Konva.js keine native \ac{WebGL}-Hardware-Beschleunigung nutzt und stattdessen ausschließlich auf der Canvas-2D-\ac{API} aufsetzt, was bei mehr als 100 gleichzeitigen Objekten zu Performance-Problemen führt.
 
-\textbf{Fabric.js} verfolgt einen ähnlichen Ansatz wie Konva.js mit Fokus auf Objekt-Manipulation, nutzt jedoch ebenfalls nur Canvas 2D. Zum Zeitpunkt der Evaluation (Stand 2025) war \ac{WebGL}-Unterstützung für Fabric.js noch nicht implementiert und befand sich laut Community-Diskussionen lediglich auf der Roadmap\autocite{FabricJSWebGL2025}. Die Performance-Charakteristiken sind daher vergleichbar mit Konva.js.
+\textbf{Fabric.js} verfolgt einen ähnlichen Ansatz wie Konva.js mit Fokus auf Objekt-Manipulation, nutzt jedoch ebenfalls nur Canvas-2D. Zum Zeitpunkt der Evaluation (Stand 2025) war \ac{WebGL}-Unterstützung für Fabric.js noch nicht implementiert und befand sich laut Community-Diskussionen lediglich auf der Roadmap\autocite{FabricJSWebGL2025}. Die Performance-Charakteristiken sind daher vergleichbar mit Konva.js.
 
-\textbf{PIXI.js} ist eine \ac{WebGL}-basierte 2D-Rendering-Engine mit optionalem Canvas 2D Fallback. In denselben Benchmarks erreichte PIXI.js 60 \ac{FPS} bei 8000 Objekten in Chrome\autocite{Canvas2025}, was einer 2-3-fachen Performance-Steigerung gegenüber Canvas 2D Frameworks entspricht. PIXI.js bietet \ac{GPU}-Memory-Management, Sprite Batching (bis zu 16 Textures pro Draw Call) und optionales Culling nicht-sichtbarer Objekte (via \texttt{cullable}-Property)\autocite{PixiPerf2024}. Zudem wird PIXI.js von Foundry \ac{VTT}, dem marktführenden Virtual Tabletop Tool, als Rendering-Engine eingesetzt\autocite{FoundryFrameworks2024}, was die Eignung für \ac{VTT}-Anwendungen unter Beweis stellt.
+\textbf{PIXI.js} ist eine \ac{WebGL}-basierte 2D-Rendering-Engine mit optionalem Canvas-2D-Fallback. In denselben Benchmarks erreichte PIXI.js 60 \ac{FPS} bei 8000 Objekten in Chrome\autocite{Canvas2025}, was einer 2-3-fachen Performance-Steigerung gegenüber Canvas-2D-Frameworks entspricht. PIXI.js bietet \ac{GPU}-Memory-Management, Sprite Batching (bis zu 16 Textures pro Draw-Call) und optionales Culling nicht-sichtbarer Objekte (via \texttt{cullable}-Property)\autocite{PixiPerf2024}. Zudem wird PIXI.js von Foundry \ac{VTT}, einem etablierten Virtual-Tabletop-Tool, als Rendering-Engine eingesetzt\autocite{FoundryFrameworks2024}, was die Eignung für \ac{VTT}-Anwendungen belegt.
 
 \paragraph{Framework-Vergleich und Entscheidung}
 
-Ein unabhängiger Benchmark vergleicht die Performance der drei Frameworks durch Rendering von 8000 bewegten Rechtecken auf einem MacBook Pro 2019 in Chrome\autocite{Canvas2025}. Die gemessenen Frame-Raten sind: PIXI.js 60 \ac{FPS}, Konva.js 23 \ac{FPS}, Fabric.js 9 \ac{FPS}. Obwohl dieser Test ein Extremszenario darstellt (\ac{VTT}-Anforderungen liegen bei 20-100 Token), zeigt er deutliche Performance-Unterschiede zwischen \ac{WebGL}-basierten (PIXI.js) und Canvas 2D-basierten Frameworks (Konva.js, Fabric.js).
+Ein unabhängiger Benchmark vergleicht die Performance der drei Frameworks durch Rendering von 8000 bewegten Rechtecken auf einem MacBook Pro 2019 in Chrome\autocite{Canvas2025}. Die gemessenen Frame-Raten sind: PIXI.js 60 \ac{FPS}, Konva.js 23 \ac{FPS}, Fabric.js 9 \ac{FPS}. Obwohl dieser Test ein Extremszenario darstellt (\ac{VTT}-Anforderungen liegen bei 20-100 Token), zeigt er deutliche Performance-Unterschiede zwischen \ac{WebGL}-basierten (PIXI.js) und Canvas-2D-basierten Frameworks (Konva.js, Fabric.js).
 
-Foundry \ac{VTT}, das etablierte Virtual Tabletop Tool, nutzt PIXI.js als Rendering-Engine\autocite{FoundryVTTWiki2024}, was die praktische Eignung für \ac{VTT}-Anwendungen validiert. Basierend auf der überlegenen Performance und der \ac{WebGL}-Hardware-Beschleunigung wurde PIXI.js als Rendering-Framework gewählt.
+Foundry \ac{VTT}, ein etabliertes Virtual-Tabletop-Tool, nutzt PIXI.js als Rendering-Engine\autocite{FoundryVTTWiki2024}, was die praktische Eignung für \ac{VTT}-Anwendungen validiert. Basierend auf der in den Benchmarks gemessenen höheren Performance (60 \ac{FPS} vs. 23 \ac{FPS} bei 8000 Objekten) und der \ac{WebGL}-Hardware-Beschleunigung wurde PIXI.js als Rendering-Framework gewählt.
 
 \subsubsection{Wahl von PIXI.js Version 8}
 
@@ -574,7 +574,7 @@ Diese Entscheidung ermöglicht die sofortige Nutzung von v8-Features, während F
 
 Basierend auf der PIXI.js Performance-Dokumentation\autocite{PixiPerf2024} wurden vier zentrale Optimierungstechniken für die Implementierung identifiziert:
 
-\textbf{Culling} reduziert die \ac{CPU}-Last durch Überspringen nicht-sichtbarer Objekte im Render-Loop. PIXI.js bietet hierfür die \texttt{cullable}-Property, die Container-Objekte nur dann rendert, wenn sie sich im definierten sichtbaren Bereich befinden.
+\textbf{Culling} reduziert die Render-Last durch Überspringen nicht-sichtbarer Objekte. PIXI.js bietet hierfür die \texttt{cullable}-Property, die Container-Objekte nur dann rendert, wenn sie sich im definierten sichtbaren Bereich befinden. Laut PIXI.js-Dokumentation ist Culling besonders effektiv bei \ac{GPU}-gebundenen Anwendungen, kann jedoch bei \ac{CPU}-gebundenen Szenarien die Performance verschlechtern\autocite{PixiPerf2024}.
 
 \textbf{Sprite Batching} wird automatisch von PIXI.js durchgeführt und bündelt bis zu 16 Textures in einem \ac{GPU}-Draw-Call\autocite{PixiPerf2024}, wodurch der \ac{GPU}-Overhead reduziert wird. Dies ist besonders relevant für VTTs, da Token häufig unterschiedliche Texturen verwenden.
 
@@ -584,16 +584,16 @@ Basierend auf der PIXI.js Performance-Dokumentation\autocite{PixiPerf2024} wurde
 
 \subsubsection{Erwartete Trade-offs}
 
-Die Entscheidung für PIXI.js bringt spezifische Trade-offs mit sich: Während Canvas 2D Frameworks wie Konva.js eine einfachere \ac{API} mit schnellerem Einstieg bieten, erfordert PIXI.js tieferes Verständnis von \ac{WebGL}-Konzepten und führt zu erhöhtem Code-Aufwand für einfache Operationen. Beispielsweise benötigt das Zeichnen einer einfachen Form in Konva.js weniger Code als in PIXI.js.
+Die Entscheidung für PIXI.js bringt spezifische Trade-offs mit sich: Während Canvas-2D-Frameworks wie Konva.js eine einfachere \ac{API} mit schnellerem Einstieg bieten, erfordert PIXI.js tieferes Verständnis von \ac{WebGL}-Konzepten und führt zu erhöhtem Code-Aufwand für einfache Operationen. Beispielsweise benötigt das Zeichnen einer einfachen Form in Konva.js weniger Code als in PIXI.js.
 
-Der zentrale Vorteil von PIXI.js liegt in der \ac{WebGL}-Hardware-Beschleunigung, die laut den evaluierten Benchmarks bei objektreichen Szenarien (wie sie für VTTs typisch sind) deutlich bessere Performance ermöglicht. Da Virtual Tabletops regelmäßig 50-100+ Objekte gleichzeitig darstellen müssen, wurde der höhere Entwicklungsaufwand als akzeptabler Trade-off für die erwartete Performance-Verbesserung bewertet. Die tatsächliche Performance-Validierung dieser Entscheidung erfolgt in \autoref{sec:evaluation}.
+Der zentrale Vorteil von PIXI.js liegt in der \ac{WebGL}-Hardware-Beschleunigung, die laut den evaluierten Benchmarks bei objektreichen Szenarien (wie sie für VTTs typisch sind) höhere Frame-Raten ermöglicht (60 \ac{FPS} gegenüber 23 \ac{FPS} bei Konva.js). Da Virtual-Tabletops regelmäßig 50-100+ Objekte gleichzeitig darstellen müssen, wurde der höhere Entwicklungsaufwand als akzeptabler Trade-off für die erwartete Performance-Verbesserung bewertet. Die tatsächliche Performance-Validierung dieser Entscheidung erfolgt in \autoref{sec:evaluation}.
 
-\subsection{Grid System: Performance-Optimierung durch Draw Call Reduktion}
+\subsection{Grid System: Performance-Optimierung durch Draw-Call-Reduktion}
 \label{subsec:grid-system}
 
 \subsubsection{Problem und ursprüngliche Implementierung}
 
-Das Grid-System ist ein fundamentales \ac{VTT}-Feature, das ein Raster für taktische Bewegung und Entfernungsmessung bereitstellt. In D\&D 5e entspricht dabei typischerweise ein Quadrat 5 Fuß realer Distanz\autocite{DnDBasicRules2014}. Da das Grid permanent als Overlay über der Map sichtbar ist und bei jedem Frame neu gerendert werden muss, ist es performance-kritisch.
+Das Grid-System ist ein fundamentales \ac{VTT}-Feature, das ein Raster für taktische Bewegung und Entfernungsmessung bereitstellt. In D\&D 5e entspricht dabei typischerweise ein Quadrat 5 Fuß realer Distanz\autocite{DnDBasicRules2014}. Da das Grid permanent als Overlay über der Map sichtbar ist und bei jedem Frame neu gerendert werden muss, ist es performancekritisch.
 
 Die ursprüngliche Implementierung zeichnete jede Grid-Linie individuell mit PIXI.js Graphics:
 
@@ -609,23 +609,23 @@ for (let y = 0; y < mapHeight; y += gridSize) {
 }
 \end{lstlisting}
 
-Bei einer 4096×4096 Pixel Map mit 64 Pixel Grid-Größe resultierte dies in über 1000 Draw Calls (64 vertikale + 64 horizontale Linien). Chrome DevTools Performance-Profiling zeigte einen \ac{FPS}-Einbruch von 60 auf 42 \ac{FPS} bei großen Maps sowie 20 \ac{MB} \ac{GPU}-Memory-Verbrauch durch Texture-Baking. Das Skalierungsverhalten war quadratisch zur Map-Größe, was für hochauflösende \ac{VTT}-Maps inakzeptabel war.
+Bei einer 4096×4096 Pixel Map mit 64 Pixel Grid-Größe resultierte dies in über 1000 Draw-Calls (64 vertikale + 64 horizontale Linien). Chrome DevTools Performance-Profiling zeigte einen \ac{FPS}-Einbruch von 60 auf 42 \ac{FPS} bei großen Maps sowie 20 \ac{MB} \ac{GPU}-Memory-Verbrauch durch Texture-Baking. Das Skalierungsverhalten war quadratisch zur Map-Größe, was für hochauflösende \ac{VTT}-Maps nicht praktikabel war.
 
 \subsubsection{Research und Evaluation von Optimierungsansätzen}
 
 Für die Optimierung wurden drei Ansätze evaluiert:
 
-\textbf{Ansatz 1: Individuelle Linien (Status Quo)} zeichnet jede Linie separat. Der Vorteil liegt in der Flexibilität, jedoch führen hunderte Draw Calls zu schlechter Performance. Dieser Ansatz wurde als nicht skalierbar verworfen.
+\textbf{Ansatz 1: Individuelle Linien (Status Quo)} zeichnet jede Linie separat. Der Vorteil liegt in der Flexibilität, jedoch führen hunderte Draw-Calls zu schlechter Performance. Dieser Ansatz wurde als nicht skalierbar verworfen.
 
-\textbf{Ansatz 2: Graphics Texture Baking} rendert das Grid einmalig in eine Texture, die dann als Sprite dargestellt wird. Dies reduziert Draw Calls zur Laufzeit, verursacht jedoch hohen \ac{GPU}-Memory-Verbrauch (20 \ac{MB} bei 4096×4096 Pixel Map), da die gesamte Map-Fläche als \ac{RGBA}-Texture gespeichert werden muss.
+\textbf{Ansatz 2: Graphics Texture Baking} rendert das Grid einmalig in eine Texture, die dann als Sprite dargestellt wird. Dies reduziert Draw-Calls zur Laufzeit, verursacht jedoch hohen \ac{GPU}-Memory-Verbrauch (20 \ac{MB} bei 4096×4096 Pixel Map), da die gesamte Map-Fläche als \ac{RGBA}-Texture gespeichert werden muss.
 
-\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature\autocite{PixiTilingSprite2024}. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Eigene Messungen zeigten nur 64 \ac{KB} \ac{GPU}-Memory-Verbrauch bei einem einzigen Draw Call.
+\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature\autocite{PixiTilingSprite2024}. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Eigene Messungen zeigten nur 64 \ac{KB} \ac{GPU}-Memory-Verbrauch bei einem einzigen Draw-Call.
 
-Foundry \ac{VTT}, als etablierter \ac{VTT}-Standard, nutzt TilingSprite für Grid-Rendering\autocite{FoundryGridDocs2024}, was die Eignung dieser Methode für \ac{VTT}-Anwendungen bestätigt. Der Ansatz reduziert Draw Calls auf 1 und nutzt natives \ac{GPU}-Texture-Tiling.
+TilingSprite wurde gewählt, da es die \ac{GPU}-Hardware optimal ausnutzt: Anstatt das gesamte Grid im Speicher vorzuhalten, wird ein einzelnes Pattern durch native Texture-Sampling-Operationen wiederholt\autocite{PixiTilingSprite2024}. Dies reduziert Draw-Calls auf 1 und delegiert die Wiederholungslogik an die \ac{GPU}, die für solche Operationen optimiert ist.
 
 \subsubsection{Entscheidung und Implementierung}
 
-Basierend auf der Evaluation wurde TilingSprite gewählt, da es Draw Calls um 99,9\% reduziert (1000 → 1), \ac{GPU}-Memory um 99,7\% senkt (20 \ac{MB} → 64 \ac{KB}) und laut Profiling zu 40\% höheren \ac{FPS} führt. Die Einschränkung, Power-of-Two Textures nutzen zu müssen, wurde als akzeptabel bewertet, da \ac{GPU}-Hardware für Texture-Größen wie 64×64, 128×128 oder 256×256 Pixel optimiert ist\autocite{PixiTexture2024}.
+Basierend auf der Evaluation wurde TilingSprite gewählt, da es Draw-Calls um 99,9\% reduziert (1000 → 1), \ac{GPU}-Memory um 99,7\% senkt (20 \ac{MB} → 64 \ac{KB}) und laut Profiling zu 40\% höheren \ac{FPS} führt. Die Einschränkung, Power-of-Two Textures nutzen zu müssen, wurde als akzeptabel bewertet, da \ac{GPU}-Hardware für Texture-Größen wie 64×64, 128×128 oder 256×256 Pixel optimiert ist\autocite{PixiTexture2024}.
 
 Die Implementierung erfolgte in zwei Schritten:
 
@@ -651,7 +651,7 @@ function generateGridTexture(gridSize: number): Texture {
 
 \textbf{Schritt 2: TilingSprite-Anwendung} verwendet die erzeugte Texture:
 
-\begin{lstlisting}[language=TypeScript,caption={Grid-Rendering mit TilingSprite (1 Draw Call)},label=lst:grid-tilingsprite]
+\begin{lstlisting}[language=TypeScript,caption={Grid-Rendering mit TilingSprite (1 Draw-Call)},label=lst:grid-tilingsprite]
 // src/app/pixi/grids/square-grid.ts:123
 const gridTexture = generateGridTexture(gridSize);
 const tilingSprite = new TilingSprite({
@@ -677,7 +677,7 @@ Die Performance-Verbesserungen wurden durch Chrome DevTools Performance-Profilin
 		\toprule
 		\textbf{Metrik}     & \textbf{Vorher} & \textbf{Nachher} & \textbf{Verbesserung} \\
 		\midrule
-		Draw Calls (4K Map) & 1000            & 1                & -99,9\%               \\
+		Draw-Calls (4K Map) & 1000            & 1                & -99,9\%               \\
 		\ac{GPU} Memory          & 20 \ac{MB}           & 64 \ac{KB}            & -99,7\%               \\
 		\ac{FPS} (4096×4096 Map) & 42 \ac{FPS}          & 60 \ac{FPS}           & +43\%                 \\
 		\ac{FPS} (2048×2048 Map) & 55 \ac{FPS}          & 60 \ac{FPS}           & +9\%                  \\
@@ -686,23 +686,23 @@ Die Performance-Verbesserungen wurden durch Chrome DevTools Performance-Profilin
 	\end{tabularx}
 \end{table}
 
-Die Messungen erfolgten auf einem MacBook Pro 2019 mit Chrome 120. Das Test-Setup umfasste eine 4096×4096 Pixel Map mit 64 Pixel Grid-Größe, was 64×64 = 4096 Grid-Quadraten entspricht. Die \ac{FPS}-Verbesserung ist bei großen Maps stärker ausgeprägt, da dort die Draw Call Reduktion den größten Einfluss hat.
+Die Messungen erfolgten auf einem MacBook Pro 2019 mit Chrome 120. Das Test-Setup umfasste eine 4096$\times$4096-Pixel-Map mit 64-Pixel-Grid-Größe, was 64$\times$64 = 4096 Grid-Quadraten entspricht. Die \ac{FPS}-Verbesserung ist bei großen Maps stärker ausgeprägt, da dort die Draw-Call-Reduktion den größten Einfluss hat.
 
-Der Trade-off dieser Optimierung liegt in der Notwendigkeit, Power-of-Two Textures zu verwenden, was bei ungewöhnlichen Grid-Größen zu minimalem Memory-Overhead führen kann (z.B. wird eine 80×80 Pixel Texture auf 128×128 Pixel aufgerundet). Dieser Overhead ist jedoch vernachlässigbar im Vergleich zur ursprünglichen Implementierung und die Performance-Vorteile überwiegen deutlich. Detaillierte Performance-Validierung erfolgt in \autoref{sec:evaluation}.
+Der Trade-off dieser Optimierung liegt in der Notwendigkeit, Power-of-Two-Textures zu verwenden, was bei ungewöhnlichen Grid-Größen zu minimalem Memory-Overhead führen kann (z.B. wird eine 80$\times$80-Pixel-Texture auf 128$\times$128 Pixel aufgerundet). Dieser Overhead ist jedoch gering im Vergleich zur ursprünglichen Implementierung (64 \ac{KB} vs. 20 \ac{MB}) und die Performance-Vorteile überwiegen. Detaillierte Performance-Validierung erfolgt in \autoref{sec:evaluation}.
 
 \subsection{Token Management: Performance-Optimierung bei vielen Objekten}
 \label{subsec:token-management}
 
-Tokens sind die zentralen interaktiven Objekte in einem Virtual Tabletop und repräsentieren Spielfiguren, NPCs und Monster auf der Map\autocite{FoundryTokens2024}. Im Gegensatz zu statischen Elementen wie dem Grid oder der Map müssen Tokens hochgradig interaktiv sein (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendern (Avatar-Bild, Health Bar, Status-Icons, Labels). Die Performance-Herausforderung entsteht durch die Notwendigkeit, viele solcher Objekte gleichzeitig darzustellen: Typische Spielsitzungen enthalten 8-15 Tokens, während größere Encounters mit 50-100+ Tokens vorkommen können. Die PIXI.js-Dokumentation warnt explizit, dass das System langsamer wird, je mehr Objekte hinzugefügt werden\autocite{PixiPerf2024}, was die Notwendigkeit systematischer Performance-Optimierung bei objektreichen Szenarien unterstreicht.
+Tokens sind die zentralen interaktiven Objekte in einem Virtual-Tabletop und repräsentieren Spielfiguren, NPCs und Monster auf der Map\autocite{FoundryTokens2024}. Im Gegensatz zu statischen Elementen wie dem Grid oder der Map müssen Tokens hochgradig interaktiv sein (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendern (Avatar-Bild, Health Bar, Status-Icons, Labels). Die Performance-Herausforderung entsteht durch die Notwendigkeit, viele solcher Objekte gleichzeitig darzustellen: Typische Spielsitzungen enthalten 8--15 Tokens, während größere Encounters mit 50--100+ Tokens vorkommen können. Die PIXI.js-Dokumentation warnt explizit, dass das System langsamer wird, je mehr Objekte hinzugefügt werden\autocite{PixiPerf2024}, was die Notwendigkeit systematischer Performance-Optimierung bei objektreichen Szenarien unterstreicht.
 
 \subsubsection{Problem: Performance bei objektreichen Szenarien}
 
 Token-Rendering in objektreichen Szenarien stellt besondere Performance-Anforderungen: Während jeder Token hochgradig interaktiv sein muss (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendert (Avatar-Bild, Health Bar, Status-Icons), können in großen Encounters bis zu 100+ Tokens gleichzeitig auf der Map existieren. Die PIXI.js-Dokumentation betont, dass zunehmende Szenen-Komplexität die Performance direkt beeinflusst\autocite{PixiPerf2024}, was die Relevanz dieser Problemstellung unterstreicht. Eine naive Implementierung, die alle Tokens durchgehend rendert und keine Optimierungsstrategien implementiert, würde mehrere Performance-Probleme aufweisen:
 
 \begin{itemize}
-	\item \textbf{Fehlende Culling-Strategie}: Bei großen Maps mit vielen off-screen Tokens würde das Rendering aller Objekte zu unnötiger \ac{CPU}- und \ac{GPU}-Last führen. Die PIXI.js-Dokumentation empfiehlt, Culling auf Anwendungsebene zu implementieren oder durch \texttt{cullable = true} zu aktivieren\autocite{PixiPerf2024}.
+	\item \textbf{Fehlende Culling-Strategie}: Bei großen Maps mit vielen Off-Screen-Tokens würde das Rendering aller Objekte zu unnötiger \ac{CPU}- und \ac{GPU}-Last führen. Die PIXI.js-Dokumentation empfiehlt, Culling auf Anwendungsebene zu implementieren oder durch \texttt{cullable = true} zu aktivieren\autocite{PixiPerf2024}.
 
-	\item \textbf{Kein Object Pooling}: Die kontinuierliche Erstellung neuer Sprite-Instanzen würde zu häufigen Garbage Collection Zyklen und instabilen Frame-Times führen. Object Pooling ist eine etablierte Technik zur Reduktion von \ac{GC}-Pressure in JavaScript-basierten Rendering-Engines\autocite{PixiPool2024}.
+	\item \textbf{Kein Object Pooling}: Die kontinuierliche Erstellung neuer Sprite-Instanzen würde zu häufigen Garbage-Collection-Zyklen und instabilen Frame-Times führen. Object Pooling ist eine etablierte Technik zur Reduktion von \ac{GC}-Pressure in JavaScript-basierten Rendering-Engines\autocite{PixiPool2024}.
 
 	\item \textbf{Ineffiziente Texture-Verwaltung}: Ohne Caching-Strategie würde die wiederholte Verwendung desselben Token-Avatars zu redundanten \ac{I/O}-Operationen führen, was besonders bei großen Avatar-Texturen performance-kritisch ist.
 \end{itemize}
@@ -727,11 +727,11 @@ Diese Technik reduziert \ac{CPU}-Zeit für nicht-sichtbare Objekte, ohne dass ma
 
 \paragraph{Sprite Batching}
 
-PIXI.js v8's Batch Renderer kann bis zu 16 Textures in einem einzigen Draw Call bündeln, wodurch \ac{GPU}-Overhead drastisch reduziert wird\autocite{PixiBatch2024}. Dieser Prozess erfolgt automatisch, solange alle Sprites denselben Blend-Mode verwenden. Für Token-Rendering bedeutet dies, dass bis zu 16 verschiedene Token-Avatare in einem Draw Call gerendert werden können, statt für jedes Token einen separaten Draw Call zu benötigen.
+PIXI.js v8's Batch Renderer kann bis zu 16 Textures in einem einzigen Draw-Call bündeln, wodurch \ac{GPU}-Overhead drastisch reduziert wird\autocite{PixiBatch2024}. Dieser Prozess erfolgt automatisch, solange alle Sprites denselben Blend-Mode verwenden. Für Token-Rendering bedeutet dies, dass bis zu 16 verschiedene Token-Avatare in einem Draw-Call gerendert werden können, statt für jedes Token einen separaten Draw-Call zu benötigen.
 
 \paragraph{Object Pooling}
 
-Object Pooling ist eine Technik zur Reduktion von Garbage Collection Pressure. Statt bei jedem Frame neue Sprite-Instanzen zu erstellen und alte zu verwerfen, werden Sprites wiederverwendet. Das \texttt{@pixi-essentials/object-pool}-Paket bietet eine fertige Implementierung dieses Patterns\autocite{PixiPool2024}:
+Object Pooling ist eine Technik zur Reduktion von Garbage-Collection-Pressure. Statt bei jedem Frame neue Sprite-Instanzen zu erstellen und alte zu verwerfen, werden Sprites wiederverwendet. Das \texttt{@pixi-essentials/object-pool}-Paket bietet eine fertige Implementierung dieses Patterns\autocite{PixiPool2024}:
 
 \begin{lstlisting}[language=TypeScript,caption={Object Pooling mit @pixi-essentials},label=lst:object-pooling]
 import { ObjectPool } from '@pixi-essentials/object-pool';
@@ -762,13 +762,13 @@ Diese Optimierungstechniken entsprechen den Best Practices der PIXI.js-Community
 Die Implementierung kombiniert alle vier recherchierten Techniken, da sie komplementäre Performance-Vorteile bieten:
 
 \begin{itemize}
-	\item \textbf{Culling} reduziert \ac{CPU}-Last für nicht-sichtbare Tokens
-	\item \textbf{Batching} reduziert \ac{GPU}-Overhead durch Draw Call Reduktion
+	\item \textbf{Culling} reduziert Render-Operationen für nicht-sichtbare Tokens
+	\item \textbf{Batching} reduziert \ac{GPU}-Overhead durch Draw-Call-Reduktion
 	\item \textbf{Texture Caching} vermeidet redundante \ac{I/O}-Operationen
 	\item \textbf{Object Pooling} stabilisiert Frame-Times durch \ac{GC}-Reduktion
 \end{itemize}
 
-Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle in modulare Sub-Komponenten strukturiert:
+Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle in modulare Subkomponenten strukturiert:
 
 \begin{itemize}
 	\item \textbf{TokenRenderer}: Zentrale Orchestrierung und Koordination des Token-Renderings
@@ -837,7 +837,7 @@ Texture-Caching erfolgt über eine dedizierte \texttt{TextureCache}-Klasse, die 
 Die implementierte Multi-Layered-Optimization-Strategie bringt folgende Design-Trade-offs mit sich:
 
 \begin{itemize}
-	\item \textbf{Code-Komplexität}: Object Pooling erfordert sorgfältiges State Management, da Sprites korrekt zurückgesetzt werden müssen, um unerwünschte Seiteneffekte zu vermeiden.
+	\item \textbf{Code-Komplexität}: Object Pooling erfordert sorgfältiges State-Management, da Sprites korrekt zurückgesetzt werden müssen, um unerwünschte Seiteneffekte zu vermeiden.
 	\item \textbf{Memory-Overhead}: Der Texture-Cache hält Texturen im Speicher, was bei vielen unterschiedlichen Token-Avataren zu erhöhtem Memory-Footprint führen kann.
 	\item \textbf{Wartbarkeit}: Die modulare Architektur mit dedizierten Komponenten für Pooling, Caching und Culling erleichtert die Wartung und zukünftige Erweiterungen.
 \end{itemize}
