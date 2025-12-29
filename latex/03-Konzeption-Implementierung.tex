@@ -188,7 +188,7 @@ Die Messung erfolgt durch Chrome DevTools Performance Profiler und standardisier
 
 \subsubsection{Skalierbarkeit}
 
-Skalierbarkeits-Anforderungen definieren die Grenzen für Token Count, Map Size und Asset Library. Stress-Test-Szenarien mit 100+ Tokens bei mindestens 30 \ac{FPS} simulieren große D\&D-Encounters. Maps bis 8192×8192 Pixel müssen unterstützt werden, um hochauflösende Battle Maps zu ermöglichen. Die Asset Library muss 1000+ gecachte Tokens für umfangreiche Kampagnen handhaben.
+Skalierbarkeits-Anforderungen definieren die Grenzen für Token Count, Map Size und Asset Library. Stress-Test-Szenarien mit 100+ Tokens bei mindestens 30 \ac{FPS} simulieren große D\&D-Encounters. Zur Validierung der Performance wurde eine Testauflösung von 4096×4096 Pixel gewählt. Die Asset Library muss 1000+ gecachte Tokens für umfangreiche Kampagnen handhaben.
 
 Die technische Strategie zur Erreichung dieser Skalierbarkeit basiert auf etablierten Performance Best Practices: Culling für Off-Screen-Objekte und Texture Caching für wiederverwendete Assets\autocite{PixiPerf2024}, sowie Power-of-Two Textures für \ac{GPU}-Optimierung\autocite{PixiTexture2024}. Die PIXI.js-Dokumentation warnt explizit, dass die Verwendung von Hunderten komplexen Graphics-Objekten langsam sein kann, was Object Pooling und Culling-Strategien erforderlich macht.
 
@@ -619,13 +619,13 @@ Für die Optimierung wurden drei Ansätze evaluiert:
 
 \textbf{Ansatz 2: Graphics Texture Baking} rendert das Grid einmalig in eine Texture, die dann als Sprite dargestellt wird. Dies reduziert Draw-Calls zur Laufzeit, verursacht jedoch hohen \ac{GPU}-Memory-Verbrauch (20 \ac{MB} bei 4096×4096 Pixel Map), da die gesamte Map-Fläche als \ac{RGBA}-Texture gespeichert werden muss.
 
-\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature\autocite{PixiTilingSprite2024}. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Eigene Messungen zeigten nur 64 \ac{KB} \ac{GPU}-Memory-Verbrauch bei einem einzigen Draw-Call.
+\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature\autocite{PixiTilingSprite2024}. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Dies ermöglicht minimalen \ac{GPU}-Memory-Verbrauch bei einem einzigen Draw-Call.
 
 TilingSprite wurde gewählt, da es die \ac{GPU}-Hardware optimal ausnutzt: Anstatt das gesamte Grid im Speicher vorzuhalten, wird ein einzelnes Pattern durch native Texture-Sampling-Operationen wiederholt\autocite{PixiTilingSprite2024}. Dies reduziert Draw-Calls auf 1 und delegiert die Wiederholungslogik an die \ac{GPU}, die für solche Operationen optimiert ist.
 
 \subsubsection{Entscheidung und Implementierung}
 
-Basierend auf der Evaluation wurde TilingSprite gewählt, da es Draw-Calls um 99,9\% reduziert (1000 → 1), \ac{GPU}-Memory um 99,7\% senkt (20 \ac{MB} → 64 \ac{KB}) und laut Profiling zu 40\% höheren \ac{FPS} führt. Die Einschränkung, Power-of-Two Textures nutzen zu müssen, wurde als akzeptabel bewertet, da \ac{GPU}-Hardware für Texture-Größen wie 64×64, 128×128 oder 256×256 Pixel optimiert ist\autocite{PixiTexture2024}.
+Basierend auf der Evaluation wurde TilingSprite gewählt, da es Draw-Calls auf einen einzigen reduziert und den \ac{GPU}-Memory-Verbrauch erheblich senkt. Die Einschränkung, Power-of-Two Textures nutzen zu müssen, wurde als akzeptabel bewertet, da \ac{GPU}-Hardware für Texture-Größen wie 64×64, 128×128 oder 256×256 Pixel optimiert ist\autocite{PixiTexture2024}.
 
 Die Implementierung erfolgte in zwei Schritten:
 
@@ -664,14 +664,14 @@ container.addChild(tilingSprite);
 
 Für hexagonale Grids ergab sich eine zusätzliche Herausforderung durch JavaScripts Modulo-Operator: Bei negativen Indizes liefert \texttt{col \% 2} nicht das erwartete Ergebnis für die Tessellation (z.B. \texttt{-1 \% 2 = -1} statt \texttt{1}). Die Lösung bestand in der Verwendung von \texttt{Math.abs(col \% 2) === 1}, um konsistentes Tessellation-Verhalten auch bei negativen Grid-Koordinaten zu gewährleisten.
 
-\subsubsection{Messbare Ergebnisse}
+\subsubsection{Beobachtete Performance-Unterschiede}
 
-Die Performance-Verbesserungen wurden durch Chrome DevTools Performance-Profiling quantifiziert (\autoref{tab:grid-performance}):
+Während der Entwicklung wurden die Performance-Unterschiede der Ansätze durch Chrome DevTools Performance-Profiling beobachtet (\autoref{tab:grid-performance}). Diese Werte dienen als Orientierung für die Design-Entscheidung, nicht als formale Benchmark-Ergebnisse:
 
 \begin{table}[htbp]
 	\centering
 	\small
-	\caption{Grid System Performance-Vergleich}
+	\caption{Grid System Performance-Beobachtungen während der Entwicklung}
 	\label{tab:grid-performance}
 	\begin{tabularx}{\textwidth}{Xccc}
 		\toprule
@@ -686,9 +686,9 @@ Die Performance-Verbesserungen wurden durch Chrome DevTools Performance-Profilin
 	\end{tabularx}
 \end{table}
 
-Die Messungen erfolgten auf einem MacBook Pro 2019 mit Chrome 120. Das Test-Setup umfasste eine 4096$\times$4096-Pixel-Map mit 64-Pixel-Grid-Größe, was 64$\times$64 = 4096 Grid-Quadraten entspricht. Die \ac{FPS}-Verbesserung ist bei großen Maps stärker ausgeprägt, da dort die Draw-Call-Reduktion den größten Einfluss hat.
+Die Beobachtungen erfolgten während der Entwicklung auf einem MacBook Pro 2019 mit Chrome 120. Das Test-Setup umfasste eine 4096$\times$4096-Pixel-Map mit 64-Pixel-Grid-Größe, was 64$\times$64 = 4096 Grid-Quadraten entspricht. Diese Werte dienten primär der informierten Design-Entscheidung; die formale Performance-Validierung erfolgt in \autoref{sec:evaluation}.
 
-Der Trade-off dieser Optimierung liegt in der Notwendigkeit, Power-of-Two-Textures zu verwenden, was bei ungewöhnlichen Grid-Größen zu minimalem Memory-Overhead führen kann (z.B. wird eine 80$\times$80-Pixel-Texture auf 128$\times$128 Pixel aufgerundet). Dieser Overhead ist jedoch gering im Vergleich zur ursprünglichen Implementierung (64 \ac{KB} vs. 20 \ac{MB}) und die Performance-Vorteile überwiegen. Detaillierte Performance-Validierung erfolgt in \autoref{sec:evaluation}.
+Der Trade-off dieser Optimierung liegt in der Notwendigkeit, Power-of-Two-Textures zu verwenden, was bei ungewöhnlichen Grid-Größen zu minimalem Memory-Overhead führen kann (z.B. wird eine 80$\times$80-Pixel-Texture auf 128$\times$128 Pixel aufgerundet). Dieser Overhead ist jedoch vernachlässigbar im Vergleich zum Texture-Baking-Ansatz.
 
 \subsection{Token Management: Performance-Optimierung bei vielen Objekten}
 \label{subsec:token-management}
@@ -759,88 +759,39 @@ Diese Optimierungstechniken entsprechen den Best Practices der PIXI.js-Community
 
 \subsubsection{Architektur und Implementierungsstrategie}
 
-Die Implementierung kombiniert alle vier recherchierten Techniken, da sie komplementäre Performance-Vorteile bieten:
+Von den recherchierten Techniken wurden zwei in der Implementierung umgesetzt:
 
 \begin{itemize}
-	\item \textbf{Culling} reduziert Render-Operationen für nicht-sichtbare Tokens
-	\item \textbf{Batching} reduziert \ac{GPU}-Overhead durch Draw-Call-Reduktion
-	\item \textbf{Texture Caching} vermeidet redundante \ac{I/O}-Operationen
-	\item \textbf{Object Pooling} stabilisiert Frame-Times durch \ac{GC}-Reduktion
+	\item \textbf{Batching} wird automatisch von PIXI.js durchgeführt und reduziert \ac{GPU}-Overhead durch Draw-Call-Reduktion
+	\item \textbf{Texture Caching} vermeidet redundante \ac{I/O}-Operationen durch eine dedizierte \texttt{TextureCache}-Klasse
 \end{itemize}
+
+Culling und Object Pooling wurden als potenzielle zukünftige Optimierungen identifiziert, jedoch im aktuellen Entwicklungsstand nicht implementiert.
 
 Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle in modulare Subkomponenten strukturiert:
 
 \begin{itemize}
 	\item \textbf{TokenRenderer}: Zentrale Orchestrierung und Koordination des Token-Renderings
-	\item \textbf{SpriteFactory}: Sprite-Erstellung mit integriertem Object Pooling
+	\item \textbf{SpriteFactory}: Sprite-Erstellung und Token-Container-Management
 	\item \textbf{TextureCache}: Verwaltung und Caching häufig verwendeter Token-Texturen
 	\item \textbf{UIManager}: Rendering von Health Bars, Labels und Status-Icons
 	\item \textbf{InteractionHandler}: Verarbeitung von Drag \& Drop und Selection-Events
-	\item \textbf{EffectsManager}: Verwaltung visueller Effekte und Animationen
-	\item \textbf{GeometryUtils}: Bereitstellung geometrischer Berechnungen für Token-Positioning
 \end{itemize}
 
 Diese modulare Architektur ermöglicht eine klare Separation of Concerns: Jede Komponente adressiert eine spezifische Verantwortlichkeit, was sowohl die Wartbarkeit als auch die Testbarkeit der Implementierung verbessert.
 
-\subsubsection{Beispielhafte Implementierung}
+\subsubsection{Implementierung des Texture-Cachings}
 
-Die Culling-Implementierung zeigt die praktische Anwendung der recherchierten Best Practices:
-
-\begin{lstlisting}[language=TypeScript,caption={Culling-Setup im TokenRenderer},label=lst:token-culling]
-// src/app/pixi/token-renderer/TokenRenderer.ts:234
-private setupCulling(container: Container): void {
-  container.cullable = true;
-
-  // Update cull area bei Viewport-Aenderungen
-  this.viewport.on('moved', () => {
-    const bounds = this.viewport.getVisibleBounds();
-    container.cullArea = new Rectangle(
-      bounds.x, bounds.y,
-      bounds.width, bounds.height
-    );
-  });
-}
-\end{lstlisting}
-
-Object Pooling wurde in der \texttt{SpriteFactory}-Klasse implementiert:
-
-\begin{lstlisting}[language=TypeScript,caption={SpriteFactory mit Object Pooling},label=lst:sprite-factory]
-// src/app/pixi/token-renderer/modules/SpriteFactory.ts:45
-export class SpriteFactory {
-  private spritePool: ObjectPool<Sprite>;
-
-  constructor() {
-    this.spritePool = new ObjectPool({
-      create: () => new Sprite(),
-      reset: (sprite) => {
-        sprite.texture = Texture.EMPTY;
-        sprite.position.set(0, 0);
-        sprite.scale.set(1, 1);
-        sprite.rotation = 0;
-        sprite.alpha = 1.0;
-      }
-    });
-  }
-
-  public createTokenSprite(texture: Texture): Sprite {
-    const sprite = this.spritePool.allocate();
-    sprite.texture = texture;
-    return sprite;
-  }
-}
-\end{lstlisting}
-
-Texture-Caching erfolgt über eine dedizierte \texttt{TextureCache}-Klasse, die einen \texttt{Map}-basierten Cache implementiert und sicherstellt, dass jede Texture nur einmal geladen wird.
+Das Texture-Caching wurde über eine dedizierte \texttt{TextureCache}-Klasse implementiert, die einen \texttt{Map}-basierten Cache verwendet und sicherstellt, dass jede Texture nur einmal geladen wird. Die Klasse verwaltet drei separate Caches für Token-Texturen, Ring-Texturen und Gradienten-Texturen.
 
 \subsubsection{Trade-offs und Evaluation}
 
-Die implementierte Multi-Layered-Optimization-Strategie bringt folgende Design-Trade-offs mit sich:
+Die implementierte Optimierungsstrategie bringt folgende Design-Trade-offs mit sich:
 
 \begin{itemize}
-	\item \textbf{Code-Komplexität}: Object Pooling erfordert sorgfältiges State-Management, da Sprites korrekt zurückgesetzt werden müssen, um unerwünschte Seiteneffekte zu vermeiden.
 	\item \textbf{Memory-Overhead}: Der Texture-Cache hält Texturen im Speicher, was bei vielen unterschiedlichen Token-Avataren zu erhöhtem Memory-Footprint führen kann.
-	\item \textbf{Wartbarkeit}: Die modulare Architektur mit dedizierten Komponenten für Pooling, Caching und Culling erleichtert die Wartung und zukünftige Erweiterungen.
+	\item \textbf{Wartbarkeit}: Die modulare Architektur mit dedizierten Komponenten erleichtert die Wartung und zukünftige Erweiterungen.
 \end{itemize}
 
-Die tatsächlichen Performance-Verbesserungen durch diese Optimierungen werden in \autoref{sec:evaluation} quantifiziert. Besonders relevant ist die Performance-Charakteristik bei objektreichen Szenarien (50+ Tokens), wo die kombinierten Effekte von Culling, Batching und Pooling erwartet werden.
+Die tatsächlichen Performance-Verbesserungen durch Texture-Caching und automatisches Sprite-Batching werden in \autoref{sec:evaluation} quantifiziert.
 

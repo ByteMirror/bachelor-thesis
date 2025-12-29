@@ -41,7 +41,7 @@ Die Implementierung von Atlas \ac{VTT} demonstriert, dass performante \ac{VTT}-P
 Drei zentrale Faktoren ermöglichen die erreichte Performance:
 
 \begin{enumerate}
-    \item \textbf{Moderne Rendering-Engine}: PIXI.js v8 mit \ac{WebGL}-Backend nutzt \ac{GPU}-Beschleunigung effektiv aus. Die automatischen Optimierungen wie Sprite-Batching und Culling\autocite{PixiPerf2024} sowie die TilingSprite-basierte Grid-Implementierung (vgl. \autoref{subsec:grid-system}) reduzieren den \ac{CPU}-Overhead und die Anzahl der Draw-Calls.
+    \item \textbf{Moderne Rendering-Engine}: PIXI.js v8 mit \ac{WebGL}-Backend nutzt \ac{GPU}-Beschleunigung effektiv aus. Das automatische Sprite-Batching\autocite{PixiPerf2024} sowie die TilingSprite-basierte Grid-Implementierung (vgl. \autoref{subsec:grid-system}) reduzieren die Anzahl der Draw-Calls.
 
     \item \textbf{Zustandsmanagement mit Zustand}: Die reaktive Store-Architektur mit \texttt{subscribeWithSelector} ermöglicht gezielte \ac{UI}-Updates ohne vollständiges Re-Rendering. Die Trennung von Rendering-State und Persistenz-State vermeidet unnötige Disk-\ac{I/O} während der Laufzeit.
 
@@ -145,8 +145,6 @@ Basierend auf den Messergebnissen könnten folgende Optimierungsansätze untersu
     \item \textbf{WebAssembly (WASM) für Performance-kritische Algorithmen}: Algorithmisch komplexe Berechnungen (z.B. Grid-Tessellation, Pathfinding) könnten in Rust oder C++ implementiert und als WASM-Module kompiliert werden, um Ausführungsgeschwindigkeiten zu erhöhen.
 
     \item \textbf{Aggressive Tree-Shaking}: Eine detaillierte Analyse der Bundle-Zusammensetzung könnte ungenutzte Code-Pfade identifizieren, die durch verbessertes Tree-Shaking eliminiert werden könnten.
-
-    \item \textbf{Texture-Atlasing und Sprite-Batching}: Weitere Optimierungen der PIXI.js-Rendering-Pipeline durch systematisches Texture-Atlasing und optimiertes Sprite-Batching könnten Draw-Calls reduzieren.
 \end{itemize}
 
 \paragraph{Technologische Entwicklungen}

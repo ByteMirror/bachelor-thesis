@@ -288,7 +288,6 @@ Entgegen der Erwartung einer Performance-Degradation bei steigender Token-Anzahl
 \begin{itemize}
 	\item \textbf{Texture-Caching}: Wiederverwendung identischer Token-Texturen reduziert \ac{GPU}-Uploads
 	\item \textbf{Batch-Rendering}: PIXI.js v8 fasst Sprites mit gleicher Textur in einzelne Draw-Calls zusammen
-	\item \textbf{Viewport-Culling}: Tokens außerhalb des sichtbaren Bereichs werden nicht gerendert
 \end{itemize}
 
 \paragraph{Speicher-Skalierung}
@@ -304,7 +303,7 @@ Die Diskussion ordnet die Messergebnisse in den Kontext der Forschungsfrage ein 
 Die Performance-Messungen liefern quantitative Belege für die Eignung der gewählten Architektur, offenbaren jedoch auch Optimierungsbedarf:
 
 \paragraph{Erwartungskonforme Ergebnisse}
-Die konstante \ac{FPS}-Rate von 120 \ac{FPS} über alle Szenarien bestätigt die in der PIXI.js-Dokumentation beschriebenen Performance-Eigenschaften für 2D-Rendering. Die implementierten Best Practices -- Batch-Rendering, Culling und Texture-Caching -- erweisen sich als effektiv für \ac{VTT}-Workloads. Die Frame-Time von 8,33 \ac{ms} belegt, dass bei 100 Token noch Kapazität für komplexere Szenen besteht (8,34 \ac{ms} verbleibend bis zum 60-\ac{FPS}-Limit).
+Die konstante \ac{FPS}-Rate von 120 \ac{FPS} über alle Szenarien bestätigt die in der PIXI.js-Dokumentation beschriebenen Performance-Eigenschaften für 2D-Rendering. Die implementierten Optimierungen -- automatisches Batch-Rendering und Texture-Caching -- erweisen sich als effektiv für \ac{VTT}-Workloads. Die Frame-Time von 8,33 \ac{ms} belegt, dass bei 100 Token noch Kapazität für komplexere Szenen besteht (8,34 \ac{ms} verbleibend bis zum 60-\ac{FPS}-Limit).
 
 \paragraph{Unerwartete Ergebnisse}
 Das identifizierte Memory-Leak war nicht antizipiert. Die Token-Löschlogik in \texttt{TokenRenderer.ts} ruft explizit \texttt{destroy(\{children: true\})} auf den PIXI-Containern auf, was laut Dokumentation alle Child-Objekte freigeben sollte. Die tatsächliche Leak-Rate von 1,8 \ac{MB}/Iteration deutet auf subtilere Referenz-Probleme hin -- möglicherweise in den Interaction-Handlern oder dem Zustand-Store.
