@@ -250,18 +250,23 @@
 }
 
 @book{Kornmeier2013WissenschaftlichDissertation,
-  title = {{Wissenschaftlich schreiben leicht gemacht : f{\"{u}}r Bachelor,
-           Master {\\\}und Dissertation}}, year = {2013}, author = {Kornmeier, M}
-           , series = {UTB Arbeitshilfen}, publisher = {Haupt Verlag}, url = {
-           https://books.google.de/books?id=zWRCAgAAQBAJ}, isbn = {9783825240738}
-           },
-}@book{Stickel-Wolf2013WissenschaftlichesWie,
-  title = {{Wissenschaftliches Arbeiten und Lerntechniken: Erfolgreich studieren
-           {\\\}- gewusst wie!}}, year = {2013}, author = {Stickel-Wolf, C and
-           Wolf, J}, publisher = {Springer Fachmedien Wiesbaden}, url = {
-           https://books.google.de/books?id=A7vwmQEACAAJ}, isbn = {9783658017132}
-           },
-}@report{GlobalGrowthInsights2024,
+  title = {{Wissenschaftlich schreiben leicht gemacht: für Bachelor, Master und Dissertation}},
+  year = {2013},
+  author = {Kornmeier, Martin},
+  series = {UTB Arbeitshilfen},
+  publisher = {Haupt Verlag},
+  isbn = {9783825240738},
+}
+
+@book{Stickel-Wolf2013WissenschaftlichesWie,
+  title = {{Wissenschaftliches Arbeiten und Lerntechniken: Erfolgreich studieren - gewusst wie!}},
+  year = {2013},
+  author = {Stickel-Wolf, Christine and Wolf, Joachim},
+  publisher = {Springer Fachmedien Wiesbaden},
+  isbn = {9783658017132},
+}
+
+@report{GlobalGrowthInsights2024,
   title = {{Tabletop Role-Playing Game (TTRPG) Market Size, Share, Growth
            Analysis, By Type, By Application - Industry Forecast 2025-2033}},
   year = {2024},
@@ -524,21 +529,39 @@
           setup and cleanup},
 }
 
-@misc{ObsidianAPI2024,
-  title = {{Obsidian API Documentation}},
+@misc{ObsidianMetadataCache2024,
+  title = {{MetadataCache - Obsidian Developer Documentation}},
   author = {{Obsidian}},
   organization = {Obsidian.md},
   year = {2024},
-  url = {https://docs.obsidian.md/},
-  urldate = {2025-11-14},
+  url = {https://docs.obsidian.md/Reference/TypeScript+API/MetadataCache},
+  urldate = {2024-12-29},
 }
 
-@misc{FowlerPoEAACatalog2024,
-  title = {{Patterns of Enterprise Application Architecture - Catalog}},
+@misc{ObsidianVault2024,
+  title = {{Vault - Obsidian Developer Documentation}},
+  author = {{Obsidian}},
+  organization = {Obsidian.md},
+  year = {2024},
+  url = {https://docs.obsidian.md/Reference/TypeScript+API/Vault},
+  urldate = {2024-12-29},
+}
+
+@misc{ObsidianEvents2024,
+  title = {{Events - Obsidian Developer Documentation}},
+  author = {{Obsidian}},
+  organization = {Obsidian.md},
+  year = {2024},
+  url = {https://docs.obsidian.md/Plugins/Events},
+  urldate = {2024-12-29},
+}
+
+@online{FowlerTableDataGateway2024,
+  title = {{Table Data Gateway}},
   author = {Fowler, Martin},
   year = {2024},
-  url = {https://martinfowler.com/eaaCatalog/},
-  urldate = {2025-12-15},
+  url = {https://martinfowler.com/eaaCatalog/tableDataGateway.html},
+  urldate = {2025-12-29},
 }
 
 @misc{JavaDesignPatternsLazyLoading,
@@ -552,21 +575,24 @@
           memory usage and reducing startup times},
 }
 
-@misc{ObsidianWiki2024,
+@online{ObsidianWiki2024,
   title = {{Obsidian (software)}},
-  year = {2024},
   author = {{Wikipedia contributors}},
-  url = {https://en.wikipedia.org/wiki/Obsidian_(software)},
-  urldate = {2025-12-15},
+  booktitle = {Wikipedia, The Free Encyclopedia},
+  year = {2024},
+  url = {https://en.wikipedia.org/w/index.php?title=Obsidian_(software)&oldid=1330021516},
+  urldate = {2025-12-29},
+  note = {Page Version ID: 1330021516},
 }
 
-@misc{ElectronWiki2024,
+@online{ElectronWiki2024,
   title = {{Electron (software framework)}},
+  author = {{Wikipedia contributors}},
+  booktitle = {Wikipedia, The Free Encyclopedia},
   year = {2024},
-  author = {{Wikipedia}},
-  organization = {Wikipedia, The Free Encyclopedia},
-  url = {https://en.wikipedia.org/wiki/Electron_(software_framework)},
-  urldate = {2025-12-15},
+  url = {https://en.wikipedia.org/w/index.php?title=Electron_(software_framework)&oldid=1328728744},
+  urldate = {2025-12-29},
+  note = {Page Version ID: 1328728744},
 }
 
 @misc{ElectronProcessModel2024,
@@ -751,8 +777,8 @@
   author = {{PixiJS Team}},
   organization = {PixiJS},
   year = {2024},
-  url = {https://pixijs.com/8.x/guides/production/performance-tips},
-  urldate = {2025-11-15},
+  url = {https://pixijs.com/8.x/guides/concepts/performance-tips},
+  urldate = {2025-12-29},
 }
 
 @misc{PixiTilingSprite2024,
@@ -774,6 +800,33 @@
          https://developer.mozilla.org/en-US/docs/Web/Performance/Animation_performance_and_frame_rate
          },
   urldate = {2025-11-17},
+}
+
+@InProceedings{Forch2017LatencyPerception,
+  author    = {Forch, Valentin and Franke, Thomas and Rauh, Nadine and Krems, Josef F.},
+  editor    = {Harris, Don},
+  title     = {Are 100 ms Fast Enough? {Characterizing} Latency Perception Thresholds in Mouse-Based Interaction},
+  booktitle = {Engineering Psychology and Cognitive Ergonomics: Cognition and Design},
+  year      = {2017},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {45--56},
+  doi       = {10.1007/978-3-319-58475-1_4},
+  isbn      = {978-3-319-58475-1}
+}
+
+@inproceedings{Janzen2014FrameRate,
+  author    = {Janzen, Benjamin F. and Teather, Robert J.},
+  title     = {Is 60 {FPS} better than 30? {The} impact of frame rate and latency on moving target selection},
+  year      = {2014},
+  isbn      = {9781450324748},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  doi       = {10.1145/2559206.2581214},
+  booktitle = {CHI '14 Extended Abstracts on Human Factors in Computing Systems},
+  pages     = {1477--1482},
+  location  = {Toronto, Ontario, Canada},
+  series    = {CHI EA '14}
 }
 
 @misc{Nielsen1993ResponseTimes,
@@ -831,24 +884,6 @@
 }
 
 % Kapitel 3.3.3: Token Management
-
-@misc{PixiBatch2024,
-  title = {{PixiJS v8 Performance Tips}},
-  author = {{PixiJS Team}},
-  organization = {PixiJS},
-  year = {2024},
-  url = {https://pixijs.com/8.x/guides/concepts/performance-tips},
-  urldate = {2025-12-24},
-}
-
-@misc{PixiPool2024,
-  title = {{@pixi-essentials/object-pool - Object Pooling for PixiJS}},
-  author = {{Shukant Pal}},
-  organization = {GitHub},
-  year = {2024},
-  url = {https://github.com/ShukantPal/pixi-essentials},
-  urldate = {2025-11-08},
-}
 
 @misc{FoundryToken2024,
   title = {{Foundry VTT Token Layer API}},
@@ -994,16 +1029,6 @@
   note = {RFC 8259, Internet Engineering Task Force (IETF)},
 }
 
-@misc{WikipediaNutzwertanalyse2024,
-  author = {{Wikipedia}},
-  title = {Nutzwertanalyse},
-  year = {2024},
-  url = {https://de.wikipedia.org/wiki/Nutzwertanalyse},
-  urldate = {2025-12-16},
-  note = {Methode zur systematischen Entscheidungsfindung bei mehreren
-          Alternativen und Kriterien},
-}
-
 @article{Gharaibeh2014,
   author = {Gharaibeh, Hani M.},
   title = {Developing a Scoring Model to Evaluate Project Management Software
@@ -1014,7 +1039,6 @@
   number = {1},
   pages = {27--41},
   doi = {10.4236/jsea.2014.71004},
-  url = {https://www.scirp.org/html/4-9301718_42099.htm},
 }
 
 @misc{ZustandDocs2024,
@@ -1027,45 +1051,44 @@
   note = {Lightweight State Management Library},
 }
 
-@misc{VirtualTabletopWiki2025,
+@online{VirtualTabletopWiki2025,
   title = {{Virtual tabletop}},
-  year = {2025},
   author = {{Wikipedia contributors}},
-  url = {https://en.wikipedia.org/w/index.php?oldid=1322244921},
+  booktitle = {Wikipedia, The Free Encyclopedia},
+  year = {2025},
+  url = {https://en.wikipedia.org/w/index.php?title=Virtual_tabletop&oldid=1322244921},
   urldate = {2025-12-21},
   note = {Page Version ID: 1322244921},
 }
 
-@misc{WikiCanvas2024,
+@online{WikiCanvas2024,
   title = {{Canvas element}},
   author = {{Wikipedia contributors}},
-  organization = {Wikipedia, The Free Encyclopedia},
+  booktitle = {Wikipedia, The Free Encyclopedia},
   year = {2024},
-  url = {https://en.wikipedia.org/wiki/Canvas_element},
-  urldate = {2025-11-18},
-  note = {Browser-API für auflösungsabhängige 2D-Bitmap-Rendering},
+  url = {https://en.wikipedia.org/w/index.php?title=Canvas_element&oldid=1294930233},
+  urldate = {2025-12-29},
+  note = {Page Version ID: 1294930233},
 }
 
-@misc{WikiWebGL2024,
+@online{WikiWebGL2024,
   title = {{WebGL}},
   author = {{Wikipedia contributors}},
-  organization = {Wikipedia, The Free Encyclopedia},
+  booktitle = {Wikipedia, The Free Encyclopedia},
   year = {2024},
-  url = {https://en.wikipedia.org/wiki/WebGL},
-  urldate = {2025-11-18},
-  note = {JavaScript-API für GPU-beschleunigtes 2D/3D-Rendering basierend auf
-          OpenGL ES},
+  url = {https://en.wikipedia.org/w/index.php?title=WebGL&oldid=1328090817},
+  urldate = {2025-12-29},
+  note = {Page Version ID: 1328090817},
 }
 
-@misc{WikiWebGPU2024,
+@online{WikiWebGPU2024,
   title = {{WebGPU}},
   author = {{Wikipedia contributors}},
-  organization = {Wikipedia, The Free Encyclopedia},
+  booktitle = {Wikipedia, The Free Encyclopedia},
   year = {2024},
-  url = {https://en.wikipedia.org/wiki/WebGPU},
-  urldate = {2025-11-20},
-  note = {Nachfolger von WebGL mit verbesserter GPU-Kompatibilität und
-          erweiterten Features},
+  url = {https://en.wikipedia.org/w/index.php?title=WebGPU&oldid=1308578072},
+  urldate = {2025-12-29},
+  note = {Page Version ID: 1308578072},
 }
 
 @misc{DigitalTrendsFrameTime2024,
@@ -1127,4 +1150,86 @@
   note = {Updated September 21, 2023. Methodische Anleitung zur wissenschaftlich
           korrekten Durchführung von Nutzwertanalysen},
 }
+
+% ============================================================
+% Requirements Prioritization
+% ============================================================
+
+@book{IIBA2015BABOK,
+  author = {{International Institute of Business Analysis}},
+  title = {{A Guide to the Business Analysis Body of Knowledge (BABOK Guide)}},
+  edition = {3},
+  publisher = {International Institute of Business Analysis},
+  year = {2015},
+  isbn = {9781927584026},
+  note = {Standard reference for business analysis techniques including MoSCoW prioritization method},
+}
+
+% ============================================================
+% Design Science Research Methodology
+% ============================================================
+
+@article{Hevner2004DesignScience,
+  author = {Hevner, Alan R. and March, Salvatore T. and Park, Jinsoo and Ram, Sudha},
+  title = {{Design Science in Information Systems Research}},
+  journal = {MIS Quarterly},
+  year = {2004},
+  month = {March},
+  volume = {28},
+  number = {1},
+  pages = {75--105},
+  doi = {10.2307/25148625},
+  note = {Grundlegendes Framework fuer Design Science Research mit sieben Richtlinien
+          zur Durchfuehrung und Evaluation von DSR-Projekten},
+}
+
+% ============================================================
+% Akademische Literatur zu Virtual Tabletops und TTRPGs
+% ============================================================
+
+@inproceedings{Szymczyk2022VTTVernacular,
+  author = {Szymczyk, Maciej and Kulka, Kacper and Grudzinski, Jakub and Bialek, Adam},
+  title = {{Virtual Tabletops (VTT) for Role-Playing Games (RPG) and Do-It-Yourself (DIY) Interactive Surfaces as Examples of Vernacular Design}},
+  booktitle = {Companion Proceedings of the 2022 Conference on Interactive Surfaces and Spaces},
+  series = {ISS '22 Companion},
+  year = {2022},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  pages = {49--52},
+  doi = {10.1145/3532104.3571455},
+  note = {Analyse von VTT-Software als Beispiel für nutzerzentriertes Design in der RPG-Community},
+}
+
+@misc{Martinolli2025TTRPGBibliometrie,
+  author = {Martinolli, Pascal},
+  title = {{Trends \& Tendencies: Academic Research on Tabletop Role-Playing Games Up to Today}},
+  year = {2025},
+  url = {https://pmartinolli.github.io/JDR50bibliometrie/index-english.html},
+  urldate = {2025-12-29},
+  note = {Bibliometrische Analyse von 50 Jahren akademischer Forschung zu TTRPGs basierend auf über 3.000 Referenzen. Zeigt dass Forschung primär auf Psychologie, Soziologie und Bildung fokussiert ist, nicht auf technische Implementierung},
+}
+
+@misc{MDN2024Debounce,
+  author = {{Mozilla Developer Network}},
+  title = {{Debounce -- MDN Web Docs Glossary}},
+  year = {2024},
+  url = {https://developer.mozilla.org/en-US/docs/Glossary/Debounce},
+  urldate = {2025-12-29},
+  note = {Offizielle Glossar-Definition: Debouncing bezeichnet das Verwerfen von Operationen, die innerhalb eines definierten Zeitintervalls zu dicht aufeinander folgen, und deren Konsolidierung zu einem einzigen Aufruf},
+}
+
+% ============================================================
+% Kapitel 2: Theoretische Grundlagen - VTT-Konzepte
+% ============================================================
+
+@misc{DnDBeyondMonsters2024,
+  title = {{Basic Rules: Monsters}},
+  author = {{Wizards of the Coast}},
+  organization = {D\&D Beyond},
+  year = {2024},
+  url = {https://www.dndbeyond.com/sources/dnd/basic-rules-2014/monsters},
+  urldate = {2025-12-29},
+  note = {Offizielle D\&D 5e Basic Rules - Monsters Section mit Statblock-Definition: ``A monster's statistics, sometimes referred to as its stat block, provide the essential information that you need to run the monster.''},
+}
+
 

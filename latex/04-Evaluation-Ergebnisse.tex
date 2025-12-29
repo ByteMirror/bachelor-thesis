@@ -8,7 +8,7 @@ Dieses Kapitel dokumentiert die systematische Evaluation der Performance-Charakt
 \section{Durchführung der Performance-Messungen}
 \label{sec:DurchfuehrungMessungen}
 
-Die Performance-Evaluation von Atlas \ac{VTT} nutzt eine praxisorientierte Messmethodik entsprechend den offiziellen Performance-Empfehlungen für Electron-Anwendungen\autocite{ElectronPerformanceGuide2024}. Die Electron-Dokumentation empfiehlt, den laufenden Code zu profilieren und die ressourcenintensivsten Teile zu identifizieren. Dieser Ansatz bewährt sich in Electron-Anwendungen wie Visual Studio Code und Slack. Die Messungen nutzen ausschließlich die Chrome DevTools als Messinstrument und quantifizieren den Performance-Einfluss einzelner Features in der Single-Bundle-Architektur.
+Die Performance-Evaluation von Atlas \ac{VTT} nutzt eine praxisorientierte Messmethodik entsprechend den offiziellen Performance-Empfehlungen für Electron-Anwendungen\autocite{ElectronPerformanceGuide2024}. Die Electron-Dokumentation empfiehlt, den laufenden Code zu profilieren und die ressourcenintensivsten Teile zu identifizieren. Dieser Ansatz bewährt sich in Electron-Anwendungen wie Visual Studio Code und Slack. Die Messungen nutzen die Chrome Performance \ac{API} (\texttt{requestAnimationFrame}, \texttt{performance.memory}) über einen automatisierten Benchmark-Service und quantifizieren den Performance-Einfluss einzelner Features in der Single-Bundle-Architektur.
 
 \subsection{Testumgebung und -bedingungen}
 
@@ -24,10 +24,10 @@ Die Tests nutzen ein repräsentatives Consumer-System, das die typische Zielgrup
 	\item \textbf{Display}: 14-Zoll Liquid Retina \ac{XDR} (3024 × 1964 Pixel)
 \end{itemize}
 
-Die Messungen erfolgen auf der für diese Arbeit verfügbaren Hardware. Die Beschränkung auf ein einzelnes Testsystem stellt eine Limitation dar, da Performance-Charakteristiken auf anderen Plattformen abweichen können. Die detaillierte Dokumentation der Testumgebung ermöglicht jedoch die Einordnung der Ergebnisse und bildet die Grundlage für vergleichende Messungen auf weiteren Systemen.
+Die Tests nutzen die für diese Arbeit verfügbare Hardware. Die Beschränkung auf ein einzelnes Testsystem stellt eine Limitation dar, da Performance-Charakteristiken auf anderen Plattformen abweichen können. Die detailliert dokumentierte Testumgebung erlaubt jedoch, die Ergebnisse einzuordnen und bildet die Grundlage für vergleichende Messungen auf weiteren Systemen.
 
 \paragraph{Software-Versionen}
-Die Nachvollziehbarkeit der Messungen erfordert die Dokumentation folgender Software-Versionen:
+Damit die Messungen nachvollziehbar bleiben, dokumentiert diese Arbeit folgende Software-Versionen:
 \begin{itemize}
 	\item \textbf{Obsidian}: Version 1.7.7 (Installer-Version 1.7.4)
 	\item \textbf{Electron}: Version 32.2.5 (gebündelt mit Obsidian)
@@ -40,7 +40,7 @@ Die Nachvollziehbarkeit der Messungen erfordert die Dokumentation folgender Soft
 Relevant für die Evaluation ist die Verwendung von PIXI.js Version 8, da Obsidian selbst PIXI.js Version 7 als globale Dependency bereitstellt. Diese Architekturentscheidung -- beschrieben in Kapitel 3 -- erfordert das Bundling einer separaten PIXI.js-Instanz und beeinflusst die Bundle-Größe und Startup-Performance des Plugins.
 
 \paragraph{Kontrollierte Testbedingungen}
-Die Minimierung von Störfaktoren und konsistente Messbedingungen\autocite{ChromeDevToolsPerformance2024} erfordern folgende Kontrollmaßnahmen:
+Um Störfaktoren zu minimieren und konsistente Messbedingungen zu gewährleisten, gelten folgende Kontrollmaßnahmen:
 \begin{itemize}
 	\item \textbf{Isolierte Testumgebung}: Alle nicht-essenziellen Hintergrundprozesse wurden beendet
 	\item \textbf{Standardisierte Systemlast}: \ac{CPU}-Auslastung < 5\% vor Testbeginn
@@ -328,37 +328,20 @@ Die Performance-Evaluation liefert folgende zentrale Erkenntnisse:
 Diese Ergebnisse fließen in die Beantwortung der Forschungsfrage in \autoref{sec:fazit} ein.
 
 \subsection{Limitationen der Evaluation}
+\label{subsec:LimitationenEvaluation}
 
-Die Performance-Evaluation unterliegt mehreren methodischen und technischen Limitationen, die bei der Interpretation der Ergebnisse berücksichtigt werden müssen:
+Die Performance-Evaluation unterliegt methodischen und technischen Einschränkungen, die bei der Interpretation der Ergebnisse berücksichtigt werden müssen.
 
 \paragraph{Methodische Limitationen}
 
-\begin{itemize}
-	\item \textbf{Single-Platform-Testing}: Die Messungen wurden ausschließlich auf einem macOS-System mit Apple Silicon durchgeführt. Performance-Charakteristika können auf Windows- oder Linux-Systemen sowie auf Intel/AMD-Prozessoren abweichen.
-
-	\item \textbf{Automatisierte Messungen mit manueller Initiierung}: Obwohl der \texttt{BenchmarkService} die Messungen automatisiert durchführt (500 Iterationen), erfordert die Initiierung und Chart-Generierung manuelle Schritte.
-
-	\item \textbf{Fehlende Baseline-Vergleiche}: Ein Vergleich mit anderen \ac{VTT}-Lösungen (z.B. Foundry \ac{VTT}, Roll20) oder anderen Obsidian-Plugins fehlt.
-\end{itemize}
+Die Messungen wurden ausschließlich auf einem macOS-System mit Apple Silicon durchgeführt. Da Performance-Charakteristika auf Windows- oder Linux-Systemen sowie auf Intel- und AMD-Prozessoren abweichen können, ist die Generalisierbarkeit der quantitativen Ergebnisse eingeschränkt. Obwohl der \texttt{BenchmarkService} die Messungen mit 500 Iterationen automatisiert durchführt, erfordern die Initiierung der Tests und die Generierung der Visualisierungen manuelle Schritte. Ein systematischer Vergleich mit anderen \ac{VTT}-Lösungen wie Foundry \ac{VTT} oder Roll20 sowie mit anderen Obsidian-Plugins wurde nicht durchgeführt, sodass eine relative Einordnung der Performance-Werte fehlt.
 
 \paragraph{Technische Limitationen}
 
-\begin{itemize}
-	\item \textbf{Electron-Version-Abhängigkeit}: Die Performance-Charakteristika sind spezifisch für die in Obsidian 1.7.7 gebündelte Electron-Version (32.2.5). Zukünftige Electron-Updates können die Ergebnisse beeinflussen.
-
-	\item \textbf{Synthetische Test-Szenarien}: Die verwendeten Test-Szenarien (Leere Map, Standard-Session, Stress-Test) sind konstruierte Nutzungsmuster. Reale Spielsitzungen können abweichende Performance-Profile aufweisen.
-
-	\item \textbf{Benchmark-Overhead}: Der \texttt{BenchmarkService} selbst fügt minimalen Code-Overhead hinzu, der in den Messungen nicht vollständig eliminiert werden kann.
-\end{itemize}
+Die gemessenen Performance-Charakteristika sind spezifisch für die in Obsidian 1.7.7 gebündelte Electron-Version 32.2.5. Zukünftige Electron-Updates können die Ergebnisse beeinflussen, da neuere V8- und Chromium-Engines andere Optimierungsstrategien anwenden. Die verwendeten Test-Szenarien -- leere Map, Standard-Session und Stress-Test -- stellen konstruierte Nutzungsmuster dar. Reale Spielsitzungen umfassen komplexere Interaktionsmuster wie gleichzeitiges Scrollen und Token-Bewegen, die in den synthetischen Benchmarks nicht abgebildet werden. Der \texttt{BenchmarkService} selbst fügt minimalen Code-Overhead hinzu, der in den Messungen nicht vollständig eliminiert werden kann.
 
 \paragraph{Interpretationsgrenzen}
 
-\begin{itemize}
-	\item \textbf{Kausalität vs. Korrelation}: Die Messungen zeigen Performance-Unterschiede zwischen Feature-Kombinationen, jedoch nicht zwingend kausale Zusammenhänge. Interaktionen zwischen Features könnten nicht-additive Effekte erzeugen.
+Die Messungen quantifizieren Performance-Metriken unter kontrollierten Bedingungen mit definierten Token-Anzahlen (0, 20, 100), erlauben jedoch keine zwingenden Rückschlüsse auf das Verhalten in komplexen realen Nutzungsszenarien. Interaktionen zwischen verschiedenen Systemkomponenten könnten unter Produktionsbedingungen andere Charakteristika aufweisen als in den isolierten Benchmark-Szenarien. Die Bewertung, ab wann Performance-Unterschiede als wahrnehmbar gelten, basiert auf den in \autoref{sec:Anforderungsanalyse} definierten Schwellenwerten. Die Evaluation fokussiert auf Runtime-Performance während kurzer Nutzungsszenarien; eine systematische Untersuchung von Performance-Degradation über längere Spielsitzungen von mehr als zwei Stunden wurde nicht durchgeführt.
 
-	\item \textbf{Subjektive Schwellenwerte}: Die Bewertung, ab wann Performance-Unterschiede als spürbar oder akzeptabel gelten, unterliegt subjektiven Kriterien.
-
-	\item \textbf{Fehlende Langzeit-Messungen}: Die Evaluation fokussiert auf Startup und kurze Nutzungsszenarien. Performance-Degradation über längere Spielsitzungen (>2 Stunden) wurde nicht untersucht.
-\end{itemize}
-
-Diese Limitationen schmälern nicht die Aussagekraft der Evaluation für den definierten Scope (Performance-Charakteristika eines \ac{VTT}-Plugins in Obsidian), verdeutlichen jedoch die Grenzen der Generalisierbarkeit der Ergebnisse.
+Diese Einschränkungen schmälern nicht die Aussagekraft der Evaluation für den definierten Untersuchungsbereich, verdeutlichen jedoch die Grenzen der Generalisierbarkeit der Ergebnisse auf andere Plattformen und Nutzungskontexte.
