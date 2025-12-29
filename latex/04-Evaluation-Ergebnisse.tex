@@ -244,9 +244,9 @@ Die rot markierte destroy()-Phase (Schritt 4b) ist die wahrscheinliche Quelle de
 
 Die Untersuchung des Token-Rendering-Codes identifiziert mehrere potenzielle Leak-Quellen in dieser Phase:
 \begin{itemize}
-	\item \textbf{PIXI.js Graphics Objects}: Jeder Token erstellt zwei \texttt{Graphics}-Objekte (Maske und Hintergrund). Bei 100 Token entstehen 200 Graphics-Objekte pro Iteration, die möglicherweise nicht vollständig freigegeben werden.
+	\item \textbf{PIXI.js Graphics Objects}: Jedes Token erstellt zwei \texttt{Graphics}-Objekte (Maske und Hintergrund). Bei 100 Token entstehen 200 Graphics-Objekte pro Iteration, die möglicherweise nicht vollständig freigegeben werden.
 	\item \textbf{Texture-Referenzen}: Obwohl Texturen gecacht werden, könnten interne PIXI.js-Referenzzähler nicht korrekt dekrementiert werden.
-	\item \textbf{Event-Listener}: Jeder Token registriert mehrere Interaction-Handler (\texttt{pointerdown}, \texttt{pointerover}, \texttt{pointerout}). Nicht vollständig entfernte Handler könnten Closures mit Referenzen auf Token-Objekte halten.
+	\item \textbf{Event-Listener}: Jedes Token registriert mehrere Interaction-Handler (\texttt{pointerdown}, \texttt{pointerover}, \texttt{pointerout}). Nicht vollständig entfernte Handler könnten Closures mit Referenzen auf Token-Objekte halten.
 	\item \textbf{Store-Subscriptions}: Die reaktiven Zustand-Subscriptions könnten Referenzen auf gelöschte Objekte im Closure-Scope halten.
 \end{itemize}
 
@@ -263,9 +263,9 @@ Die Analyse des Token-Rendering-Codes sowie dokumentierte PIXI.js-Probleme deute
 Die beobachtete Leak-Rate von 18 \ac{KB}/Token könnte auf folgende Komponenten zurückzuführen sein:
 
 \begin{itemize}
-	\item \textbf{Grafik-Objekte}: Jeder Token erstellt zwei PIXI.js \texttt{Graphics}-Objekte (kreisförmige Maske und rechteckiger Hintergrund für Klick-Erkennung). Laut PIXI.js-Dokumentation erfordern diese Objekte explizite Freigabe via \texttt{destroy()}\autocite{PixiGarbageCollection2024}, was im vorliegenden Code zwar aufgerufen wird, jedoch aufgrund der bekannten v8-Bugs möglicherweise nicht alle Ressourcen freigibt.
+	\item \textbf{Grafik-Objekte}: Jedes Token erstellt zwei PIXI.js \texttt{Graphics}-Objekte (kreisförmige Maske und rechteckiger Hintergrund für Klick-Erkennung). Laut PIXI.js-Dokumentation erfordern diese Objekte explizite Freigabe via \texttt{destroy()}\autocite{PixiGarbageCollection2024}, was im vorliegenden Code zwar aufgerufen wird, jedoch aufgrund der bekannten v8-Bugs möglicherweise nicht alle Ressourcen freigibt.
 
-	\item \textbf{Interaktions-Funktionen}: Jeder Token registriert Funktionen für Benutzerinteraktionen (Mausklick, Hover-Effekte, Maus-Verlassen). Nicht vollständig entfernte Interaktions-Funktionen verhindern die automatische Speicherfreigabe, da sie Verweise auf Token-Objekte und den zentralen Anwendungszustand halten\autocite{PixiGarbageCollection2024}. Der Code ruft eine Aufräum-Funktion auf, jedoch könnte die PIXI.js-interne Verwaltung zusätzliche Verweise halten.
+	\item \textbf{Interaktions-Funktionen}: Jedes Token registriert Funktionen für Benutzerinteraktionen (Mausklick, Hover-Effekte, Maus-Verlassen). Nicht vollständig entfernte Interaktions-Funktionen verhindern die automatische Speicherfreigabe, da sie Verweise auf Token-Objekte und den zentralen Anwendungszustand halten\autocite{PixiGarbageCollection2024}. Der Code ruft eine Aufräum-Funktion auf, jedoch könnte die PIXI.js-interne Verwaltung zusätzliche Verweise halten.
 
 	\item \textbf{Verschachtelte Objektstruktur}: Die hierarchische Anordnung der Token-Komponenten (Container mit Bild, Maske und Hintergrund) erfordert rekursive Freigabe via \texttt{destroy(\{children: true\})}. Verbleibende Verweise innerhalb der Hierarchie oder gespeicherte Positions- und Rotationsdaten könnten nicht vollständig bereinigt werden.
 \end{itemize}

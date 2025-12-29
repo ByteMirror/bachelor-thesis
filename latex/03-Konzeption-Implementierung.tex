@@ -94,7 +94,7 @@ Die erweiterten Features F2.6-F2.8 (Health Bars, Status Icons, Statblock-Linking
 
 \subsubsection{Fog of War}
 
-Fog of War ermöglicht das Verbergen nicht-entdeckter Bereiche einer Map und ist ein Standard-Feature in VTTs wie Foundry \ac{VTT} und Roll20\autocite{FoundryScenes2024,Roll20FogOfWar2024}. Die Anforderungen umfassen das Erstellen von Fog Regions (Rectangle, Polygon), das progressive Aufdecken durch Fog Removal sowie separate Rendering-Modi: Der \ac{GM} sieht die vollständige Map (\ac{GM}-Only Preview) zur Fog-Planung, während die Player View Fog opaque rendert.
+Wie in \autoref{subsubsec:FogOfWar} beschrieben, ermöglicht Fog of War das Verbergen nicht-entdeckter Bereiche einer Map und ist ein Standard-Feature in VTTs wie Foundry \ac{VTT} und Roll20\autocite{FoundryScenes2024,Roll20FogOfWar2024}. Die Anforderungen umfassen das Erstellen von Fog Regions (Rectangle, Polygon), das progressive Aufdecken durch Fog Removal sowie separate Rendering-Modi: Der \ac{GM} sieht die vollständige Map (\ac{GM}-Only Preview) zur Fog-Planung, während die Player View Fog opaque rendert.
 
 Alle Fog of War-Anforderungen (F3.1-F3.4) sind als Must have klassifiziert, da Fog of War in beiden etablierten \ac{VTT}-Plattformen als Kern-Feature für Dungeon-Exploration implementiert ist und ohne diese Funktionalität eine zentrale Mechanik des Tabletop-Gameplays -- das schrittweise Erkunden unbekannter Gebiete -- nicht umsetzbar wäre:
 
@@ -281,7 +281,7 @@ Atlas \ac{VTT} integriert sich über die Standard Plugin Lifecycle Hooks in Obsi
 
 \paragraph{DeferredView Handling}
 
-Eine kritische Obsidian-spezifische Constraint ist das DeferredView-System: Obsidian lädt Views lazy, um Startup-Performance zu optimieren. Direkter Zugriff auf eine nicht-geladene View führt zu \texttt{undefined}-Fehlern. \autoref{lst:deferred-view} zeigt das Safety Pattern für explizites Laden vor Zugriff.
+Ein kritischer Obsidian-spezifischer Constraint ist das DeferredView-System: Obsidian lädt Views lazy, um Startup-Performance zu optimieren. Direkter Zugriff auf eine nicht-geladene View führt zu \texttt{undefined}-Fehlern. \autoref{lst:deferred-view} zeigt das Safety Pattern für explizites Laden vor Zugriff.
 
 \begin{lstlisting}[float,language=TypeScript,caption={DeferredView Safety Pattern},label=lst:deferred-view]
 // Falsch: Direkter Zugriff kann fehlschlagen
@@ -293,7 +293,7 @@ await leaf.loadIfDeferred();
 const view = leaf.view as AtlasView;
 \end{lstlisting}
 
-Diese Constraint stellt ein dokumentiertes Risiko dar und erfordert explizites Laden via \texttt{await leaf.loadIfDeferred()} vor jedem View-Zugriff.
+Dieser Constraint stellt ein dokumentiertes Risiko dar und erfordert explizites Laden via \texttt{await leaf.loadIfDeferred()} vor jedem View-Zugriff.
 
 \paragraph{PIXI.js Version Konflikt}
 
@@ -312,7 +312,7 @@ const app = new Application();
 
 Diese Entscheidung unterscheidet sich von Foundry \ac{VTT}, das bei PIXI.js v7 verbleibt. Das Foundry-Entwicklerteam begründet dies damit, dass eine Migration Breaking Changes für das Modul-Ökosystem bedeuten würde\autocite{FoundryIssue11183}. Da Atlas \ac{VTT} als vollständige Neuentwicklung ohne bestehende Codebasis entsteht, entfallen Migrationskosten. Gleichzeitig können v8-Features wie das vereinfachte Package-System, asynchrone Initialisierung für WebGPU-Support und optimierte Culling-Controls genutzt werden\autocite{PixiV8Migration2024}.
 
-Der Trade-off dieser Lösung ist erhöhter Bundle-Size: PIXI.js v8 fügt ~500 \ac{KB} zum finalen Bundle hinzu. Dieser Overhead wird bewusst in Kauf genommen, da die konsolidierte Package-Struktur von v8 Version-Konflikte eliminiert und die modernen \ac{API}-Patterns die Wartbarkeit erhöhen\autocite{PixiV8Migration2024}.
+Der Trade-off dieser Lösung ist erhöhte Bundle-Size: PIXI.js v8 fügt ~500 \ac{KB} zum finalen Bundle hinzu. Dieser Overhead wird bewusst in Kauf genommen, da die konsolidierte Package-Struktur von v8 Version-Konflikte eliminiert und die modernen \ac{API}-Patterns die Wartbarkeit erhöhen\autocite{PixiV8Migration2024}.
 
 \subsection{Datenmodell}
 \label{subsec:Datenmodell}
@@ -412,7 +412,7 @@ Die Verwendung von \ac{YAML} Frontmatter folgt Obsidian's native Metadata-System
 
 \paragraph{Bidirektionale Token-Statblock-Verlinkung}
 
-Das System erzwingt One-to-One Relationships zwischen Tokens und Statblocks: Ein Token kann maximal einen Statblock referenzieren, und ein Statblock kann maximal einen Token haben. Dies wird durch den \texttt{TokenStatblockLinkService} (Singleton) garantiert. \autoref{fig:bidirectional-linking-flow} illustriert den Ablauf der Verlinkungslogik:
+Das System erzwingt One-to-One Relationships zwischen Tokens und Statblocks: Ein Token kann maximal einen Statblock referenzieren, und ein Statblock kann maximal ein Token haben. Dies wird durch den \texttt{TokenStatblockLinkService} (Singleton) garantiert. \autoref{fig:bidirectional-linking-flow} illustriert den Ablauf der Verlinkungslogik:
 
 \begin{figure}[htbp]
 	\centering
@@ -654,7 +654,7 @@ Tokens sind die zentralen interaktiven Objekte in einem Virtual-Tabletop und rep
 
 \subsubsection{Problem: Performance bei objektreichen Szenarien}
 
-Token-Rendering in objektreichen Szenarien stellt besondere Performance-Anforderungen: Während jeder Token hochgradig interaktiv sein muss (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendert (Avatar-Bild, Health Bar, Status-Icons), können in großen Encounters bis zu 100+ Tokens gleichzeitig auf der Map existieren. Die PIXI.js-Dokumentation betont, dass zunehmende Szenen-Komplexität die Performance direkt beeinflusst\autocite{PixiPerf2024}, was die Relevanz dieser Problemstellung unterstreicht. Eine naive Implementierung, die alle Tokens durchgehend rendert und keine Optimierungsstrategien implementiert, würde mehrere Performance-Probleme aufweisen:
+Token-Rendering in objektreichen Szenarien stellt besondere Performance-Anforderungen: Während jedes Token hochgradig interaktiv sein muss (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendert (Avatar-Bild, Health Bar, Status-Icons), können in großen Encounters bis zu 100+ Tokens gleichzeitig auf der Map existieren. Die PIXI.js-Dokumentation betont, dass zunehmende Szenen-Komplexität die Performance direkt beeinflusst\autocite{PixiPerf2024}, was die Relevanz dieser Problemstellung unterstreicht. Eine naive Implementierung, die alle Tokens durchgehend rendert und keine Optimierungsstrategien implementiert, würde mehrere Performance-Probleme aufweisen:
 
 \begin{itemize}
 	\item \textbf{Fehlende Culling-Strategie}: Bei großen Maps mit vielen Off-Screen-Tokens würde das Rendering aller Objekte zu unnötiger \ac{CPU}- und \ac{GPU}-Last führen. Die PIXI.js-Dokumentation empfiehlt, Culling auf Anwendungsebene zu implementieren oder durch \texttt{cullable = true} zu aktivieren\autocite{PixiPerf2024}.
