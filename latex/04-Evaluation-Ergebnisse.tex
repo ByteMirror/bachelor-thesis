@@ -9,7 +9,7 @@ Die Performance-Evaluation von Atlas \ac{VTT} folgt einer praxisorientierten Mes
 
 \subsection{Testumgebung und -bedingungen}
 
-Die Reproduzierbarkeit der Performance-Messungen erfordert eine präzise Dokumentation der Testumgebung\autocite{Weber2019EssentialBenchmarking}. Die Testumgebung für die Performance-Messungen von Atlas \ac{VTT} wurde daher mit folgenden Spezifikationen aufgebaut:
+Für die methodische Gestaltung der Performance-Messungen orientiert sich diese Arbeit an den Richtlinien der Standard Performance Evaluation Corporation (SPEC), deren Benchmarking-Standards von über 120 Industriepartnern -- darunter Intel, AMD und Google -- getragen werden und als De-facto-Standard für reproduzierbare Performance-Evaluationen gelten. Die Reproduzierbarkeit der Performance-Messungen erfordert eine präzise Dokumentation der Testumgebung\autocite{SPECCPU2017RunRules}. Die Testumgebung für die Performance-Messungen von Atlas \ac{VTT} wurde daher mit folgenden Spezifikationen aufgebaut:
 
 \paragraph{Hardware-Spezifikationen}
 Die Tests wurden auf einem repräsentativen Consumer-System durchgeführt, das die typische Zielgruppe von Obsidian-Nutzern widerspiegelt:
@@ -21,7 +21,7 @@ Die Tests wurden auf einem repräsentativen Consumer-System durchgeführt, das d
 	\item \textbf{Display}: 14-Zoll Liquid Retina \ac{XDR} (3024 × 1964 Pixel)
 \end{itemize}
 
-Die Auswahl dieser Hardware-Konfiguration begründet sich durch die weite Verbreitung von Apple Silicon Macs in der Entwickler- und Content-Creator-Community, die eine zentrale Nutzergruppe von Obsidian darstellt. Die ARM-basierte Architektur des M1-Chips stellt zudem besondere Anforderungen an Electron-Anwendungen und ermöglicht die Evaluation unter realistischen Bedingungen.
+Die Messungen wurden auf der für diese Arbeit verfügbaren Hardware durchgeführt. Die Beschränkung auf ein einzelnes Testsystem stellt eine Limitation dar, da Performance-Charakteristiken auf anderen Plattformen abweichen können. Die detaillierte Dokumentation der Testumgebung ermöglicht jedoch die Einordnung der Ergebnisse und bildet die Grundlage für vergleichende Messungen auf weiteren Systemen.
 
 \paragraph{Software-Versionen}
 Um die Nachvollziehbarkeit der Messungen zu gewährleisten, wurden folgende Software-Versionen verwendet:
@@ -47,10 +47,10 @@ Um Störfaktoren zu minimieren und die interne Validität der Messungen zu siche
 	\item \textbf{Temperaturkontrolle}: Tests erst nach thermischer Stabilisierung (< 45°C \ac{CPU}-Temperatur)
 \end{itemize}
 
-Diese Kontrollmaßnahmen orientieren sich an Best Practices für Electron-App-Benchmarks, wie sie von Thangadurai et al. in ihrer Studie zum Vergleich von Electron- und Web-Anwendungen etabliert wurden \autocite{Thangadurai2024ElectronApps}.
+Diese Kontrollmaßnahmen entsprechen etablierten Best Practices für reproduzierbare Software-Benchmarks\autocite{SPECCPU2017RunRules}.
 
 \paragraph{Testdaten und Szenarien}
-Die Evaluation folgt einem Multi-Scenario-Ansatz \autocite{Thangadurai2024ElectronApps}, der verschiedene Nutzungsmuster und Belastungsstufen abdeckt:
+Die Evaluation folgt einem Multi-Scenario-Ansatz, der verschiedene Nutzungsmuster und Belastungsstufen abdeckt:
 
 \begin{enumerate}
 	\item \textbf{Leere Map (Baseline)}: Eine neu erstellte, leere Karte ohne Token oder Assets dient als Performance-Baseline zur Messung der minimalen Plugin-Overhead
@@ -69,7 +69,7 @@ Diese Szenarien wurden gewählt, um sowohl typische als auch Extremfälle der Pl
 Die Messmethodik folgt dem von Electron empfohlenen Ansatz des profiling-gestützten Performance-Measurements\autocite{ElectronPerformanceGuide2024}. Für die statistisch valide Evaluation wurde ein automatisiertes Benchmark-System implementiert, das reproduzierbare Messungen mit hoher Stichprobengröße ermöglicht.
 
 \paragraph{Automatisiertes Benchmark-System}
-Zur Gewährleistung statistischer Validität wurde ein dedizierter \texttt{BenchmarkService} implementiert, der vollautomatische Performance-Messungen durchführt. Das System führt für jedes Szenario 500 Iterationen durch -- eine Stichprobengröße, die deutlich über dem für statistische Signifikanz erforderlichen Minimum von $n \geq 30$ liegt\autocite{Weber2019EssentialBenchmarking}. Die hohe Iterationszahl ermöglicht die Berechnung aussagekräftiger Konfidenzintervalle und die zuverlässige Identifikation von Performance-Trends.
+Zur Gewährleistung statistischer Validität wurde ein dedizierter \texttt{BenchmarkService} implementiert, der vollautomatische Performance-Messungen durchführt. Das System führt für jedes Szenario 500 Iterationen durch -- eine Stichprobengröße, die deutlich über dem statistisch etablierten Minimum von $n \geq 30$ liegt. Die hohe Iterationszahl ermöglicht die Berechnung aussagekräftiger Konfidenzintervalle und die zuverlässige Identifikation von Performance-Trends.
 
 Der Benchmark-Ablauf pro Iteration umfasst:
 \begin{enumerate}
@@ -118,7 +118,7 @@ Tabelle~\autoref{tab:benchmark-results} zeigt die aggregierten Ergebnisse der Pe
 	\label{tab:benchmark-results}
 	\begin{tabularx}{\textwidth}{Xrrrr}
 		\toprule
-		\textbf{Szenario} & \textbf{Token} & \textbf{\ac{FPS}}          & \textbf{Frame Time}    & \textbf{Heap Memory}      \\
+		\textbf{Szenario} & \textbf{Token} & \textbf{\ac{FPS}}     & \textbf{Frame Time}         & \textbf{Heap Memory}           \\
 		\midrule
 		Baseline (Empty)  & 0              & $119{,}94 \pm 0{,}22$ & $8{,}34 \pm 0{,}02$ \ac{ms} & $52{,}1 \pm 0{,}4$ \ac{MB}     \\
 		Typical Session   & 20             & $120{,}02 \pm 0{,}96$ & $8{,}33 \pm 0{,}08$ \ac{ms} & $287{,}3 \pm 77{,}2$ \ac{MB}   \\

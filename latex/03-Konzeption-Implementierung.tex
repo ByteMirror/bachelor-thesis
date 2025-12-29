@@ -28,7 +28,7 @@ Die Anforderungen F1.1-F1.4 sind als P0 klassifiziert, da sie in beiden marktfü
 
 \textbf{Foundry \ac{VTT}} implementiert Grid-Konfiguration mit Unterstützung für Square, Hexagonal und Gridless Layouts sowie konfigurierbarer Grid-Größe und Offset-Anpassung\autocite{FoundryScenes2024}. Map-Import erfolgt über Drag \& Drop mit Unterstützung für \ac{JPEG}, \ac{PNG} und \ac{WebP} Formate. Die Scene-Konfiguration ermöglicht präzise Anpassung von Grid-Typ, Größe und Ausrichtung, was für die korrekte Darstellung verschiedener Battle-Map-Formate erforderlich ist.
 
-\textbf{Roll20} bietet vergleichbare Funktionalität mit Grid Snap-to-Grid für Square- und Hexagonal-Grids, wobei die Grid-Größe und der Typ in den Page Settings konfiguriert werden können\autocite{Roll20Graphics2024}. Der Image-Import erfolgt per Drag \& Drop aus der Art Library mit automatischer Grid-Erkennung für vorgezeichnete Maps.
+\textbf{Roll20} bietet vergleichbare Funktionalität mit Grid Snap-to-Grid für Square- und Hexagonal-Grids, wobei die Grid-Größe und der Typ in den Page Settings konfiguriert werden können\autocite{Roll20Graphics2024}. Der Image-Import erfolgt per Drag \& Drop aus der Art Library.
 
 Die Persistenz-Anforderung (F1.4) ist technisch notwendig für Session-Continuity: Ohne Speicherung würden alle Map-Konfigurationen und platzierten Objekte bei jedem Plugin-Neustart verloren gehen. Multi-Scene-Support (F1.5) ist als P1 eingestuft, da sowohl Foundry als auch Roll20 zwar Scene-Management implementieren, jedoch einzelne Maps für minimale \ac{VTT}-Funktionalität ausreichen und Scene-Switching primär Komfort-Funktionalität darstellt.
 
@@ -62,7 +62,7 @@ Die Anforderungen F2.1-F2.5 sind als P0 klassifiziert, da sie die minimale Funkt
 
 \textbf{Foundry \ac{VTT}} implementiert Token-Manipulation als Kern-Feature mit folgenden Funktionen: Token Creation durch Drag \& Drop von Akteuren auf die Canvas, Placement mit präziser Positionierung über X/Y-Koordinaten, Movement mit automatischer Distanzmessung beim Ziehen, Grid-Snapping für taktische Positionierung sowie Rotation in Grad-Schritten mit Shift+WASD/Mausrad-Kontrolle\autocite{FoundryTokens2024}. Multi-Selection wird durch das Select Tokens Tool mit Shift-Click und Bounding-Box-Auswahl unterstützt.
 
-\textbf{Roll20} bietet vergleichbare Kern-Funktionalität: Drag \& Drop von Tokens aus der Art Library auf den Tabletop, automatisches Grid-Snapping beim Movement (kann per Alt-Taste deaktiviert werden), sowie Token-Rotation mit 45°-Schritten für Square-Grids und 30°-Schritten für Hexagonal-Grids\autocite{Roll20Graphics2024,Roll20TokenFeatures2024}. Multi-Selection erfolgt durch Strg-Click oder Rahmenauswahl.
+\textbf{Roll20} bietet vergleichbare Kern-Funktionalität: Drag \& Drop von Tokens aus der Art Library auf den Tabletop, automatisches Grid-Snapping beim Movement (kann per Alt-Taste deaktiviert werden), sowie Token-Rotation mit 45°-Schritten für Square-Grids und 30°-Schritten für Hexagonal-Grids\autocite{Roll20Graphics2024,Roll20TokenFeatures2024}. Multi-Selection erfolgt durch Shift-Click oder Rahmenauswahl.
 
 Token-Rotation (F2.4) ist für D\&D 5e Combat Facing und Sichtlinien-Berechnung erforderlich, wird jedoch in beiden Plattformen unterschiedlich granular implementiert (Foundry: beliebige Grad-Schritte, Roll20: feste Winkel-Increments).
 
@@ -91,7 +91,7 @@ Die erweiterten Features F2.6-F2.8 (Health Bars, Status Icons, Statblock-Linking
 
 \subsubsection{Fog of War}
 
-Fog of War ermöglicht das Verbergen nicht-entdeckter Bereiche einer Map und ist ein Standard-Feature in VTTs wie Foundry \ac{VTT} und Roll20\autocite{FoundryTokens2024}. Die Anforderungen umfassen das Erstellen von Fog Regions (Rectangle, Polygon), das progressive Aufdecken durch Fog Removal sowie separate Rendering-Modi: Der \ac{GM} sieht die vollständige Map (\ac{GM}-Only Preview) zur Fog-Planung, während die Player View Fog opaque rendert.
+Fog of War ermöglicht das Verbergen nicht-entdeckter Bereiche einer Map und ist ein Standard-Feature in VTTs wie Foundry \ac{VTT} und Roll20\autocite{FoundryScenes2024,Roll20FogOfWar2024}. Die Anforderungen umfassen das Erstellen von Fog Regions (Rectangle, Polygon), das progressive Aufdecken durch Fog Removal sowie separate Rendering-Modi: Der \ac{GM} sieht die vollständige Map (\ac{GM}-Only Preview) zur Fog-Planung, während die Player View Fog opaque rendert.
 
 Alle Fog of War-Anforderungen (F3.1-F3.4) sind als P0 klassifiziert, da Fog of War in beiden marktführenden \ac{VTT}-Plattformen als Kern-Feature für Dungeon-Exploration implementiert ist und ohne diese Funktionalität eine zentrale Mechanik des Tabletop-Gameplays -- das schrittweise Erkunden unbekannter Gebiete -- nicht umsetzbar wäre:
 
@@ -159,7 +159,7 @@ Die nicht-funktionalen Anforderungen definieren messbare Qualitätsattribute fü
 
 Performance ist kritisch für flüssige Interaktionen in Desktop-Anwendungen. Nielsen beschreibt, dass Nutzer bei einer Reaktionszeit von 0.1 Sekunden (100ms) das System als augenblicklich reagierend wahrnehmen\autocite{Nielsen1993ResponseTimes}. Für Animationen und kontinuierliches Rendering gilt 60 \ac{FPS} als Desktop-Standard, während 30 \ac{FPS} als Minimum für flüssige Interaktionen definiert wird.
 
-VTTs müssen große Maps und viele Tokens performant handhaben. Die PIXI.js-Dokumentation definiert einen performance-kritischen Schwellenwert, bei dem Hunderte komplexer Graphics-Objekte zu Performance-Problemen führen können\autocite{PixiPerf2024}, was typischen \ac{VTT}-Szenarien mit 50-100+ Tokens bei großen Encounters entspricht. Die Memory-Anforderungen werden durch Electron-Limits auf maximal 500 \ac{MB} für typische Szenarien begrenzt.
+VTTs müssen große Maps und viele Tokens performant handhaben. Die PIXI.js-Dokumentation betont, dass die Szenen-Komplexität direkt die Performance beeinflusst und das System mit zunehmender Objektanzahl langsamer wird\autocite{PixiPerf2024}, was bei typischen \ac{VTT}-Szenarien mit 50-100+ Tokens bei großen Encounters relevant ist. Die Memory-Anforderungen werden durch Electron-Limits auf maximal 500 \ac{MB} für typische Szenarien begrenzt.
 
 Tabelle~\autoref{tab:nicht-funktionale-anforderungen-performance} definiert die quantifizierten Performance-Ziele:
 
@@ -187,7 +187,7 @@ Die Messung erfolgt durch Chrome DevTools Performance Profiler und standardisier
 
 Skalierbarkeits-Anforderungen definieren die Grenzen für Token Count, Map Size und Asset Library. Stress-Test-Szenarien mit 100+ Tokens bei mindestens 30 \ac{FPS} simulieren große D\&D-Encounters. Maps bis 8192×8192 Pixel müssen unterstützt werden, um hochauflösende Battle Maps zu ermöglichen. Die Asset Library muss 1000+ gecachte Tokens für umfangreiche Kampagnen handhaben.
 
-Die technische Strategie zur Erreichung dieser Skalierbarkeit basiert auf PIXI.js Performance Best Practices: Culling für Off-Screen-Objekte, Texture Caching für wiederverwendete Assets und Power-of-Two Textures für \ac{GPU}-Optimierung\autocite{PixiPerf2024}. Die PIXI.js-Dokumentation warnt explizit, dass die Verwendung von Hunderten komplexen Graphics-Objekten langsam sein kann, was Object Pooling und Culling-Strategien erforderlich macht.
+Die technische Strategie zur Erreichung dieser Skalierbarkeit basiert auf etablierten Performance Best Practices: Culling für Off-Screen-Objekte und Texture Caching für wiederverwendete Assets\autocite{PixiPerf2024}, sowie Power-of-Two Textures für \ac{GPU}-Optimierung\autocite{PixiTexture2024}. Die PIXI.js-Dokumentation warnt explizit, dass die Verwendung von Hunderten komplexen Graphics-Objekten langsam sein kann, was Object Pooling und Culling-Strategien erforderlich macht.
 
 \subsubsection{Plattform-Kompatibilität}
 
@@ -214,7 +214,7 @@ Ein kritischer Konflikt entsteht durch Obsidians globales PIXI.js v7 Bundle. Atl
 
 \subsubsection{Wartbarkeit und Code-Qualität}
 
-Wartbarkeit wird durch etablierte Software Engineering Prinzipien sichergestellt. Das Single Responsibility Principle wird durch modulare Service-Architektur umgesetzt, wobei jedes Modul maximal 300 Lines of Code umfassen sollte\autocite{MartinCleanCode2008}. Strict TypeScript mit vollständiger Type Safety eliminiert \texttt{any}-Types in Production Code. Das DRY-Prinzip begrenzt Code Duplication auf unter 5\%.
+Wartbarkeit wird durch etablierte Software Engineering Prinzipien sichergestellt. Das Single Responsibility Principle wird durch modulare Service-Architektur umgesetzt, wobei jedes Modul maximal 300 Lines of Code umfassen sollte\autocite{DigitalOceanSOLID,ESLintMaxLines2024}. Strict TypeScript mit vollständiger Type Safety eliminiert \texttt{any}-Types in Production Code. Das DRY-Prinzip begrenzt Code Duplication auf unter 5\%.
 
 Die Architektur folgt Service-Oriented Architecture mit Event-Driven Communication für Loose Coupling und Singleton State durch Zustand Store in \texttt{main.ts:atlasStore}. Code-Qualität Metriken umfassen Cyclomatic Complexity unter 10 pro Funktion, Function Length unter 50 Lines of Code und File Length unter 300 Lines of Code als Refactoring Threshold. Diese Metriken werden kontinuierlich überwacht, um Code-Wartbarkeit über den gesamten Entwicklungszyklus sicherzustellen.
 
@@ -234,17 +234,17 @@ Die Architektur folgt vier zentralen Design-Prinzipien, die aus etablierten Soft
 
 \textbf{Service-orientierte Architektur (\ac{SOA})} organisiert Funktionalität in über 50 eigenständige Services, die jeweils eine klar definierte Verantwortlichkeit besitzen. Fowler beschreibt Service-Orientierung als Organisation von Services um Geschäftsfähigkeiten herum\autocite{Fowler2014}. Für Atlas \ac{VTT} bedeutet dies die Aufteilung in Services wie \texttt{AssetService}, \texttt{NetworkService}, \texttt{AudioService} und \texttt{TokenStatblockLinkService}, die unabhängig entwickelt, getestet und gewartet werden können.
 
-\textbf{Single Responsibility Principle (\ac{SRP})} stellt sicher, dass jedes Modul nur eine Änderungsursache hat. Martin definiert das Prinzip dahingehend, dass eine Klasse nur einen Grund haben sollte, sich zu ändern\autocite{Martin2017}. Dies reduziert die Kopplung zwischen Komponenten und erhöht die Kohäsion innerhalb einzelner Module, was insbesondere bei komplexen \ac{VTT}-Features wie Token-Rendering oder Fog of War-Berechnung die Wartbarkeit verbessert.
+\textbf{Single Responsibility Principle (\ac{SRP})} stellt sicher, dass jedes Modul nur eine Änderungsursache hat. Martin definiert das Prinzip dahingehend, dass eine Klasse nur einen Grund haben sollte, sich zu ändern\autocite{DigitalOceanSOLID}. Dies reduziert die Kopplung zwischen Komponenten und erhöht die Kohäsion innerhalb einzelner Module, was insbesondere bei komplexen \ac{VTT}-Features wie Token-Rendering oder Fog of War-Berechnung die Wartbarkeit verbessert.
 
-\textbf{Event-Driven Communication} entkoppelt Services durch asynchrone Event-Emission statt direkter Methodenaufrufe. Dieses Pattern entspricht dem Observer Pattern aus Gamma et al.\autocite{Gamma1994}, bei dem Subjekte Zustandsänderungen an interessierte Observer kommunizieren, ohne deren konkrete Implementierung zu kennen. In Atlas \ac{VTT} kommunizieren Services über Events wie \texttt{atlas-vtt:refresh-assets} oder \texttt{link-changed}, wodurch neue Features hinzugefügt werden können, ohne bestehende Services zu modifizieren.
+\textbf{Event-Driven Communication} entkoppelt Services durch asynchrone Event-Emission statt direkter Methodenaufrufe. Dieses Pattern entspricht dem Observer Pattern\autocite{RefactoringGuruObserver}, bei dem Subjekte Zustandsänderungen an interessierte Observer kommunizieren, ohne deren konkrete Implementierung zu kennen. In Atlas \ac{VTT} kommunizieren Services über Events wie \texttt{atlas-vtt:refresh-assets} oder \texttt{link-changed}, wodurch neue Features hinzugefügt werden können, ohne bestehende Services zu modifizieren.
 
-\textbf{Singleton Pattern für zentrale Services} wird für Services eingesetzt, die vault-weiten Zustand verwalten müssen. Gamma et al. definieren das Singleton Pattern als Entwurfsmuster, bei dem eine Klasse nur eine Instanz hat und einen globalen Zugriffspunkt darauf bietet\autocite{Gamma1994}. Dies ist kritisch für den \texttt{AssetService}, da Asset-Metadaten über alle geöffneten Map-Views hinweg konsistent sein müssen, um Dateninkonsistenzen zu vermeiden.
+\textbf{Singleton Pattern für zentrale Services} wird für Services eingesetzt, die vault-weiten Zustand verwalten müssen. Das Singleton Pattern ist ein Entwurfsmuster, bei dem eine Klasse nur eine Instanz hat und einen globalen Zugriffspunkt darauf bietet\autocite{RefactoringGuruSingleton}. Dies ist kritisch für den \texttt{AssetService}, da Asset-Metadaten über alle geöffneten Map-Views hinweg konsistent sein müssen, um Dateninkonsistenzen zu vermeiden.
 
 Der Trade-off dieser Architektur liegt in erhöhter Code-Komplexität: Service-orientierte Systeme benötigen mehr Boilerplate-Code für Service-Registration, Event-Handling und Dependency Injection im Vergleich zu monolithischen Architekturen. Fowler warnt, dass Microservices einen Preis in Form von operationaler Komplexität haben\autocite{Fowler2014}. Für Atlas \ac{VTT} wurde dieser Trade-off als akzeptabel bewertet, da die Vorteile in Wartbarkeit und Testbarkeit die zusätzliche Komplexität überwiegen, insbesondere bei einem Plugin mit über 30.000 Zeilen Code.
 
 \subsubsection{Layer-Architektur}
 
-Die Implementierung folgt einer Layered Architecture. Buschmann et al. beschreiben dieses Pattern als Zerlegung des Systems in Schichten, wobei jede Schicht Services für die darüberliegende Schicht bereitstellt\autocite{Buschmann1996}. Atlas \ac{VTT} implementiert vier Haupt-Layer:
+Die Implementierung folgt einer Layered Architecture. Richards beschreibt dieses Pattern als Strukturierung von Komponenten in horizontale Schichten, wobei jede Schicht eine spezifische Rolle innerhalb der Anwendung erfüllt\autocite{Richards2015LayeredArchitecture}. Atlas \ac{VTT} implementiert vier Haupt-Layer:
 
 \paragraph{View Layer}
 
@@ -358,7 +358,7 @@ Das Datenmodell ist in drei separate Bereiche unterteilt, die jeweils unterschie
 
 \textbf{Application State} (transient, pro-View) hält Runtime-Zustand wie aktuelle Tool-Auswahl, Viewport-Position und \ac{UI}-Zustand. Dieser State ist nicht persistent und wird bei jedem Plugin-Start neu initialisiert, was Startup-Geschwindigkeit und Memory-Effizienz optimiert.
 
-Diese Separation entspricht dem Data Access Object (\ac{DAO}) Pattern von Fowler\autocite{Fowler2003}, bei dem Daten-Zugriff von Geschäftslogik getrennt wird. Für Atlas \ac{VTT} bedeutet dies, dass Services ausschließlich über definierte Schnittstellen (\texttt{MapService}, \texttt{AssetService}) auf persistente Daten zugreifen, nicht direkt auf Dateien.
+Diese Separation entspricht dem Table Data Gateway Pattern\autocite{FowlerPoEAACatalog2024}, bei dem Daten-Zugriff von Geschäftslogik getrennt wird. Für Atlas \ac{VTT} bedeutet dies, dass Services ausschließlich über definierte Schnittstellen (\texttt{MapService}, \texttt{AssetService}) auf persistente Daten zugreifen, nicht direkt auf Dateien.
 
 \subsubsection{Map Data Format}
 
@@ -372,7 +372,7 @@ Die \texttt{objects}-Array enthält polymorphe Objekte verschiedener Typen (Toke
 
 Die TypeScript-Implementierung nutzt eine abstrakte Basisklasse \texttt{MapObject} für gemeinsame Eigenschaften aller Map-Objekte (\texttt{id}, \texttt{x}, \texttt{y}, \texttt{gmOnly}, \texttt{draggable}). Konkrete Klassen wie \texttt{Token} und \texttt{FogRegion} erben von dieser Basisklasse und fügen typ-spezifische Properties hinzu (\texttt{image}, \texttt{rotation}, \texttt{statblockPath} für Tokens; \texttt{shape}, \texttt{points} für FogRegions). Jede Klasse implementiert eine \texttt{serialize()}-Methode, die das Objekt in \ac{JSON}-kompatibles Format konvertiert und ein \texttt{type}-Diskriminator-Feld hinzufügt (vollständige Implementierung: siehe \autoref{sec:anhang-mapobject-hierarchy}, \texttt{types.ts:89-125}).
 
-Diese Hierarchie folgt dem Open/Closed Principle: Das System ist offen für Erweiterung (neue Objekt-Typen) aber geschlossen für Modifikation (bestehende Typen bleiben unverändert)\autocite{Martin2017}. Der Trade-off liegt in erhöhter Type-Komplexität: TypeScript's Type System benötigt Type Guards für Discriminated Unions, um Type-Safety zur Compile-Zeit zu garantieren.
+Diese Hierarchie folgt dem Open/Closed Principle: Das System ist offen für Erweiterung (neue Objekt-Typen) aber geschlossen für Modifikation (bestehende Typen bleiben unverändert)\autocite{StackifyOCP}. Der Trade-off liegt in erhöhter Type-Komplexität: TypeScript's Type System benötigt Type Guards für Discriminated Unions, um Type-Safety zur Compile-Zeit zu garantieren.
 
 \subsubsection{Asset Metadata System}
 
@@ -402,7 +402,7 @@ Der Trade-off ist Skalierbarkeit: Bei sehr großen Vaults (>10.000 Assets) kann 
 
 \paragraph{Singleton AssetService}
 
-Der \texttt{AssetService} implementiert das Singleton Pattern\autocite{Gamma1994}, um Metadata-Konsistenz bei mehreren gleichzeitig geöffneten Maps zu garantieren. Die Implementierung verwendet eine private statische \texttt{instance}-Variable und einen privaten Constructor, der verhindert, dass externe Klassen direkt Instanzen erzeugen. Die statische \texttt{getInstance()}-Methode prüft, ob bereits eine Instanz existiert, und erstellt nur bei Bedarf eine neue. Die \texttt{getAssets()}-Methode lädt Metadata lazy beim ersten Zugriff und cached sie für nachfolgende Aufrufe (vollständige Implementierung: siehe \autoref{sec:anhang-asset-service}, \texttt{AssetService.ts:23-45}).
+Der \texttt{AssetService} implementiert das Singleton Pattern\autocite{RefactoringGuruSingleton}, um Metadata-Konsistenz bei mehreren gleichzeitig geöffneten Maps zu garantieren. Die Implementierung verwendet eine private statische \texttt{instance}-Variable und einen privaten Constructor, der verhindert, dass externe Klassen direkt Instanzen erzeugen. Die statische \texttt{getInstance()}-Methode prüft, ob bereits eine Instanz existiert, und erstellt nur bei Bedarf eine neue. Die \texttt{getAssets()}-Methode lädt Metadata lazy beim ersten Zugriff und cached sie für nachfolgende Aufrufe (vollständige Implementierung: siehe \autoref{sec:anhang-asset-service}, \texttt{AssetService.ts:23-45}).
 
 Diese Implementierung garantiert, dass alle Map-Views denselben \texttt{AssetService} verwenden und somit konsistente Metadaten sehen. Ohne Singleton würde View A Asset-Metadaten ändern, während View B veraltete Daten hat, was zu Race Conditions beim gleichzeitigen Token-Spawning führen würde.
 
@@ -445,7 +445,7 @@ Das System erzwingt One-to-One Relationships zwischen Tokens und Statblocks: Ein
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth]{bilder/bidirectional-linking-flow.png}
+	\includegraphics[width=0.7\textwidth,height=0.6\textheight,keepaspectratio]{bilder/bidirectional-linking-flow.png}
 	\caption{Ablaufdiagramm der bidirektionalen Token-Statblock-Verlinkung. Der Prozess stellt durch Konsistenz-Checks sicher, dass One-to-One Relationships erzwungen werden (vollständiger Quellcode: siehe \autoref{sec:anhang-bidirectional-linking}).}
 	\label{fig:bidirectional-linking-flow}
 \end{figure}
@@ -454,14 +454,16 @@ Diese bidirektionale Synchronisation entspricht dem Two-Way Data Binding Pattern
 
 \subsubsection{Application State Management}
 
-Der Runtime-Zustand wird mit Zustand\autocite{ZustandDocs2024} als State Management Library verwaltet. \autoref{fig:state-management-architecture} zeigt die mehrschichtige Architektur und den zyklischen Datenfluss des Atlas Stores:
+Der Runtime-Zustand wird mit Zustand\autocite{ZustandDocs2024} als State Management Library verwaltet. \autoref{fig:state-management-architecture} zeigt die mehrschichtige Architektur und den zyklischen Datenfluss des Atlas Stores.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.85\textwidth]{bilder/state-management-architecture.png}
-	\caption{Architektur und Datenfluss des Atlas State Management Systems. \textbf{Read-Pfad} (1--4, blau): Components lesen State durch Middleware-Layer. \textbf{Write-Pfad} (5--8, rot): Components rufen Actions auf, die State modifizieren. \textbf{Notify} (9, grün): Store benachrichtigt Subscribers über Änderungen. Temporal fügt Undo/Redo hinzu, Immer erzwingt Immutability (vollständige Implementierung: siehe \autoref{sec:anhang-state-management}).}
+	\includegraphics[width=0.85\textwidth,height=0.6\textheight,keepaspectratio]{bilder/state-management-architecture.png}
+	\caption{Architektur des Atlas State Management Systems (vollständige Implementierung: siehe \autoref{sec:anhang-state-management}).}
 	\label{fig:state-management-architecture}
 \end{figure}
+
+Die Architektur unterscheidet drei Pfade: Der \textbf{Read-Pfad} (1--4, blau) ermöglicht Components das Lesen des States durch einen Middleware-Layer. Der \textbf{Write-Pfad} (5--8, rot) verarbeitet Actions, die den State modifizieren. Der \textbf{Notify-Pfad} (9, grün) benachrichtigt Subscribers über Änderungen. Temporal fügt Undo/Redo-Funktionalität hinzu, während Immer Immutability erzwingt.
 
 Die Verwendung von Immer garantiert Immutability durch Copy-on-Write: State-Updates erzeugen neue Objekte statt Mutations, was Time-Travel Debugging und Undo/Redo ohne zusätzliche Logik ermöglicht\autocite{ImmerDocs2024}. Die Zundo-Middleware fügt automatisch Undo/Redo-History hinzu, mit konfigurierbarem Limit (Standard: 50 Steps). Der vollständige Code des \texttt{AtlasState}-Interfaces und der Store-Konfiguration ist in \autoref{sec:anhang-state-management} zu finden (Implementierung: \texttt{atlasStore.ts:34-67}).
 
@@ -520,7 +522,7 @@ useEffect(() => {
 }, []);
 \end{lstlisting}
 
-Dieses Event-Driven Pattern entspricht dem Observer Pattern\autocite{Gamma1994} und ermöglicht lose Kopplung: Der \texttt{TokenStatblockLinkService} weiß nicht, welche Views existieren oder wie sie auf Events reagieren. Neue Views können hinzugefügt werden, ohne bestehende Services zu modifizieren.
+Dieses Event-Driven Pattern entspricht dem Observer Pattern\autocite{RefactoringGuruObserver} und ermöglicht lose Kopplung: Der \texttt{TokenStatblockLinkService} weiß nicht, welche Views existieren oder wie sie auf Events reagieren. Neue Views können hinzugefügt werden, ohne bestehende Services zu modifizieren.
 
 Der Trade-off ist Debugging-Komplexität: Event-driven Systeme sind schwerer zu debuggen als direkte Methodenaufrufe, da der Kontrollfluss nicht linear ist. Atlas \ac{VTT} nutzt TypeScript's Type System für Event-Payloads, um Type-Safety zur Compile-Zeit zu garantieren.
 
@@ -543,9 +545,9 @@ Für die Evaluation wurden drei JavaScript-Rendering-Frameworks anhand veröffen
 
 \textbf{Konva.js} basiert auf der Canvas 2D \ac{API} und bietet eine einfache, deklarative \ac{API} für interaktive Grafiken. In Performance-Benchmarks mit 8000 Objekten erreichte Konva.js durchschnittlich 23 \ac{FPS} in Chrome auf einem MacBook Pro 2019\autocite{Canvas2025}. Die Hauptlimitation besteht darin, dass Konva.js keine native \ac{WebGL}-Hardware-Beschleunigung nutzt und stattdessen ausschließlich auf der Canvas 2D \ac{API} aufsetzt, was bei mehr als 100 gleichzeitigen Objekten zu Performance-Problemen führt.
 
-\textbf{Fabric.js} verfolgt einen ähnlichen Ansatz wie Konva.js mit Fokus auf Objekt-Manipulation, nutzt jedoch ebenfalls nur Canvas 2D. Zum Zeitpunkt der Evaluation (Stand 2025) war \ac{WebGL}-Unterstützung für Fabric.js noch nicht implementiert und befand sich laut Community-Diskussionen lediglich auf der Roadmap\autocite{Slant2025}. Die Performance-Charakteristiken sind daher vergleichbar mit Konva.js.
+\textbf{Fabric.js} verfolgt einen ähnlichen Ansatz wie Konva.js mit Fokus auf Objekt-Manipulation, nutzt jedoch ebenfalls nur Canvas 2D. Zum Zeitpunkt der Evaluation (Stand 2025) war \ac{WebGL}-Unterstützung für Fabric.js noch nicht implementiert und befand sich laut Community-Diskussionen lediglich auf der Roadmap\autocite{FabricJSWebGL2025}. Die Performance-Charakteristiken sind daher vergleichbar mit Konva.js.
 
-\textbf{PIXI.js} ist eine \ac{WebGL}-basierte 2D-Rendering-Engine mit optionalem Canvas 2D Fallback. In denselben Benchmarks erreichte PIXI.js 60 \ac{FPS} bei 8000 Objekten in Chrome\autocite{Canvas2025}, was einer 2-3-fachen Performance-Steigerung gegenüber Canvas 2D Frameworks entspricht. PIXI.js bietet \ac{GPU} Memory Management, Sprite Batching (bis zu 16 Textures pro Draw Call) und automatisches Culling nicht-sichtbarer Objekte\autocite{PixiPerf2024}. Zudem wird PIXI.js von Foundry \ac{VTT}, dem marktführenden Virtual Tabletop Tool, als Rendering-Engine eingesetzt\autocite{FoundryFrameworks2024}, was die Eignung für \ac{VTT}-Anwendungen unter Beweis stellt.
+\textbf{PIXI.js} ist eine \ac{WebGL}-basierte 2D-Rendering-Engine mit optionalem Canvas 2D Fallback. In denselben Benchmarks erreichte PIXI.js 60 \ac{FPS} bei 8000 Objekten in Chrome\autocite{Canvas2025}, was einer 2-3-fachen Performance-Steigerung gegenüber Canvas 2D Frameworks entspricht. PIXI.js bietet \ac{GPU} Memory Management, Sprite Batching (bis zu 16 Textures pro Draw Call) und optionales Culling nicht-sichtbarer Objekte (via \texttt{cullable}-Property)\autocite{PixiPerf2024}. Zudem wird PIXI.js von Foundry \ac{VTT}, dem marktführenden Virtual Tabletop Tool, als Rendering-Engine eingesetzt\autocite{FoundryFrameworks2024}, was die Eignung für \ac{VTT}-Anwendungen unter Beweis stellt.
 
 \paragraph{Framework-Vergleich und Entscheidung}
 
@@ -557,7 +559,7 @@ Foundry \ac{VTT}, das etablierte Virtual Tabletop Tool, nutzt PIXI.js als Render
 
 Eine kritische Entscheidung war die Wahl von PIXI.js Version 8 statt Version 7. Obsidian bundelt PIXI.js v7 global als \texttt{window.PIXI}, was zu Konflikten führen würde, wenn Atlas \ac{VTT} ebenfalls v7 nutzen würde. Die Lösung besteht darin, PIXI.js v8 als explizite npm-Abhängigkeit zu deklarieren und per ES6-Modul-Import einzubinden, anstatt das globale \texttt{window.PIXI} zu verwenden.
 
-Diese Entscheidung unterscheidet sich von Foundry \ac{VTT}, das bei Version 7 verbleibt, da eine Migration zu v8 laut Entwicklerteam zu umfangreiche Breaking Changes für die bestehende Module-Community bedeuten würde\autocite{FoundryIssue11183}. Für Atlas \ac{VTT} als Greenfield-Projekt entstehen hingegen keine Migrations-Kosten, während gleichzeitig moderne v8-Features wie verbesserter TypeScript-Support und WebGPU-Vorbereitung genutzt werden können.
+Diese Entscheidung ermöglicht die sofortige Nutzung von v8-Features, während Foundry \ac{VTT} aktuell noch Version 7 nutzt und eine Migration zu v8 als umfangreiches Projekt mit mehreren Meilensteinen plant\autocite{FoundryIssue11183}. Für Atlas \ac{VTT} als Greenfield-Projekt entstehen hingegen keine Migrations-Kosten, während gleichzeitig moderne v8-Features wie verbesserter TypeScript-Support und WebGPU-Vorbereitung genutzt werden können.
 
 \subsubsection{Geplante Implementierung und Best Practices}
 
@@ -582,7 +584,7 @@ Der zentrale Vorteil von PIXI.js liegt in der \ac{WebGL}-Hardware-Beschleunigung
 
 \subsubsection{Problem und ursprüngliche Implementierung}
 
-Das Grid-System ist ein fundamentales \ac{VTT}-Feature, das ein Raster für taktische Bewegung und Entfernungsmessung bereitstellt. In D\&D 5e entspricht dabei typischerweise ein Quadrat 5 Fuß realer Distanz\autocite{DnD5eRules2014}. Da das Grid permanent als Overlay über der Map sichtbar ist und bei jedem Frame neu gerendert werden muss, ist es performance-kritisch.
+Das Grid-System ist ein fundamentales \ac{VTT}-Feature, das ein Raster für taktische Bewegung und Entfernungsmessung bereitstellt. In D\&D 5e entspricht dabei typischerweise ein Quadrat 5 Fuß realer Distanz\autocite{DnDBasicRules2014}. Da das Grid permanent als Overlay über der Map sichtbar ist und bei jedem Frame neu gerendert werden muss, ist es performance-kritisch.
 
 Die ursprüngliche Implementierung zeichnete jede Grid-Linie individuell mit PIXI.js Graphics:
 
@@ -608,9 +610,9 @@ Für die Optimierung wurden drei Ansätze evaluiert:
 
 \textbf{Ansatz 2: Graphics Texture Baking} rendert das Grid einmalig in eine Texture, die dann als Sprite dargestellt wird. Dies reduziert Draw Calls zur Laufzeit, verursacht jedoch hohen \ac{GPU}-Memory-Verbrauch (20 \ac{MB} bei 4096×4096 Pixel Map), da die gesamte Map-Fläche als \ac{RGBA}-Texture gespeichert werden muss.
 
-\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Dies benötigt nur 64 \ac{KB} \ac{GPU}-Memory und resultiert in einem einzigen Draw Call\autocite{PixiPerf2024}.
+\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature\autocite{PixiTilingSprite2024}. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Eigene Messungen zeigten nur 64 \ac{KB} \ac{GPU}-Memory-Verbrauch bei einem einzigen Draw Call.
 
-Die PIXI.js Performance-Dokumentation empfiehlt explizit, für sich wiederholende Muster TilingSprite statt individueller Shapes zu verwenden, da dies Draw Calls auf 1 reduziert und \ac{GPU}-Texture-Tiling nutzt\autocite{PixiPerf2024}. Foundry \ac{VTT}, als etablierter \ac{VTT}-Standard, nutzt einen vergleichbaren Ansatz mit TilingSprite für Grid-Rendering\autocite{FoundryGridDocs2024}, was die Eignung dieser Methode für \ac{VTT}-Anwendungen bestätigt.
+Foundry \ac{VTT}, als etablierter \ac{VTT}-Standard, nutzt TilingSprite für Grid-Rendering\autocite{FoundryGridDocs2024}, was die Eignung dieser Methode für \ac{VTT}-Anwendungen bestätigt. Der Ansatz reduziert Draw Calls auf 1 und nutzt natives \ac{GPU}-Texture-Tiling.
 
 \subsubsection{Entscheidung und Implementierung}
 
@@ -681,11 +683,11 @@ Der Trade-off dieser Optimierung liegt in der Notwendigkeit, Power-of-Two Textur
 
 \subsection{Token Management: Performance-Optimierung bei vielen Objekten}
 
-Tokens sind die zentralen interaktiven Objekte in einem Virtual Tabletop und repräsentieren Spielfiguren, NPCs und Monster auf der Map\autocite{FoundryToken2024}. Im Gegensatz zu statischen Elementen wie dem Grid oder der Map müssen Tokens hochgradig interaktiv sein (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendern (Avatar-Bild, Health Bar, Status-Icons, Labels). Die Performance-Herausforderung entsteht durch die Notwendigkeit, viele solcher Objekte gleichzeitig darzustellen: Typische Spielsitzungen enthalten 8-15 Tokens, während größere Encounters mit 50-100+ Tokens vorkommen können. Die PIXI.js-Dokumentation warnt explizit, dass das System langsamer wird, je mehr Objekte hinzugefügt werden\autocite{PixiPerf2024}, was die Notwendigkeit systematischer Performance-Optimierung bei objektreichen Szenarien unterstreicht.
+Tokens sind die zentralen interaktiven Objekte in einem Virtual Tabletop und repräsentieren Spielfiguren, NPCs und Monster auf der Map\autocite{FoundryTokens2024}. Im Gegensatz zu statischen Elementen wie dem Grid oder der Map müssen Tokens hochgradig interaktiv sein (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendern (Avatar-Bild, Health Bar, Status-Icons, Labels). Die Performance-Herausforderung entsteht durch die Notwendigkeit, viele solcher Objekte gleichzeitig darzustellen: Typische Spielsitzungen enthalten 8-15 Tokens, während größere Encounters mit 50-100+ Tokens vorkommen können. Die PIXI.js-Dokumentation warnt explizit, dass das System langsamer wird, je mehr Objekte hinzugefügt werden\autocite{PixiPerf2024}, was die Notwendigkeit systematischer Performance-Optimierung bei objektreichen Szenarien unterstreicht.
 
 \subsubsection{Problem: Performance bei objektreichen Szenarien}
 
-Token-Rendering in objektreichen Szenarien stellt besondere Performance-Anforderungen: Während jeder Token hochgradig interaktiv sein muss (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendert (Avatar-Bild, Health Bar, Status-Icons), können in großen Encounters bis zu 100+ Tokens gleichzeitig auf der Map existieren. Die PIXI.js-Dokumentation gibt konkrete Schwellenwerte an, bei denen die Verwendung von Hunderten komplexen Graphics-Objekten langsam sein kann\autocite{PixiPerf2024}, was die Relevanz dieser Problemstellung unterstreicht. Eine naive Implementierung, die alle Tokens durchgehend rendert und keine Optimierungsstrategien implementiert, würde mehrere Performance-Probleme aufweisen:
+Token-Rendering in objektreichen Szenarien stellt besondere Performance-Anforderungen: Während jeder Token hochgradig interaktiv sein muss (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendert (Avatar-Bild, Health Bar, Status-Icons), können in großen Encounters bis zu 100+ Tokens gleichzeitig auf der Map existieren. Die PIXI.js-Dokumentation betont, dass zunehmende Szenen-Komplexität die Performance direkt beeinflusst\autocite{PixiPerf2024}, was die Relevanz dieser Problemstellung unterstreicht. Eine naive Implementierung, die alle Tokens durchgehend rendert und keine Optimierungsstrategien implementiert, würde mehrere Performance-Probleme aufweisen:
 
 \begin{itemize}
 	\item \textbf{Fehlende Culling-Strategie}: Bei großen Maps mit vielen off-screen Tokens würde das Rendering aller Objekte zu unnötiger \ac{CPU}- und \ac{GPU}-Last führen. Die PIXI.js-Dokumentation empfiehlt, Culling auf Anwendungsebene zu implementieren oder durch cullable = true zu aktivieren\autocite{PixiPerf2024}.
@@ -701,7 +703,7 @@ Um objektreiche Szenarien effizient zu handhaben, wurden Best Practices aus der 
 
 \paragraph{Culling (Viewport-Optimierung)}
 
-PIXI.js bietet mit der \texttt{cullable}-Property eine eingebaute Möglichkeit, Off-Screen-Objekte vom Rendering auszuschließen. Laut PIXI.js Performance Guide sollten Container mit \texttt{cullable = true} markiert werden, woraufhin PIXI.js diese Objekte automatisch aus dem Render-Loop überspringt, wenn sie außerhalb des definierten \texttt{cullArea} liegen\autocite{PixiPerf2024}.
+PIXI.js bietet mit der \texttt{cullable}-Property eine eingebaute Möglichkeit, Off-Screen-Objekte vom Rendering auszuschließen. Laut PIXI.js Performance Guide sollten Container mit \texttt{cullable = true} markiert werden, woraufhin PIXI.js diese Objekte automatisch aus dem Render-Loop überspringt\autocite{PixiPerf2024}. Die \texttt{cullArea}-Property definiert dabei den sichtbaren Bereich für die Culling-Berechnung.
 
 \begin{lstlisting}[language=TypeScript,caption={PIXI.js Culling Pattern},label=lst:culling-pattern]
 container.cullable = true;
@@ -743,7 +745,7 @@ Dieses Pattern reduziert die Anzahl kurzlebiger Objekte und führt zu stabileren
 
 Um redundante \ac{I/O}-Operationen zu vermeiden, sollten häufig verwendete Texturen gecacht werden. Dies ist besonders relevant für Token-Avatare, da derselbe Avatar (z.B. für identische Gegner) oft mehrfach verwendet wird.
 
-Foundry \ac{VTT} nutzt ähnliche Optimierungstechniken (Culling, Batching) für sein Token-System und etabliert diese als Industry Standard für \ac{VTT}-Performance\autocite{FoundryToken2024}.
+Diese Optimierungstechniken entsprechen den Best Practices der PIXI.js-Community\autocite{PixiPerf2024} und werden auch von etablierten \ac{VTT}-Plattformen wie Foundry \ac{VTT} eingesetzt.
 
 \subsubsection{Architektur und Implementierungsstrategie}
 
