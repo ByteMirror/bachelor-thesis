@@ -8,10 +8,10 @@ Dieses abschließende Kapitel fasst die Ergebnisse der Arbeit zusammen und ordne
 \section{Zusammenfassung der wesentlichen Erkenntnisse}
 \label{sec:Zusammenfassung}
 
-Die vorliegende Arbeit untersuchte die Entwicklung und Performance-Optimierung eines Virtual-Tabletop-Plugins für Obsidian.md. Im Verlauf der Konzeption, Implementierung und Evaluation wurden mehrere zentrale Erkenntnisse gewonnen, die sowohl für das konkrete Projekt als auch für die allgemeine Plugin-Entwicklung in Electron-basierten Umgebungen relevant sind.
+Die vorliegende Arbeit untersuchte die Entwicklung und Performance-Optimierung eines Virtual-Tabletop-Plugins für Obsidian.md. Im Verlauf der Konzeption, Implementierung und Evaluation ergaben sich mehrere zentrale Erkenntnisse. Diese sind sowohl für das konkrete Projekt als auch für die allgemeine Plugin-Entwicklung in Electron-basierten Umgebungen relevant.
 
 \paragraph{Architekturentscheidungen}
-Die Wahl von PIXI.js v8 als Rendering-Engine erwies sich als leistungsfähig. Die automatischen Optimierungen der \ac{WebGL}-basierten Bibliothek -- insbesondere Sprite-Batching und Texture-Caching -- ermöglichen konstante 120 \ac{FPS} selbst bei 100 gleichzeitig gerenderten Token. Die Entscheidung, PIXI.js v8 als eigenständige Dependency zu bundlen statt die in Obsidian global verfügbare v7-Version zu nutzen, war aufgrund der in \autoref{subsec:rendering-engine-pixi} dokumentierten \ac{API}-Änderungen und modernen Features der Version 8 notwendig.
+Die Wahl von PIXI.js v8 als Rendering-Engine ermöglicht konstante 120 \ac{FPS} bei 100 gleichzeitig gerenderten Token. Die automatischen Optimierungen der \ac{WebGL}-basierten Bibliothek -- insbesondere Sprite-Batching und Texture-Caching -- tragen zu dieser Performance bei. Die Entscheidung, PIXI.js v8 als eigenständige Dependency zu bundlen statt die in Obsidian global verfügbare v7-Version zu nutzen, war aufgrund der in \autoref{subsec:rendering-engine-pixi} dokumentierten \ac{API}-Änderungen und modernen Features der Version 8 notwendig.
 
 Die Single-Bundle-Architektur von Obsidian-Plugins stellt eine strukturelle Einschränkung dar, die Code-Splitting und Lazy Loading erschwert. Alle Features müssen beim Plugin-Start geladen werden, was sich jedoch in den Messungen nicht als Engpass für die Runtime-Performance erwies. Der Haupteinfluss liegt im initialen Bundle-Parsing und Startup-Overhead.
 
@@ -20,12 +20,12 @@ Die automatisierten Benchmark-Messungen mit 500 Iterationen pro Szenario liefert
 
 \begin{itemize}
 	\item Die Rendering-Performance ist über alle getesteten Szenarien (0, 20, 100 Token) konstant und erreicht die Hardware-Obergrenze von 120 \ac{FPS}
-	\item Die Frame Time von durchschnittlich 8,33 \ac{ms} liegt unter dem Schwellenwert für flüssige Interaktion (16,67 \ac{ms} für 60 \ac{FPS}\autocite[S. 1480]{Janzen2014FrameRate})
+	\item Die Frame Time von durchschnittlich 8,33 \ac{ms} liegt unter dem Schwellenwert für flüssige Interaktion (16,67 \ac{ms} für 60 \ac{FPS} \autocite[S. 1480]{Janzen2014FrameRate})
 	\item Der Speicherverbrauch skaliert mit der Token-Anzahl, wobei Texture-Sharing die Effizienz bei vielen gleichartigen Token erhöht
 \end{itemize}
 
 \paragraph{Identifizierte Probleme}
-Die Langzeit-Benchmarks offenbarten ein Memory-Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von 1,8 \ac{MB} pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Dieses Problem wäre ohne automatisierte Benchmarks mit hoher Iterationszahl nicht identifiziert worden und unterstreicht den Wert systematischer Performance-Evaluation.
+Die Langzeit-Benchmarks zeigten ein Memory-Leak bei intensiver Token-Manipulation. Mit einer Leak-Rate von 1,8 \ac{MB} pro Iteration akkumuliert sich der Speicherverbrauch über längere Nutzungszeiträume. Ohne automatisierte Benchmarks mit hoher Iterationszahl wäre dieses Problem unentdeckt geblieben. Dies verdeutlicht die Notwendigkeit systematischer Performance-Evaluation.
 
 \section{Beantwortung der Forschungsfrage}
 \label{sec:BeantwortungForschungsfrage}
@@ -34,21 +34,21 @@ Die zentrale Forschungsfrage dieser Arbeit lautete: Wie können Virtual-Tabletop
 
 \paragraph{Technische Machbarkeit}
 
-Die Implementierung von Atlas \ac{VTT} demonstriert, dass performante \ac{VTT}-Plugins in Obsidian realisierbar sind. Die gemessenen 120 \ac{FPS} und Frame Times von 8,33~\ac{ms} übertreffen die in \autoref{sec:Anforderungsanalyse} definierten Anforderungen von mehr als 30 \ac{FPS} und weniger als 60~\ac{ms} Interaktionslatenz für Dragging-Tasks. Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
+Die Implementierung von Atlas \ac{VTT} zeigt, dass performante \ac{VTT}-Plugins in Obsidian realisierbar sind. Die gemessenen 120 \ac{FPS} und Frame Times von 8,33~\ac{ms} erfüllen die in \autoref{sec:Anforderungsanalyse} definierten Anforderungen von mehr als 30 \ac{FPS} und weniger als 60~\ac{ms} Interaktionslatenz für Dragging-Tasks. Die Electron-Umgebung stellt somit keine prinzipielle Barriere für Echtzeit-Rendering-Anwendungen dar.
 
-\paragraph{Erfolgsfaktoren}
+\paragraph{Einflussfaktoren}
 
-Drei zentrale Faktoren ermöglichen die erreichte Performance. Die in \autoref{subsec:rendering-engine-pixi} beschriebene Integration von PIXI.js v8 mit \ac{WebGL}-Backend nutzt \ac{GPU}-Beschleunigung effektiv aus. Das automatische Sprite-Batching\autocite{PixiPerf2024} sowie die in \autoref{subsec:grid-system} dokumentierte TilingSprite-basierte Grid-Implementierung reduzieren die Anzahl der Draw-Calls auf ein Minimum.
+Drei technische Faktoren ermöglichen die erreichte Performance. Die in \autoref{subsec:rendering-engine-pixi} beschriebene Integration von PIXI.js v8 mit \ac{WebGL}-Backend nutzt \ac{GPU}-Beschleunigung. Das automatische Sprite-Batching \autocite{PixiPerf2024} sowie die in \autoref{subsec:grid-system} dokumentierte TilingSprite-basierte Grid-Implementierung reduzieren die Anzahl der Draw-Calls auf ein Minimum.
 
 Das in \autoref{subsec:Datenmodell} erläuterte Zustandsmanagement mit Zustand ermöglicht durch die reaktive Store-Architektur gezielte \ac{UI}-Updates ohne vollständiges Re-Rendering. Die Trennung von Rendering-State und Persistenz-State vermeidet unnötige Disk-\ac{I/O} während der Laufzeit. Die in \autoref{subsec:token-management} beschriebene asynchrone Ressourcenladung stellt sicher, dass Texturen den Main Thread nicht blockieren. Das Texture-Caching verhindert redundante Ladevorgänge bei wiederholter Token-Verwendung.
 
 \paragraph{Einschränkungen}
 
-Neben den erreichten Performance-Werten zeigt die Evaluation auch Grenzen auf. Das in \autoref{sec:AuswertungInterpretation} identifizierte Memory Leak bei intensiver Token-Manipulation deutet auf Komplexität im Lifecycle-Management von PIXI.js-Objekten hin. Die korrekte Freigabe von Graphics-Objekten, Event-Listenern und Texture-Referenzen erfordert präzise Implementierung. Die Bundle-Größe des Plugins von ca. 2,8~\ac{MB} resultiert primär aus PIXI.js und React-Abhängigkeiten; die Single-Bundle-Architektur von Obsidian verhindert eine Aufteilung in bedarfsgesteuert geladene Module. Der Speicherverbrauch von ca. 10~\ac{MB} pro Token kann bei Szenarien mit mehr als 100 Token relevant werden.
+Neben den erreichten Performance-Werten zeigt die Evaluation auch Grenzen auf. Das in \autoref{sec:AuswertungInterpretation} identifizierte Memory Leak bei intensiver Token-Manipulation deutet auf Komplexität im Lifecycle-Management von PIXI.js-Objekten hin. Die korrekte Freigabe von Graphics-Objekten, Event-Listenern und Texture-Referenzen erfordert präzise Implementierung. Die Bundle-Größe des Plugins von ca. 2,8~\ac{MB} resultiert primär aus PIXI.js und React-Abhängigkeiten. Die Single-Bundle-Architektur von Obsidian verhindert eine Aufteilung in bedarfsgesteuert geladene Module. Der Speicherverbrauch von ca. 10~\ac{MB} pro Token kann bei Szenarien mit mehr als 100 Token relevant werden.
 
 \paragraph{Fazit}
 
-Die Forschungsfrage lässt sich wie folgt beantworten: \ac{VTT}-Plugins können in Obsidian performant implementiert werden, wenn geeignete Technologien und Best Practices angewendet werden. \ac{WebGL}-basiertes Rendering, reaktives State Management, asynchrones Loading, Texture-Caching und inkrementelle Updates bilden die technische Grundlage für flüssige Echtzeit-Interaktionen. Die technischen Limitierungen von Electron erweisen sich für die getesteten Szenarien mit bis zu 100 Token als nicht performance-kritisch. Die Herausforderungen liegen weniger in der Rendering-Performance als vielmehr im korrekten Memory Management und der Bundle-Größen-Optimierung.
+Die Forschungsfrage lässt sich wie folgt beantworten: \ac{VTT}-Plugins können in Obsidian performant implementiert werden, wenn geeignete Technologien und Best Practices angewendet werden. \ac{WebGL}-basiertes Rendering, reaktives State Management, asynchrones Loading, Texture-Caching und inkrementelle Updates bilden die technische Grundlage für flüssige Echtzeit-Interaktionen. Die technischen Limitierungen von Electron erweisen sich für die getesteten Szenarien mit bis zu 100 Token nicht als Engpass. Die Herausforderungen liegen weniger in der Rendering-Performance als vielmehr im korrekten Memory Management und der Bundle-Größen-Optimierung.
 
 \section{Limitationen und kritische Reflexion}
 \label{sec:Limitationen}
@@ -58,20 +58,20 @@ Die Aussagekraft der Ergebnisse unterliegt methodischen und technischen Einschr�
 \subsection{Zusammenfassung der Limitationen}
 \label{subsec:ZusammenfassungLimitationen}
 
-Die Limitationen dieser Arbeit gliedern sich in methodische Einschränkungen der Evaluation sowie technische Constraints der Obsidian-Plattform. Da beide Aspekte in den vorangegangenen Kapiteln behandelt wurden, erfolgt hier eine zusammenfassende Einordnung mit Verweisen auf die relevanten Abschnitte.
+Die Limitationen dieser Arbeit gliedern sich in methodische Einschränkungen der Evaluation sowie technische Constraints der Obsidian-Plattform. Da die vorangegangenen Kapitel beide Aspekte behandeln, erfolgt hier eine zusammenfassende Einordnung mit Verweisen auf die relevanten Abschnitte.
 
 Die methodischen Limitationen der Performance-Evaluation sind in \autoref{subsec:LimitationenEvaluation} dokumentiert. Das Single-Platform-Testing auf Apple Silicon, die synthetischen Benchmark-Szenarien sowie die Abhängigkeit von der gebündelten Electron-Version schränken die Generalisierbarkeit der quantitativen Ergebnisse auf andere Hardware- und Software-Konfigurationen ein.
 
-Die technischen Plattform-Limitationen wurden im Rahmen der Anforderungsanalyse identifiziert und adressiert. Die Single-Bundle-Architektur von Obsidian verhindert Code-Splitting und Lazy Loading, wie in \autoref{tab:nicht-funktionale-anforderungen-plattform} als nicht-funktionale Anforderung NF3.1 dokumentiert. Der PIXI.js-Versionskonflikt zwischen der globalen v7-Installation und der benötigten v8-Version wird in \autoref{subsec:rendering-engine-pixi} behandelt; die gewählte Lösung erhöht die Bundle-Größe um ca. 500~\ac{KB}.
+Die Anforderungsanalyse identifizierte und adressierte die technischen Plattform-Limitationen. Die Single-Bundle-Architektur von Obsidian verhindert Code-Splitting und Lazy Loading, wie in \autoref{tab:nicht-funktionale-anforderungen-plattform} als nicht-funktionale Anforderung NF3.1 dokumentiert. Der PIXI.js-Versionskonflikt zwischen der globalen v7-Installation und der benötigten v8-Version wird in \autoref{subsec:rendering-engine-pixi} behandelt; die gewählte Lösung erhöht die Bundle-Größe um ca. 500~\ac{KB}.
 
-Eine weitere Einschränkung betrifft den Fokus auf Runtime-Performance. Die Evaluation erfasste primär Frame Rate und Speicherverbrauch während der Laufzeit. Andere Metriken wie Startup-Zeit, Bundle-Parse-Duration und Time-to-Interactive wurden nicht systematisch gemessen, obwohl sie die wahrgenommene Nutzererfahrung beim Plugin-Start beeinflussen.
+Eine weitere Einschränkung betrifft den Fokus auf Runtime-Performance. Die Evaluation erfasste primär Frame Rate und Speicherverbrauch während der Laufzeit. Andere Metriken wie Startup-Zeit, Bundle-Parse-Duration und Time-to-Interactive blieben unberücksichtigt, obwohl diese die wahrgenommene Nutzererfahrung beim Plugin-Start beeinflussen.
 
 \subsection{Kritische Würdigung}
 \label{subsec:KritischeWuerdigung}
 
-\paragraph{Stärken der Arbeit}
+\paragraph{Beiträge der Arbeit}
 
-Die Arbeit leistet mehrere Beiträge zur Plugin-Entwicklung für Obsidian. Die automatisierte Benchmark-Infrastruktur mit 500 Iterationen ermöglicht reproduzierbare und statistisch valide Performance-Messungen innerhalb der Obsidian-Umgebung. Die Identifikation des Memory Leaks demonstriert den praktischen Wert systematischer Langzeit-Benchmarks, da dieser Fehler bei manuellen Kurztests nicht aufgefallen wäre. Die dokumentierten Architekturentscheidungen -- PIXI.js v8, Zustand und die modulare Service-Architektur -- können als Referenz für ähnliche Plugin-Projekte dienen.
+Die Arbeit dokumentiert die Entwicklung eines \ac{VTT}-Plugins in der Obsidian-Umgebung. Die Architekturentscheidungen -- PIXI.js v8, Zustand und die modulare Service-Architektur -- sind für ähnliche Plugin-Projekte nachvollziehbar. Die Identifikation des Memory Leaks verdeutlicht die Notwendigkeit von Langzeit-Tests bei der Plugin-Entwicklung, da dieser Fehler bei manuellen Kurztests nicht erkennbar gewesen wäre.
 
 \paragraph{Schwächen und Verbesserungspotenzial}
 
@@ -79,7 +79,7 @@ Rückblickend hätten einige Aspekte anders angegangen werden können. Die Memor
 
 \paragraph{Gewonnene Erkenntnisse}
 
-Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenntnisse. Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation. Erst bei ausreichend vielen Wiederholungen -- mehr als 100 Iterationen -- werden subtile Probleme wie Memory Leaks sichtbar. Die strikte Trennung von Rendering-State und Persistenz-State vereinfacht sowohl Performance-Optimierung als auch Debugging, da Änderungen in einem Bereich den anderen nicht beeinflussen.
+Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenntnisse. Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation. Erst bei ausreichend vielen Wiederholungen -- mehr als 100 Iterationen -- werden nicht offensichtliche Probleme wie Memory Leaks sichtbar. Die strikte Trennung von Rendering-State und Persistenz-State vereinfacht sowohl Performance-Optimierung als auch Debugging, da Änderungen in einem Bereich den anderen nicht beeinflussen.
 
 \section{Ausblick}
 \label{sec:Ausblick}
@@ -94,6 +94,6 @@ Das in \autoref{sec:AuswertungInterpretation} identifizierte Memory Leak erforde
 
 \paragraph{Weiterentwicklung}
 
-Eine mögliche Weiterentwicklung besteht in der Auslagerung rechenintensiver Operationen in Web Workers\autocite{ElectronPerformanceGuide2024}. Die in \autoref{subsec:grid-system} beschriebenen Grid-Berechnungen und die Asset-Indexierung sind Kandidaten für diese Optimierung, da sie den Main Thread nicht blockieren sollten.
+Eine mögliche Weiterentwicklung besteht in der Auslagerung rechenintensiver Operationen in Web Workers \autocite{ElectronPerformanceGuide2024}. Die in \autoref{subsec:grid-system} beschriebenen Grid-Berechnungen und die Asset-Indexierung sind Kandidaten für diese Optimierung, da sie den Main Thread nicht blockieren sollten.
 
 Die in \autoref{sec:Systemdesign} dokumentierten Architekturmuster -- PIXI.js-Integration (\autoref{subsec:rendering-engine-pixi}), Zustand-basiertes State Management (\autoref{subsec:Datenmodell}) und die modulare Service-Architektur (\autoref{subsec:Architekturentwurf}) -- sind auf andere Obsidian-Plugins mit Rendering-Anforderungen übertragbar.

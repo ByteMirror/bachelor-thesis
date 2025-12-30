@@ -9,7 +9,7 @@ Dieses Kapitel legt die theoretischen Grundlagen für die Entwicklung eines \ac{
 
 Dieser Abschnitt führt in die grundlegenden Konzepte ein, die für das Verständnis eines \ac{VTT}-Plugins erforderlich sind. \autoref{subsec:VTTTools} beschreibt die Kernkomponenten von Virtual-Tabletop-Tools und deren technische Anforderungen, während \autoref{subsec:PluginArchitekturen} die architektonischen Muster erläutert, die modernen Plugin-Systemen zugrunde liegen.
 
-\subsection{\ac{VTT} Tools}
+\subsection{\ac{VTT}-Tools}
 \label{subsec:VTTTools}
 
 \ac{VTT}s sind digitale Anwendungen, die die physische Spielumgebung von Pen-and-Paper-Rollenspielen in einem digitalen Raum simulieren \autocite{Roll20TokenFeatures2024}. Sie ersetzen die essenziellen Elemente des Tabletop-Rollenspiels -- Karten, Miniaturen, Würfel und Charakterbögen -- durch interaktive digitale Komponenten und ermöglichen räumlich getrennten Spielgruppen eine gemeinsame, synchronisierte Spielumgebung.
@@ -25,7 +25,7 @@ Die zentralen visuellen Elemente eines \ac{VTT} umfassen \textit{Token}, \textit
 	\label{fig:token-demo}
 \end{figure}
 
-Statblocks enthalten strukturiert alle spielrelevanten Informationen einer Spielfigur -- Attribute, Fähigkeiten und Aktionen -- und ermöglichen in modernen \ac{VTT}s interaktive Würfelwürfe direkt aus dem Datenblatt \autocite{DnDBeyondMonsters2024}. \autoref{fig:statblock-showcase} demonstriert die Statblock-Implementierung in Atlas \ac{VTT}, die Obsidians Markdown-Fähigkeiten nutzt.
+Statblocks enthalten strukturiert alle spielrelevanten Informationen einer Spielfigur -- Attribute, Fähigkeiten und Aktionen -- und ermöglichen in modernen \ac{VTT}s interaktive Würfelwürfe direkt aus dem Datenblatt \autocite{DnDBeyondMonsters2024}. \autoref{fig:statblock-showcase} zeigt die Statblock-Implementierung in Atlas \ac{VTT}, die Obsidians Markdown-Fähigkeiten nutzt.
 
 \begin{figure}
 	\centering
@@ -63,11 +63,11 @@ Die beiden Marktführer Roll20 und Foundry VTT verfolgen unterschiedliche Archit
 \subsection{Plugin-Architekturen}
 \label{subsec:PluginArchitekturen}
 
-Plugin-Architekturen ermöglichen die Erweiterbarkeit von Anwendungen ohne Modifikation des Kernsystems. Das Architekturmuster basiert auf der Trennung zwischen einem stabilen Kernsystem und dynamisch ladbaren Erweiterungsmodulen, die über wohldefinierte Schnittstellen kommunizieren. Das \textit{Microkernel Pattern} strukturiert dabei die Anwendung in einen minimalen Kern mit essenziellen Funktionalitäten und Plugin-Module für spezifische Features \autocite{Richards2024MicrokernelArchitecture}.
+Plugin-Architekturen ermöglichen die Erweiterbarkeit von Anwendungen ohne Modifikation des Kernsystems. Das Architekturmuster basiert auf der Trennung zwischen einem stabilen Kernsystem und dynamisch ladbaren Erweiterungsmodulen, die über wohldefinierte Schnittstellen kommunizieren. Das \textit{Microkernel Pattern} strukturiert dabei die Anwendung in einen minimalen Kern mit essenziellen Funktionalitäten und Plugin-Module für spezifische Features \autocite[S.~24--26]{Richards2024MicrokernelArchitecture}.
 
 Moderne Plugin-Systeme nutzen häufig eine \textit{Event-Driven Architecture}, bei der Komponenten asynchron über Events kommunizieren \autocite{Microsoft2024EventDriven}. Plugins registrieren Event-Handler für spezifische Ereignisse und können selbst Events auslösen -- eine lose Kopplung, die Integration ohne direkte Abhängigkeiten ermöglicht. Das \textit{Lifecycle Management} folgt einem definierten Zustandsmodell mit Phasen wie Loading, Initialization, Activation und Unloading, wobei jede Phase Hooks für Setup- und Cleanup-Operationen bietet \autocite{VSCodeExtensionLifecycle2024}.
 
-Für die Datenpersistierung nutzen Plugin-Systeme typischerweise isolierte Datenspeicher pro Plugin \autocite{VSCodeExtensionLifecycle2024}. Die Kommunikation zwischen Plugins erfolgt über Event-basierte Mechanismen statt direkter Aufrufe, um unerwünschte Abhängigkeiten zu vermeiden \autocite{RefactoringGuruObserver}. Performance-Überlegungen sind kritisch, da jedes Plugin den Memory-Footprint erhöht -- Strategien wie Lazy Loading optimieren die Ressourcennutzung \autocite{JavaDesignPatternsLazyLoading}.
+Für die Datenpersistierung nutzen Plugin-Systeme typischerweise isolierte Datenspeicher pro Plugin \autocite{VSCodeExtensionLifecycle2024}. Die Kommunikation zwischen Plugins erfolgt über Event-basierte Mechanismen statt direkter Aufrufe, um unerwünschte Abhängigkeiten zu vermeiden \autocite{RefactoringGuruObserver}. Performance-Überlegungen sind relevant, da jedes Plugin den Memory-Footprint erhöht -- Strategien wie Lazy Loading optimieren die Ressourcennutzung \autocite{JavaDesignPatternsLazyLoading}.
 
 \section{Technische Rahmenbedingungen}
 \label{sec:TechnischeRahmenbedingungen}
@@ -77,7 +77,7 @@ Die Entwicklung eines \ac{VTT}-Plugins für Obsidian erfordert ein Verständnis 
 \subsection{Obsidian als Markdown-Editor}
 \label{subsec:ObsidianMarkdown}
 
-Obsidian ist eine proprietäre Wissensdatenbank-Anwendung, die auf dem Konzept vernetzter Markdown-Dokumente basiert. Notizen werden als Plain-Text-Dateien innerhalb einer sogenannten \textit{Vault}-Ordnerstruktur persistiert \autocite{ObsidianWiki2024}. Diese Architekturentscheidung gewährleistet Datenportabilität und ermöglicht die Integration externer Werkzeuge für Versionskontrolle und Synchronisierung. Obsidian positioniert sich damit als persönliches Wissensmanagementsystem, dessen Stärke in bidirektionaler Verlinkung und Visualisierung von Wissensstrukturen liegt.
+Obsidian ist eine proprietäre Wissensdatenbank-Anwendung, die auf dem Konzept vernetzter Markdown-Dokumente basiert. Notizen werden als Plain-Text-Dateien innerhalb einer sogenannten \textit{Vault}-Ordnerstruktur persistiert \autocite{ObsidianWiki2024}. Diese Architekturentscheidung gewährleistet Datenportabilität und ermöglicht die Integration externer Werkzeuge für Versionskontrolle und Synchronisierung. Obsidian positioniert sich damit als persönliches Wissensmanagementsystem, dessen Kernfunktionen in bidirektionaler Verlinkung und Visualisierung von Wissensstrukturen liegen.
 
 Das Plugin-System unterscheidet zwei Kategorien: \textit{Core Plugins}, die vom Obsidian-Team entwickelt werden, sowie \textit{Community Plugins}, die als Open-Source-Erweiterungen über GitHub distribuiert werden \autocite{ObsidianWiki2024}. Die Plugin-\ac{API} folgt einer Event-basierten Architektur, die lose Kopplung zwischen Plugins und Kernsystem gewährleistet \autocite{ObsidianEvents2024}. Plugins registrieren Handler für spezifische Systemereignisse und werden asynchron benachrichtigt -- ein Muster, das dem in \autoref{subsec:PluginArchitekturen} beschriebenen Observer-Pattern entspricht.
 
@@ -113,7 +113,7 @@ Die \textbf{HTML5 Canvas API} bietet eine Bitmap-Zeichenfläche für 2D-Renderin
 
 PIXI.js ist eine Open-Source-2D-Rendering-Engine, die Low-Level-\ac{WebGL}-APIs durch eine objektorientierte Schnittstelle abstrahiert. Version 8 (März 2024) führt WebGPU als zusätzlichen Renderer ein und bietet Performance-Optimierungen gegenüber früheren Versionen \autocite{PixiJS2024Launch}. Für \ac{VTT}-Plugins bildet diese Engine das Fundament für Map-Rendering, Token-Visualisierung und interaktive Spielelemente.
 
-Konzeptionell organisiert PIXI.js Grafikobjekte in einem \textit{Scene-Graph} -- einer hierarchischen Baumstruktur, in der Parent-Objekte ihre Transformationen (Position, Rotation, Skalierung) automatisch an Child-Objekte weitergeben \autocite{PixiJSSceneGraph2024}. Diese Komposition ermöglicht elegante Objektgruppierung: Ein Token kann beispielsweise aus mehreren visuellen Elementen bestehen, die sich gemeinsam bewegen.
+Konzeptionell organisiert PIXI.js Grafikobjekte in einem \textit{Scene-Graph} -- einer hierarchischen Baumstruktur, in der Parent-Objekte ihre Transformationen (Position, Rotation, Skalierung) automatisch an Child-Objekte weitergeben \autocite{PixiJSSceneGraph2024}. Diese Komposition ermöglicht flexible Objektgruppierung: Ein Token kann beispielsweise aus mehreren visuellen Elementen bestehen, die sich gemeinsam bewegen.
 
 Die zentrale Performance-Optimierung der Engine ist \textit{Batch-Rendering}: Grafikobjekte mit identischen Eigenschaften werden in einem einzigen GPU-Aufruf verarbeitet, anstatt separate Aufrufe pro Objekt durchzuführen. Zusätzlich implementiert Version 8 ein Dirty-Flag-System, das nur modifizierte Objekte aktualisiert -- statische Szenen verursachen dadurch minimalen CPU-Overhead \autocite{PixiJSV8Performance2024}. Diese Eigenschaften sind für \ac{VTT}-Anwendungen relevant, deren Szenen typischerweise aus vielen statischen Kartenelementen und wenigen bewegten Token bestehen.
 
