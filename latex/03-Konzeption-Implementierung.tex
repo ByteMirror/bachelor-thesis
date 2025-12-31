@@ -7,7 +7,7 @@ Dieses Kapitel beschreibt die Konzeption und Implementierung von Atlas \ac{VTT}.
 \section{Anforderungsanalyse}
 \label{sec:Anforderungsanalyse}
 
-Die Anforderungsanalyse fundiert die Konzeption und Implementierung von Atlas \ac{VTT}. Die funktionalen und nicht-funktionalen Anforderungen werden aus bestehenden \ac{VTT}-Standards, gängigen \ac{TTRPG}-Standards und der Obsidian-Plattform abgeleitet und nach Priorität kategorisiert.
+Die Anforderungsanalyse fundiert die Konzeption und Implementierung des Plugins. Die funktionalen und nicht-funktionalen Anforderungen werden aus bestehenden \ac{VTT}-Standards, gängigen \ac{TTRPG}-Standards und der Obsidian-Plattform abgeleitet und nach Priorität kategorisiert.
 
 \subsection{Funktionale Anforderungen}
 
@@ -15,7 +15,7 @@ Wie bereits in \autoref{sec:GrundlagenKapitel} erläutert, digitalisieren \ac{VT
 
 Die Fokussierung auf \ac{DnD} 5e als Referenzsystem erfolgt aus zwei Gründen: Erstens dominiert \ac{DnD} den \ac{TTRPG}-Markt mit einem geschätzten Anteil von über 50\% aller Verkäufe im Fachhandel \autocite{RPGDrop2024Market}, wodurch die Implementierung der \ac{DnD} 5e-Regeln die größte Zielgruppe adressiert. Zweitens erfordert die Entwicklung eines \ac{MVP} eine bewusste Einschränkung des Umfangs auf ein einzelnes Regelsystem, um innerhalb des Projektrahmens eine vollständige und nutzbare Implementierung zu gewährleisten. Die Architektur von Atlas \ac{VTT} ist jedoch modular gestaltet, sodass zukünftige Erweiterungen für andere Regelsysteme möglich sind.
 
-Im Gegensatz zu cloud-basierten Lösungen fokussiert Atlas \ac{VTT} auf lokales Gameplay innerhalb Obsidian mit direkter Integration in das Vault-System.
+Im Gegensatz zu cloud-basierten Lösungen fokussiert das Plugin auf lokales Gameplay innerhalb Obsidian mit direkter Integration in das Vault-System.
 
 \paragraph{Priorisierungskriterien}
 
@@ -23,11 +23,11 @@ Die Priorisierung der Anforderungen erfolgt nach der MoSCoW-Methode, einer etabl
 
 \textbf{Must have (M)} umfasst Features, die in etablierten \ac{VTT}-Lösungen als grundlegend gelten und ohne die grundlegendes \ac{VTT}-Gameplay nicht möglich ist. Die Klassifikation als Must have erfolgt, wenn mindestens eines der folgenden Kriterien erfüllt ist: (1) Das Feature ist in allen marktführenden \ac{VTT}-Lösungen (Foundry \ac{VTT}, Roll20) als Kern-Feature implementiert \autocite{FoundryVTT2024,Roll202024}, (2) das Feature ist für die Umsetzung grundlegender \ac{DnD} 5e-Spielregeln erforderlich \autocite{DnDBasicRules2014}, oder (3) das Feature ist technisch notwendig für die Persistenz und Session-Continuity (Sitzungskontinuität).
 
-\textbf{Should have (S)} umfasst Features, die die Benutzererfahrung verbessern oder Obsidian-spezifische Integration bieten, allerdings nicht für grundlegendes \ac{VTT}-Gameplay erforderlich sind. Diese Features werden oft als optionale Erweiterungen in etablierten \ac{VTT}s angeboten oder dienen der Differenzierung von Atlas \ac{VTT} durch vault-native Integration.
+\textbf{Should have (S)} umfasst Features, die die Benutzererfahrung verbessern oder Obsidian-spezifische Integration bieten, allerdings nicht für grundlegendes \ac{VTT}-Gameplay erforderlich sind. Diese Features werden oft als optionale Erweiterungen in etablierten \ac{VTT}s angeboten oder dienen der Differenzierung des Plugins durch vault-native Integration.
 
 \subsubsection{Karten-Management}
 
-Das Karten-Management bildet die Basis jeder \ac{VTT}-Session. Atlas \ac{VTT} muss verschiedene Bildformate (\ac{JPEG}, \ac{PNG}, \ac{WebP}) für Hintergrundkarten unterstützen und ein konfigurierbares Grid-Overlay bereitstellen. \ac{DnD} 5e definiert das Grid-basierte Movement-System mit einer Standardskalierung, bei der jedes Quadrat auf dem Grid 5 Fuß repräsentiert \autocite{DnDBasicRules2014}. Die Grid-Konfiguration muss verschiedene Größen, Offsets und Typen (Square, Hexagonal) unterstützen. Battle Maps bezeichnen detaillierte Karten für taktische Kampfszenen, die typischerweise ein Grid-Overlay für präzise Token-Positionierung enthalten. Da diese Maps unterschiedliche Skalierungen aufweisen, ist eine flexible Grid-Konfiguration erforderlich.
+Das Karten-Management bildet die Basis jeder \ac{VTT}-Session. Das Plugin muss verschiedene Bildformate (\ac{JPEG}, \ac{PNG}, \ac{WebP}) für Hintergrundkarten unterstützen und ein konfigurierbares Grid-Overlay bereitstellen. \ac{DnD} 5e definiert das Grid-basierte Movement-System mit einer Standardskalierung, bei der jedes Quadrat auf dem Grid 5 Fuß repräsentiert \autocite{DnDBasicRules2014}. Die Grid-Konfiguration muss verschiedene Größen, Offsets und Typen (Square, Hexagonal) unterstützen. Battle Maps bezeichnen detaillierte Karten für taktische Kampfszenen, die typischerweise ein Grid-Overlay für präzise Token-Positionierung enthalten. Da diese Maps unterschiedliche Skalierungen aufweisen, ist eine flexible Grid-Konfiguration erforderlich.
 
 Die Persistenz erfolgt durch ein benutzerdefiniertes \texttt{.atlasmap}-Dateiformat, das Map-Konfiguration und platzierte Objekte als \ac{JSON} speichert. Dies ermöglicht Session-Continuity und Integration in Obsidians Vault-Struktur. Multi-Scene-Support ermöglicht den Wechsel zwischen verschiedenen Locations innerhalb einer Kampagne.
 
@@ -63,7 +63,7 @@ Die Persistenz-Anforderung (F1.4) ist technisch notwendig für Session-Continuit
 
 Tokens repräsentieren Entitäten in Form von Spieler- und Nicht-Spieler-Charakteren auf der Map und sind die zentralen interaktiven Objekte in einem \ac{VTT} \autocite{FoundryTokens2024}. Die grundlegenden Anforderungen umfassen Token Creation \& Placement, Drag \& Drop Movement mit Grid-Snapping und Token Rotation. \ac{DnD} 5e definiert für Movement-Berechnungen, dass eine typische mittelgroße Kreatur einen Raum von 5 Fuß Breite kontrolliert \autocite{DnDBasicRules2014}, was in der Regel einer Token-Größe von 1×1 Grid-Squares entspricht.
 
-Erweiterte Funktionen umfassen Multi-Selection für Gruppenbewegung, Health Bar Display für visuelles \ac{HP}-Tracking und Status Icons für Conditions wie Prone oder Stunned. Die Token-Statblock Linking-Funktion ermöglicht bidirektionale Verlinkung zwischen Tokens und Markdown-basierten Character Sheets im Obsidian Vault, wodurch ein Klick auf einen Token die zugehörigen Werte anzeigt. Diese Vault-native Integration unterscheidet Atlas \ac{VTT} von cloud-basierten Lösungen.
+Erweiterte Funktionen umfassen Multi-Selection für Gruppenbewegung, Health Bar Display für visuelles \ac{HP}-Tracking und Status Icons für Conditions wie Prone oder Stunned. Die Token-Statblock Linking-Funktion ermöglicht bidirektionale Verlinkung zwischen Tokens und Markdown-basierten Character Sheets im Obsidian Vault, wodurch ein Klick auf einen Token die zugehörigen Werte anzeigt. Diese Vault-native Integration unterscheidet das Plugin von cloud-basierten Lösungen.
 
 Die Anforderungen F2.1-F2.5 sind als Must have klassifiziert, da sie die minimale Funktionalität für Token-basiertes Gameplay darstellen und in beiden etablierten \ac{VTT}-Plattformen als Kern-Features implementiert sind:
 
@@ -127,7 +127,7 @@ Die Unterscheidung zwischen \ac{GM}- und Player-View (F3.3, F3.4) ist technisch 
 
 \subsubsection{Werkzeuge und Interaktion}
 
-Interaktive Werkzeuge unterstützen taktisches Gameplay und Map-Annotation. Das Measure Tool ermöglicht Distanzmessungen zwischen Entitäten auf der Map. \ac{DnD} 5e definiert standardisierte Reichweiten für bestimmte Spielmechaniken, die in einem Virtual-Tabletop-System nachvollzogen werden müssen \autocite{DnDBasicRules2014}. Note Pins verlinken Map-Positionen mit beliebigen Markdown-Dateien im Vault, wodurch \ac{VTT}-Inhalte mit bestehenden Notizen und Daten anderer Plugins (z.B. Dataview) verknüpft werden können -- diese Obsidian-spezifische Integration unterscheidet Atlas \ac{VTT} von anderen \ac{VTT}-Lösungen. Drawing Tools und Text Placement ermöglichen zusätzliche Map-Annotationen.
+Interaktive Werkzeuge unterstützen taktisches Gameplay und Map-Annotation. Das Measure Tool ermöglicht Distanzmessungen zwischen Entitäten auf der Map. \ac{DnD} 5e definiert standardisierte Reichweiten für bestimmte Spielmechaniken, die in einem Virtual-Tabletop-System nachvollzogen werden müssen \autocite{DnDBasicRules2014}. Note Pins verlinken Map-Positionen mit beliebigen Markdown-Dateien im Vault, wodurch \ac{VTT}-Inhalte mit bestehenden Notizen und Daten anderer Plugins (z.B. Dataview) verknüpft werden können -- diese Obsidian-spezifische Integration unterscheidet das entwickelte Plugin von anderen \ac{VTT}-Lösungen. Drawing Tools und Text Placement ermöglichen zusätzliche Map-Annotationen.
 
 Das Measure Tool (F4.1) ist als Must have klassifiziert, da Distanzmessung für die Umsetzung der \ac{DnD} 5e-Spielregeln erforderlich ist: Bewegungsreichweiten, Zauberreichweiten und Waffenreichweiten sind in Fuß definiert \autocite{DnDBasicRules2014}, was präzise Grid-basierte Messung erfordert. Die Implementierung in beiden etablierten \ac{VTT}-Plattformen als Kern-Feature bestätigt diese Einstufung:
 
@@ -135,7 +135,7 @@ Das Measure Tool (F4.1) ist als Must have klassifiziert, da Distanzmessung für 
 
 \textbf{Roll20} bietet ein Measurement Tool, das bei aktiviertem Grid automatisch Grid-basierte Distanzen berechnet. Das Tool unterstützt Wegpunkt-basierte Messungen für nicht-lineare Pfade und berücksichtigt Grid-Typ (Square vs. Hexagonal) bei der Distanzberechnung \autocite{Roll20Graphics2024}.
 
-Die erweiterten Features F4.2-F4.4 (Drawing Tools, Note Pins, Text Placement) sind als Should have eingestuft, da sie optionale Annotations-Features darstellen, die zwar die Benutzererfahrung verbessern könnten, aber nicht für regelkonformes \ac{DnD}-Gameplay erforderlich sind. Beide Plattformen implementieren Drawing-Funktionalität als zusätzliche Features, jedoch nicht als Must have. Note Pins (F4.3) bieten Obsidian-spezifische Integration ohne direktes Äquivalent in cloud-basierten VTTs und stellen eine Differenzierung von Atlas \ac{VTT} dar. \autoref{tab:funktionale-anforderungen-werkzeuge} fasst die Werkzeug-Anforderungen zusammen.
+Die erweiterten Features F4.2-F4.4 (Drawing Tools, Note Pins, Text Placement) sind als Should have eingestuft, da sie optionale Annotations-Features darstellen, die zwar die Benutzererfahrung verbessern könnten, aber nicht für regelkonformes \ac{DnD}-Gameplay erforderlich sind. Beide Plattformen implementieren Drawing-Funktionalität als zusätzliche Features, jedoch nicht als Must have. Note Pins (F4.3) bieten Obsidian-spezifische Integration ohne direktes Äquivalent in cloud-basierten VTTs und stellen eine Differenzierung des Plugins dar. \autoref{tab:funktionale-anforderungen-werkzeuge} fasst die Werkzeug-Anforderungen zusammen.
 
 \begin{table}[htbp]
 	\centering
@@ -156,7 +156,7 @@ Die erweiterten Features F4.2-F4.4 (Drawing Tools, Note Pins, Text Placement) si
 
 \subsubsection{Character Management}
 
-Der Statblock Builder ermöglicht die Erstellung von Character Sheets direkt in Obsidian. Statblocks werden als Markdown-Dateien mit \ac{YAML} Frontmatter im Vault gespeichert, wodurch sie mit Obsidians Linking-System kompatibel sind. Die Token-Statblock Linking-Funktion ermöglicht bidirektionale Verlinkung zwischen Map-Tokens und Character Sheets. Diese Integration unterscheidet Atlas \ac{VTT} von cloud-basierten \ac{VTT}s, die separate Datenbanken verwenden.
+Der Statblock Builder ermöglicht die Erstellung von Character Sheets direkt in Obsidian. Statblocks werden als Markdown-Dateien mit \ac{YAML} Frontmatter im Vault gespeichert, wodurch sie mit Obsidians Linking-System kompatibel sind. Die Token-Statblock Linking-Funktion ermöglicht bidirektionale Verlinkung zwischen Map-Tokens und Character Sheets. Diese Integration unterscheidet das Plugin von cloud-basierten \ac{VTT}s, die separate Datenbanken verwenden.
 
 \subsection{Nicht-funktionale Anforderungen}
 
@@ -250,7 +250,7 @@ Der Trade-off dieser Architektur liegt in erhöhter Code-Komplexität durch Serv
 
 \subsubsection{Layer-Architektur}
 
-Die Implementierung folgt einer Layered Architecture, bei der Komponenten in horizontale Schichten mit spezifischen Rollen strukturiert sind \autocite[S.~15]{Richards2024MicrokernelArchitecture}. Atlas \ac{VTT} implementiert vier Haupt-Layer.
+Die Implementierung folgt einer Layered Architecture, bei der Komponenten in horizontale Schichten mit spezifischen Rollen strukturiert sind \autocite[S.~15]{Richards2024MicrokernelArchitecture}. Das Plugin implementiert vier Haupt-Layer.
 
 \paragraph{View Layer}
 
@@ -275,7 +275,7 @@ Das Singleton Pattern beim \texttt{AssetService} (siehe \autoref{lst:asset-servi
 
 \subsubsection{Integration mit Obsidian Plugin \ac{API}}
 
-Die Integration mit der Obsidian Plugin \ac{API} stellt spezifische Herausforderungen, da Atlas \ac{VTT} sowohl native Obsidian-Funktionalität (Vault-Access, Metadata-Cache, Events) als auch externe Frameworks (React, PIXI.js) kombinieren muss.
+Die Integration mit der Obsidian Plugin \ac{API} stellt spezifische Herausforderungen, da das Plugin sowohl native Obsidian-Funktionalität (Vault-Access, Metadata-Cache, Events) als auch externe Frameworks (React, PIXI.js) kombinieren muss.
 
 \paragraph{Plugin Lifecycle Management}
 
@@ -299,7 +299,7 @@ Die Obsidian Plugin \ac{API} bietet hierfür eine dedizierte Methode, die lazy-g
 
 \paragraph{PIXI.js Version Konflikt}
 
-Eine kritische Integration-Herausforderung entsteht durch Obsidians globales PIXI.js v7 Bundle. Obsidian stellt PIXI.js v7 als \texttt{window.PIXI} bereit, Atlas \ac{VTT} benötigt hingegen PIXI.js v8 für v8-spezifische Features wie den optimierten Batch Renderer und WebGPU-Vorbereitung. Die Verwendung beider Versionen gleichzeitig würde zu Type-Konflikten und Runtime-Fehlern führen.
+Eine kritische Integration-Herausforderung entsteht durch Obsidians globales PIXI.js v7 Bundle. Obsidian stellt PIXI.js v7 als \texttt{window.PIXI} bereit, das Plugin benötigt hingegen PIXI.js v8 für v8-spezifische Features wie den optimierten Batch Renderer und WebGPU-Vorbereitung. Die Verwendung beider Versionen gleichzeitig würde zu Type-Konflikten und Runtime-Fehlern führen.
 
 Die Lösung besteht darin, PIXI.js v8 als explizite npm-Dependency zu deklarieren und ausschließlich über ES6-Imports zu verwenden, wie \autoref{lst:pixi-import} demonstriert.
 
@@ -319,7 +319,7 @@ Der Trade-off dieser Lösung ist erhöhte Bundle-Size: PIXI.js v8 fügt ~500 \ac
 \subsection{Datenmodell}
 \label{subsec:Datenmodell}
 
-Das Datenmodell von Atlas \ac{VTT} adressiert \ac{VTT}-spezifische Anforderungen wie Multi-Scene-Support, Undo/Redo und vault-wide Asset-Konsistenz. Die folgenden Abschnitte beschreiben die Datenstrukturen sowie deren Persistierungsstrategien und Begründung der Design-Entscheidungen.
+Das Datenmodell adressiert \ac{VTT}-spezifische Anforderungen wie Multi-Scene-Support, Undo/Redo und vault-wide Asset-Konsistenz. Die folgenden Abschnitte beschreiben die Datenstrukturen sowie deren Persistierungsstrategien und Begründung der Design-Entscheidungen.
 
 \subsubsection{Datenmodell-Architektur}
 
@@ -331,7 +331,7 @@ Das Datenmodell ist in drei separate Bereiche unterteilt, die jeweils unterschie
 
 \textbf{Application State} (transient, pro-View) hält Runtime-Zustand wie aktuelle Tool-Auswahl, Viewport-Position und \ac{UI}-Zustand. Dieser State ist nicht persistent und wird bei jedem Plugin-Start neu initialisiert, was Startup-Geschwindigkeit und Memory-Effizienz optimieren soll.
 
-Diese Separation entspricht dem Table Data Gateway Pattern \autocite{FowlerTableDataGateway2024}, bei dem Daten-Zugriff von Geschäftslogik getrennt wird. Für Atlas \ac{VTT} bedeutet dies, dass Services ausschließlich über definierte Schnittstellen (\texttt{MapService}, \texttt{AssetService}) auf persistente Daten zugreifen, nicht direkt auf Dateien.
+Diese Separation entspricht dem Table Data Gateway Pattern \autocite{FowlerTableDataGateway2024}, bei dem Daten-Zugriff von Geschäftslogik getrennt wird. Für das Plugin bedeutet dies, dass Services ausschließlich über definierte Schnittstellen (\texttt{MapService}, \texttt{AssetService}) auf persistente Daten zugreifen, nicht direkt auf Dateien.
 
 \subsubsection{Map Data Format}
 
@@ -408,7 +408,7 @@ actions:
 Additional GM notes...
 \end{lstlisting}
 
-Die Verwendung von \ac{YAML} Frontmatter folgt Obsidians nativem Metadata-System und ermöglicht Statblock-Queries über die Bases-Funktion \autocite{ObsidianBases2025}. Bases ist ein Core-Plugin, das Datenbank-ähnliche Views basierend auf Properties erstellt. Der Trade-off ist erhöhte Parsing-Komplexität: Atlas \ac{VTT} muss \ac{YAML} parsen und validieren, während ein custom \ac{JSON}-Format einfacher zu verarbeiten wäre. Der Vorteil liegt in der Interoperabilität: Statblocks sind als normale Markdown-Notes mit anderen Vault-Dateien kompatibel und können in Bases-Datenbanken aggregiert werden. Zudem nutzt das in \autoref{sec:Einleitung} erwähnte Plugin Fantasy Statblocks ebenfalls \ac{YAML} Frontmatter für Charakterdaten \autocite{ValentineFantasyStatblocks2024}, sodass Obsidian-Nutzer der \ac{TTRPG}-Community mit diesem Format bereits vertraut sind.
+Die Verwendung von \ac{YAML} Frontmatter folgt Obsidians nativem Metadata-System und ermöglicht Statblock-Queries über die Bases-Funktion \autocite{ObsidianBases2025}. Bases ist ein Core-Plugin, das Datenbank-ähnliche Views basierend auf Properties erstellt. Der Trade-off ist erhöhte Parsing-Komplexität: Das Plugin muss \ac{YAML} parsen und validieren, während ein custom \ac{JSON}-Format einfacher zu verarbeiten wäre. Der Vorteil liegt in der Interoperabilität: Statblocks sind als normale Markdown-Notes mit anderen Vault-Dateien kompatibel und können in Bases-Datenbanken aggregiert werden. Zudem nutzt das in \autoref{sec:Einleitung} erwähnte Plugin Fantasy Statblocks ebenfalls \ac{YAML} Frontmatter für Charakterdaten \autocite{ValentineFantasyStatblocks2024}, sodass Obsidian-Nutzer der \ac{TTRPG}-Community mit diesem Format bereits vertraut sind.
 
 \paragraph{Bidirektionale Token-Statblock-Verlinkung}
 
@@ -493,7 +493,7 @@ useEffect(() => {
 
 Dieses Event-Driven Pattern entspricht dem Observer Pattern \autocite{RefactoringGuruObserver} und ermöglicht lose Kopplung: Der \texttt{TokenStatblockLinkService} weiß nicht, welche Views existieren oder wie sie auf Events reagieren. Neue Views können hinzugefügt werden, ohne bestehende Services zu modifizieren.
 
-Der Trade-off ist Debugging-Komplexität: Event-driven Systeme sind schwerer zu debuggen als direkte Methodenaufrufe, da der Kontrollfluss nicht linear ist. Atlas \ac{VTT} nutzt TypeScript's Type System für Event-Payloads, um Type-Safety zur Compile-Zeit zu garantieren.
+Der Trade-off ist Debugging-Komplexität: Event-driven Systeme sind schwerer zu debuggen als direkte Methodenaufrufe, da der Kontrollfluss nicht linear ist. Das Plugin nutzt TypeScript's Type System für Event-Payloads, um Type-Safety zur Compile-Zeit zu garantieren.
 
 \section{Entwicklung verschiedener Lösungsansätze}
 \label{sec:Loesungsansaetze}

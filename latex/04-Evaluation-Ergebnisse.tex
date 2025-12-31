@@ -37,7 +37,7 @@ Damit die Messungen nachvollziehbar bleiben, dokumentiert diese Arbeit folgende 
 	\item \textbf{Betriebssystem}: macOS Sequoia 15.0
 \end{itemize}
 
-Relevant für die Evaluation ist die Verwendung von PIXI.js Version 8, da Obsidian selbst PIXI.js Version 7 als globale Dependency bereitstellt. Diese Architekturentscheidung -- beschrieben in \autoref{sec:KonzeptionImplementierung} -- erfordert das Bundling einer separaten PIXI.js-Instanz und beeinflusst die Bundle-Größe und Startup-Performance des Plugins.
+Relevant für die Evaluation ist die Verwendung von PIXI.js Version 8, weil Obsidian selbst PIXI.js Version 7 als globale Dependency bereitstellt. Diese Architekturentscheidung -- beschrieben in \autoref{sec:KonzeptionImplementierung} -- erfordert das Bundling einer separaten PIXI.js-Instanz und beeinflusst die Bundle-Größe und Startup-Performance des Plugins.
 
 \paragraph{Kontrollierte Testbedingungen}
 Um Störfaktoren zu minimieren und konsistente Messbedingungen zu gewährleisten, gelten folgende Kontrollmaßnahmen:
@@ -240,7 +240,7 @@ Der in \autoref{fig:benchmark-flow} dargestellte Iterationszyklus durchläuft fo
 	\item \textbf{Clear (Loop zurück zu Store)}: Nach dem Löschen aller Token beginnt der Zyklus erneut mit Schritt 1. Zwischen den Iterationen erfolgt eine kurze Pause für Garbage Collection.
 \end{enumerate}
 
-Die rot markierte destroy()-Phase (Schritt 4b) ist die wahrscheinliche Quelle des Speicherlecks, da hier die in Schritt 4a allozierten Ressourcen freigegeben werden müssen.
+Die rot markierte destroy()-Phase (Schritt 4b) ist die wahrscheinliche Quelle des Speicherlecks, weil hier die in Schritt 4a allozierten Ressourcen freigegeben werden müssen.
 
 Die Untersuchung des Token-Rendering-Codes identifiziert mehrere potenzielle Leak-Quellen in dieser Phase:
 \begin{itemize}
@@ -265,7 +265,7 @@ Die beobachtete Leak-Rate von 18 \ac{KB}/Token könnte auf folgende Komponenten 
 \begin{itemize}
 	\item \textbf{Grafik-Objekte}: Jedes Token erstellt zwei PIXI.js \texttt{Graphics}-Objekte (kreisförmige Maske und rechteckiger Hintergrund für Klick-Erkennung). Laut PIXI.js-Dokumentation erfordern diese Objekte explizite Freigabe via \texttt{destroy()} \autocite{PixiGarbageCollection2024}, was im vorliegenden Code zwar aufgerufen wird, jedoch aufgrund der bekannten v8-Bugs möglicherweise nicht alle Ressourcen freigibt.
 
-	\item \textbf{Interaktions-Funktionen}: Jedes Token registriert Funktionen für Benutzerinteraktionen (Mausklick, Hover-Effekte, Maus-Verlassen). Nicht vollständig entfernte Interaktions-Funktionen verhindern die automatische Speicherfreigabe, da sie Verweise auf Token-Objekte und den zentralen Anwendungszustand halten \autocite{PixiGarbageCollection2024}. Der Code ruft eine Aufräum-Funktion auf, jedoch könnte die PIXI.js-interne Verwaltung zusätzliche Verweise halten.
+	\item \textbf{Interaktions-Funktionen}: Jedes Token registriert Funktionen für Benutzerinteraktionen (Mausklick, Hover-Effekte, Maus-Verlassen). Nicht vollständig entfernte Interaktions-Funktionen verhindern die automatische Speicherfreigabe, weil sie Verweise auf Token-Objekte und den zentralen Anwendungszustand halten \autocite{PixiGarbageCollection2024}. Der Code ruft eine Aufräum-Funktion auf, jedoch könnte die PIXI.js-interne Verwaltung zusätzliche Verweise halten.
 
 	\item \textbf{Verschachtelte Objektstruktur}: Die hierarchische Anordnung der Token-Komponenten (Container mit Bild, Maske und Hintergrund) erfordert rekursive Freigabe aller Child-Objekte. Verbleibende Verweise innerhalb der Hierarchie könnten nicht vollständig bereinigt werden.
 \end{itemize}
@@ -338,7 +338,7 @@ Die Messungen erfolgten ausschließlich auf einem macOS-System mit Apple Silicon
 
 \paragraph{Technische Limitationen}
 
-Die gemessenen Performance-Charakteristika sind spezifisch für die in Obsidian 1.7.7 gebündelte Electron-Version 32.2.5. Zukünftige Electron-Updates können die Ergebnisse beeinflussen, da neuere V8- und Chromium-Engines andere Optimierungsstrategien anwenden. Die verwendeten Test-Szenarien -- leere Map, Standard-Session und Stress-Test -- stellen konstruierte Nutzungsmuster dar. Reale Spielsitzungen umfassen komplexere Interaktionsmuster wie gleichzeitiges Scrollen und Token-Bewegen, die in den synthetischen Benchmarks nicht abgebildet werden.
+Die gemessenen Performance-Charakteristika sind spezifisch für die in Obsidian 1.7.7 gebündelte Electron-Version 32.2.5. Zukünftige Electron-Updates können die Ergebnisse beeinflussen, weil neuere V8- und Chromium-Engines andere Optimierungsstrategien anwenden. Die verwendeten Test-Szenarien -- leere Map, Standard-Session und Stress-Test -- stellen konstruierte Nutzungsmuster dar. Reale Spielsitzungen umfassen komplexere Interaktionsmuster wie gleichzeitiges Scrollen und Token-Bewegen, die in den synthetischen Benchmarks nicht abgebildet werden.
 
 \paragraph{Interpretationsgrenzen}
 

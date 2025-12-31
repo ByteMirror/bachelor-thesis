@@ -25,7 +25,7 @@ Die zentralen visuellen Elemente eines \ac{VTT} umfassen \textit{Token}, \textit
 	\label{fig:token-demo}
 \end{figure}
 
-Statblocks enthalten strukturiert alle spielrelevanten Informationen einer Spielfigur -- Attribute, Fähigkeiten und Aktionen -- und ermöglichen in modernen \ac{VTT}s interaktive Würfelwürfe direkt aus dem Datenblatt \autocite{DnDBeyondMonsters2024}. \autoref{fig:statblock-showcase} zeigt die Statblock-Implementierung in Atlas \ac{VTT}, die Obsidians Markdown-Fähigkeiten nutzt.
+Statblocks enthalten strukturiert alle spielrelevanten Informationen einer Spielfigur -- Attribute, Fähigkeiten und Aktionen -- und ermöglichen in modernen \ac{VTT}s interaktive Würfelwürfe direkt aus dem Datenblatt \autocite{DnDBeyondMonsters2024}. \autoref{fig:statblock-showcase} zeigt die Statblock-Implementierung des Plugins, die Obsidians Markdown-Fähigkeiten nutzt.
 
 \begin{figure}
 	\centering
@@ -34,7 +34,7 @@ Statblocks enthalten strukturiert alle spielrelevanten Informationen einer Spiel
 	\label{fig:statblock-showcase}
 \end{figure}
 
-Der Fog of War simuliert begrenzte Wahrnehmung, indem unerforschte oder aktuell nicht sichtbare Bereiche für Spieler verborgen werden \autocite{Roll20FogOfWar2024}. \autoref{fig:fog-of-war-demo} illustriert diese Komponente in Atlas \ac{VTT}.
+Der Fog of War simuliert begrenzte Wahrnehmung, indem unerforschte oder aktuell nicht sichtbare Bereiche für Spieler verborgen werden \autocite{Roll20FogOfWar2024}. \autoref{fig:fog-of-war-demo} illustriert diese Komponente im entwickelten Plugin.
 
 \begin{figure}
 	\centering
@@ -43,7 +43,7 @@ Der Fog of War simuliert begrenzte Wahrnehmung, indem unerforschte oder aktuell 
 	\label{fig:fog-of-war-demo}
 \end{figure}
 
-Neben den visuellen Komponenten benötigen \ac{VTT}s eine zentrale Verwaltung für Spielressourcen wie Token-Grafiken, Kartenbilder und Statblocks. In Atlas \ac{VTT} übernimmt diese Funktion der \textit{Asset Manager}, dessen Implementierung \autoref{fig:asset-manager} zeigt.
+Neben den visuellen Komponenten benötigen \ac{VTT}s eine zentrale Verwaltung für Spielressourcen wie Token-Grafiken, Kartenbilder und Statblocks. Im entwickelten Plugin übernimmt diese Funktion der \textit{Asset Manager}, dessen Implementierung \autoref{fig:asset-manager} zeigt.
 
 \begin{figure}
 	\centering
@@ -117,4 +117,4 @@ Konzeptionell organisiert PIXI.js Grafikobjekte in einem \textit{Scene-Graph} --
 
 Die zentrale Performance-Optimierung der Engine ist \textit{Batch-Rendering}: Grafikobjekte mit identischen Eigenschaften werden in einem einzigen GPU-Aufruf verarbeitet anstatt separate Aufrufe pro Objekt durchzuführen. Zusätzlich implementiert Version 8 ein Dirty-Flag-System, das nur modifizierte Objekte aktualisiert -- statische Szenen verursachen dadurch minimalen CPU-Overhead \autocite{PixiJSV8Performance2024}. Diese Eigenschaften sind für \ac{VTT}-Anwendungen relevant, da die Hintergrundkarte statisch bleibt und Token-Bewegungen typischerweise sequentiell erfolgen -- zu jedem Zeitpunkt bewegt sich meist nur ein einzelner Token.
 
-Die konkreten Implementierungsdetails -- einschließlich Texture-Management und Event-Handling -- werden in \autoref{sec:KonzeptionImplementierung} im Kontext der Atlas-VTT-Entwicklung erläutert.
+Die konkreten Implementierungsdetails -- einschließlich Texture-Management und Event-Handling -- werden in \autoref{sec:KonzeptionImplementierung} im Kontext der Plugin-Entwicklung erläutert.
