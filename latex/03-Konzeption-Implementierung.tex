@@ -193,11 +193,11 @@ Standardisierte Test-Szenarien validieren diese Anforderungen, wie \autoref{sec:
 \subsubsection{Skalierbarkeit}
 
 Skalierbarkeits-Anforderungen definieren die Grenzen für Token Count, Map Size und Asset Library. Stress-Test-Szenarien mit mehr als 100 Tokens bei mindestens 30 \ac{FPS} simulieren große \ac{DnD}-Encounters. Für die Performance-Validierung dient eine Testauflösung von 4096×4096 Pixel.
-Die technische Strategie zur Erreichung dieser Skalierbarkeit basiert auf etablierten Performance Best Practices: Texture Caching für wiederverwendete Assets \autocite{PixiPerf2024} sowie Power-of-Two Textures für \ac{GPU}-Optimierung \autocite{PixiTexture2024}. Die PIXI.js-Dokumentation empfiehlt zusätzlich Culling-Strategien für komplexe Szenen \autocite{PixiPerf2024}, die im aktuellen Entwicklungsstand allerdings nicht implementiert sind.
+Die technische Strategie zur Erreichung dieser Skalierbarkeit basiert auf etablierten Performance Best Practices: Texture Caching für wiederverwendete Assets sowie Culling-Strategien für komplexe Szenen \autocite{PixiPerf2024}. Culling ist im aktuellen Entwicklungsstand allerdings nicht implementiert.
 
 \subsubsection{Plattform-Kompatibilität}
 
-Obsidian-Plugins unterliegen spezifischen Plattform-Constraints, die Architektur-Entscheidungen beeinflussen. Das Single-Bundle-Constraint erfordert, dass alle Plugin-Funktionalität in einer \texttt{main.js} Datei gebündelt wird, was Code-Splitting unmöglich macht und Tree-Shaking sowie Bundle Size Monitoring kritisch werden lässt \autocite{ObsidianPluginDev2024}. Das empfohlene Limit von 244 \ac{KB} wird von großen Plugins regelmäßig überschritten; das Ziel für Atlas \ac{VTT} liegt bei maximal 3 \ac{MB}.
+Obsidian-Plugins unterliegen spezifischen Plattform-Constraints, die Architektur-Entscheidungen beeinflussen. Das Single-Bundle-Constraint erfordert, dass alle Plugin-Funktionalität in einer \texttt{main.js} Datei gebündelt wird, was Code-Splitting unmöglich macht und Tree-Shaking sowie Bundle Size Monitoring kritisch werden lässt \autocite{ObsidianPluginDev2024}. Das Ziel für Atlas \ac{VTT} liegt bei maximal 3 \ac{MB}.
 
 Ein kritischer Konflikt entsteht durch Obsidians globales PIXI.js v7 Bundle. Atlas \ac{VTT} benötigt PIXI.js v8 für moderne Features, was explizite v8 Imports via npm erfordert, um Namespace-Kollisionen zu vermeiden. File Access ist auf Vault-relative Pfade beschränkt, weshalb der AssetManager ausschließlich Obsidians Vault \ac{API} nutzt. Tailwind \ac{CSS} ist nur eingeschränkt nutzbar, wodurch Styling primär durch \ac{SCSS} und Obsidian Native Styles erfolgt. \autoref{tab:nicht-funktionale-anforderungen-plattform} fasst die Plattform-Constraints und deren Mitigationsstrategien zusammen.
 
@@ -246,7 +246,7 @@ Das \textbf{Single Responsibility Principle (\ac{SRP})} stellt sicher, dass jede
 
 Für Services mit vault-weitem Zustand -- insbesondere den \texttt{AssetService} -- kommt das \textbf{Singleton Pattern} zum Einsatz \autocite{RefactoringGuruSingleton}. Asset-Metadaten müssen über alle geöffneten Map-Views hinweg konsistent sein; multiple Instanzen würden zu Dateninkonsistenzen führen.
 
-Der Trade-off dieser Architektur liegt in erhöhter Code-Komplexität durch Service-Registration, Event-Handling und Dependency Injection \autocite{Fowler2014}. Bei einem Plugin mit mehr als 30.000 Zeilen Code überwiegen dennoch die Vorteile in Wartbarkeit und Testbarkeit.
+Der Trade-off dieser Architektur liegt in erhöhter Code-Komplexität durch Service-Registration, Event-Handling und Dependency Injection \autocite{Fowler2014}. Bei einem Plugin dieser Größenordnung überwiegen dennoch die Vorteile in Wartbarkeit und Testbarkeit.
 
 \subsubsection{Layer-Architektur}
 
@@ -254,25 +254,24 @@ Die Implementierung folgt einer Layered Architecture, bei der Komponenten in hor
 
 \paragraph{View Layer}
 
-Der View Layer umfasst alle Benutzeroberflächen-Komponenten. Die \texttt{atlas-view.ts} stellt die \ac{GM}/Host View für Spielleiter bereit, während \texttt{player-view.ts} ein dediziertes Player Window ohne \ac{GM}-spezifische Elemente implementiert. Ergänzt werden diese durch die \texttt{dashboard-view.tsx} für Session-Management und die \texttt{statblock-view.tsx} für Charakterbögen im \ac{DnD} 5e Layout. Alle Views sind als React 19 Komponenten implementiert und nutzen \ac{UI}-Komponenten aus dem Radix \ac{UI} Ecosystem.
+Der View Layer umfasst alle Benutzeroberflächen-Komponenten. Die \texttt{atlas-view.ts} stellt die \ac{GM}/Host View für Spielleiter bereit, während \texttt{player-view.ts} ein dediziertes Player Window ohne \ac{GM}-spezifische Elemente implementiert. Diese Separation ermöglicht lokale Spielumgebungen, bei denen die Player View auf einem zweiten Bildschirm für Mitspieler angezeigt werden kann, ohne dass \ac{GM}-exklusive Informationen wie versteckte Tokens oder Fog of War-Bereiche sichtbar sind. Ergänzt werden diese durch die \texttt{dashboard-view.tsx} für Session-Management und die \texttt{statblock-view.tsx} für Charakterbögen im \ac{DnD} 5e Layout. Alle Views sind als React 19 Komponenten implementiert und nutzen \ac{UI}-Komponenten aus dem Radix \ac{UI} Ecosystem.
 
 \paragraph{Rendering Layer}
 
-Der Rendering Layer stellt Map, Tokens und Effekte auf einem HTML5 Canvas dar. Der \texttt{PixiRendererOrchestrator.ts} orchestriert den Rendering-Prozess, während der \texttt{LayerManager.ts} die Rendering-Layer (Background, Grid, Tokens, Fog, \ac{UI}) verwaltet. Für Kamera-Kontrolle mit Pan, Zoom und Boundary-Handling kommt \texttt{pixi-viewport} zum Einsatz.
-
-Die strikte Separation zwischen React (\ac{UI} Layer) und PIXI.js (Rendering Layer) stellt eine architektonisch relevante Entscheidung dar: React-Komponenten modifizieren niemals direkt PIXI.js Display Objects, sondern aktualisieren den zentralen State. Renderer reflektieren anschließend den neuen State. Diese unidirektionale Datenfluss-Architektur entspricht dem Flux-Pattern, einem von Facebook entwickelten Architekturmuster für vorhersagbaren Datenfluss, und verhindert Race Conditions zwischen \ac{UI}-Updates und Canvas-Rendering.
+Der Rendering Layer stellt Map, Tokens und Effekte auf einem HTML5 Canvas dar. Der \texttt{PixiRendererOrchestrator.ts} orchestriert den Rendering-Prozess, während der \texttt{LayerManager.ts} die Rendering-Layer (Background, Grid, Tokens, Fog, \ac{UI}) verwaltet.
+Die strikte Separation zwischen React (\ac{UI} Layer) und PIXI.js (Rendering Layer) stellt eine architektonisch relevante Entscheidung dar: React-Komponenten modifizieren niemals direkt PIXI.js Display Objects, sondern aktualisieren den zentralen State. Renderer reflektieren anschließend den neuen State. Diese unidirektionale Datenfluss-Architektur entspricht dem Flux-Pattern, einem von Facebook entwickelten Architekturmuster für vorhersagbaren Datenfluss, und macht Race Conditions unwahrscheinlicher zwischen \ac{UI}-Updates und Canvas-Rendering.
 
 \paragraph{State Management Layer}
 
-Der State Management Layer implementiert eine Centralized-State-Architecture mit Zustand. Der globale Application State in \texttt{atlasStore.ts} umfasst Map-Daten, \ac{UI}-Zustand und Tool-Modus. Eine \texttt{storeFactory.ts} erzeugt View-spezifische Store-Instanzen, während \texttt{tabStore.ts} Tab-spezifischen State für Multi-Map-Support verwaltet. Die Middlewares zundo und immer ermöglichen Undo/Redo-Funktionalität und immutable State-Updates.
+Der State Management Layer verwaltet den Anwendungszustand über einen zentralen Store. Die JavaScript-Library Zustand stellt diesen globalen Datenspeicher in \texttt{atlasStore.ts} bereit, der Map-Daten, \ac{UI}-Zustand und Tool-Modus umfasst. Eine \texttt{storeFactory.ts} erzeugt View-spezifische Store-Instanzen, während \texttt{tabStore.ts} Tab-spezifischen State für Multi-Map-Support verwaltet. Die Middlewares zundo und immer ermöglichen Undo/Redo-Funktionalität und immutable State-Updates.
 
-Die Verwendung von Immer garantiert Immutability durch strukturelles Sharing: State-Updates erzeugen neue Objekte statt bestehende zu mutieren. Der Copy-on-Write-Algorithmus kopiert nur geänderte Teile des State-Trees, wodurch der Performance-Overhead minimiert wird \autocite{ImmerDocs2024}.
+Die Verwendung von Immer garantiert Immutability durch strukturelles Sharing: State-Updates erzeugen neue Objekte statt bestehende zu mutieren. Strukturelles Sharing ermöglicht, dass nur geänderte Teile des State-Trees kopiert werden, während Immer unveränderte Daten wiederverwendet \autocite{ImmerPerformance2024}.
 
 \paragraph{Service Layer}
 
-Der Service Layer enthält mehr als 50 spezialisierte Services für Geschäftslogik, externe \ac{API}-Calls und Daten-Persistierung. Der \texttt{AssetService} verwaltet als Singleton vault-weite Asset-Metadaten, der \texttt{TokenStatblockLinkService} implementiert die bidirektionale Token-Statblock-Verlinkung. Weitere Services umfassen den \texttt{NetworkService} für WebSocket-basiertes Multiplayer, den \texttt{AudioService} für Sound Effects und den \texttt{MapService} für Map Loading und Validation.
+Der Service Layer enthält diverse spezialisierte Services für Geschäftslogik, externe \ac{API}-Calls und Daten-Persistierung. Der \texttt{AssetService} verwaltet als Singleton vault-weite Asset-Metadaten, der \texttt{TokenStatblockLinkService} implementiert die bidirektionale Token-Statblock-Verlinkung. Weitere Services umfassen den \texttt{AudioService} für Sound Effects und den \texttt{MapService} für Map Loading und Validation.
 
-Das Singleton Pattern beim \texttt{AssetService} adressiert eine wesentliche Anforderung: Die Verlinkung eines Tokens zu einem Statblock muss über alle Maps hinweg konsistent sein. Multiple Instanzen würden zu inkonsistenten Metadaten-Zuständen führen, wenn zwei Maps gleichzeitig dieselben Assets verwenden.
+Das Singleton Pattern beim \texttt{AssetService} (siehe \autoref{lst:asset-service-singleton-full}) adressiert eine wesentliche Anforderung: Die Verlinkung eines Tokens zu einem Statblock muss über alle Maps hinweg konsistent sein. Multiple Instanzen würden zu inkonsistenten Metadaten-Zuständen führen, wenn zwei Maps gleichzeitig dieselben Assets verwenden.
 
 \subsubsection{Integration mit Obsidian Plugin \ac{API}}
 
@@ -296,7 +295,7 @@ await leaf.loadIfDeferred();
 const view = leaf.view as AtlasView;
 \end{lstlisting}
 
-Dieser Constraint stellt ein dokumentiertes Risiko dar und erfordert explizites Laden via \texttt{await leaf.loadIfDeferred()} vor jedem View-Zugriff.
+Die Obsidian Plugin \ac{API} bietet hierfür eine dedizierte Methode, die lazy-geladene Views vor dem Zugriff explizit initialisiert und somit Runtime-Fehler verhindert.
 
 \paragraph{PIXI.js Version Konflikt}
 
@@ -315,7 +314,7 @@ const app = new Application();
 
 Diese Entscheidung unterscheidet sich von Foundry \ac{VTT}, das bei PIXI.js v7 verbleibt. Das Foundry-Entwicklerteam begründet dies damit, dass eine Migration Breaking Changes für das Modul-Ökosystem bedeuten würde \autocite{FoundryIssue11183}. Da Atlas \ac{VTT} als vollständige Neuentwicklung ohne bestehende Codebasis entsteht, entfallen Migrationskosten. Gleichzeitig können v8-Features wie das vereinfachte Package-System und asynchrone Initialisierung für WebGPU-Support genutzt werden \autocite{PixiV8Migration2024}.
 
-Der Trade-off dieser Lösung ist erhöhte Bundle-Size: PIXI.js v8 fügt ~500 \ac{KB} zum finalen Bundle hinzu. Dieser Overhead wird bewusst in Kauf genommen, da die konsolidierte Package-Struktur von v8 Version-Konflikte eliminiert und die modernen \ac{API}-Patterns die Wartbarkeit erhöhen \autocite{PixiV8Migration2024}.
+Der Trade-off dieser Lösung ist erhöhte Bundle-Size: PIXI.js v8 fügt ~500 \ac{KB} zum finalen Bundle hinzu. Dieser Overhead wird bewusst in Kauf genommen, da die konsolidierte Package-Struktur von v8 Version-Konflikte eliminiert und die modernen \ac{API}-Patterns die Wartbarkeit erhöhen könnten \autocite{PixiV8Migration2024}.
 
 \subsection{Datenmodell}
 \label{subsec:Datenmodell}
@@ -330,7 +329,7 @@ Das Datenmodell ist in drei separate Bereiche unterteilt, die jeweils unterschie
 
 \textbf{Asset Metadata} (persistent, vault-wide) verwaltet wiederverwendbare Assets wie Token-Images, Sound Effects und Map-Templates in einer gemeinsamen \texttt{assets-metadata.json} Datei. Diese Separation verhindert Daten-Duplikation: Ein Token-Image kann in mehreren Maps verwendet werden, ohne dass dessen Metadaten (Tags, Statblock-Link) redundant gespeichert werden müssen.
 
-\textbf{Application State} (transient, pro-View) hält Runtime-Zustand wie aktuelle Tool-Auswahl, Viewport-Position und \ac{UI}-Zustand. Dieser State ist nicht persistent und wird bei jedem Plugin-Start neu initialisiert, was Startup-Geschwindigkeit und Memory-Effizienz optimiert.
+\textbf{Application State} (transient, pro-View) hält Runtime-Zustand wie aktuelle Tool-Auswahl, Viewport-Position und \ac{UI}-Zustand. Dieser State ist nicht persistent und wird bei jedem Plugin-Start neu initialisiert, was Startup-Geschwindigkeit und Memory-Effizienz optimieren soll.
 
 Diese Separation entspricht dem Table Data Gateway Pattern \autocite{FowlerTableDataGateway2024}, bei dem Daten-Zugriff von Geschäftslogik getrennt wird. Für Atlas \ac{VTT} bedeutet dies, dass Services ausschließlich über definierte Schnittstellen (\texttt{MapService}, \texttt{AssetService}) auf persistente Daten zugreifen, nicht direkt auf Dateien.
 
@@ -338,7 +337,7 @@ Diese Separation entspricht dem Table Data Gateway Pattern \autocite{FowlerTable
 
 Das \texttt{.atlasmap}-Format speichert Map-Konfiguration und platzierte Objekte als \ac{JSON}. Die Datenstruktur umfasst ein \texttt{version}-Feld für Schema-Versionierung, \texttt{name} und \texttt{background}-Konfiguration (Image-Pfad und Grid-Parameter), sowie ein \texttt{objects}-Array mit platzierten Map-Objekten (Token, FogRegion, etc.). Jedes Objekt enthält \texttt{type}, \texttt{id}, Position (\texttt{x}/\texttt{y}) und typ-spezifische Properties wie \texttt{statblockPath} für Tokens oder \texttt{shape}/\texttt{points} für FogRegions (vollständiges Schema: siehe \autoref{sec:anhang-map-format}).
 
-Mehrere Faktoren motivierten die Wahl von \ac{JSON} als Datenformat: \ac{JSON} ist human-readable und damit git-friendly, was Diff-Visualisierung und Merge-Konflikt-Auflösung bei kollaborativer Map-Entwicklung erleichtert \autocite{JSON2017}. Binäre Formate wie Protocol Buffers wären kompakter (~30\% kleinere Files), jedoch auf Kosten der Lesbarkeit und Git-Integration. Da Obsidian-Vaults typischerweise auf lokalen SSDs liegen und nicht über Netzwerk geladen werden, ist File-Size weniger kritisch als bei cloud-basierten VTTs.
+Mehrere Faktoren motivierten die Wahl von \ac{JSON} als Datenformat: \ac{JSON} ist human-readable und damit git-friendly, was Diff-Visualisierung und Merge-Konflikt-Auflösung bei kollaborativer Map-Entwicklung erleichtert \autocite{JSON2017}.
 
 Das \texttt{objects}-Array enthält polymorphe Objekte verschiedener Typen (Token, FogRegion, NotePin), die durch ein \texttt{type}-Diskriminator-Feld unterschieden werden. Dieses Pattern entspricht dem Subtype Polymorphism Pattern und ermöglicht Erweiterbarkeit: Neue Objekt-Typen können hinzugefügt werden, ohne bestehende Maps zu invalidieren, solange das \texttt{version}-Feld entsprechend inkrementiert wird.
 
@@ -371,8 +370,6 @@ Asset-Metadaten werden vault-wide in \texttt{assets-metadata.json} gespeichert, 
 \end{lstlisting}
 
 Eine zentrale Anforderung motivierte die Entscheidung für eine zentrale Metadata-Datei statt verteilter Metadaten (z.B. Sidecar-Files pro Asset): Asset-Metadaten müssen vault-weit konsistent sein, sodass die Verlinkung eines Tokens zu einem Statblock über alle Maps hinweg identisch bleibt. Eine dezentrale Lösung würde bei Änderungen (z.B. Statblock-Link-Update) alle Maps durchsuchen und aktualisieren müssen, was bei Vaults mit mehr als 50 Maps zu messbaren Performance-Einbußen führen würde, da jede Änderung alle Map-Dateien lesen und schreiben müsste. Die zentrale Lösung ermöglicht direkten Zugriff auf Metadaten über \texttt{AssetService} als Singleton, ohne dass Maps durchsucht werden müssen.
-
-Der Trade-off ist Skalierbarkeit: Da alle Metadaten beim Laden in den Arbeitsspeicher gelesen werden, wächst der Memory-Footprint linear mit der Asset-Anzahl. Für die in \autoref{sec:Anforderungsanalyse} definierten Szenarien (1000 Assets) beträgt dieser Overhead weniger als 1~\ac{MB}, während die Texture-Daten derselben Assets mehrere hundert \ac{MB} beanspruchen.
 
 \paragraph{Singleton AssetService}
 
@@ -411,7 +408,7 @@ actions:
 Additional GM notes...
 \end{lstlisting}
 
-Die Verwendung von \ac{YAML} Frontmatter folgt Obsidian's native Metadata-System und ermöglicht Statblock-Queries über Obsidian's Dataview Plugin. Der Trade-off ist erhöhte Parsing-Komplexität: Atlas \ac{VTT} muss \ac{YAML} parsen und validieren, während ein custom \ac{JSON}-Format einfacher zu verarbeiten wäre. Der Vorteil liegt in der Interoperabilität: Statblocks sind als normale Markdown-Notes mit beliebigen anderen Vault-Dateien und Plugins wie Dataview oder Templater kompatibel.
+Die Verwendung von \ac{YAML} Frontmatter folgt Obsidians nativem Metadata-System und ermöglicht Statblock-Queries über die Bases-Funktion \autocite{ObsidianBases2025}. Bases ist ein Core-Plugin, das Datenbank-ähnliche Views basierend auf Properties erstellt. Der Trade-off ist erhöhte Parsing-Komplexität: Atlas \ac{VTT} muss \ac{YAML} parsen und validieren, während ein custom \ac{JSON}-Format einfacher zu verarbeiten wäre. Der Vorteil liegt in der Interoperabilität: Statblocks sind als normale Markdown-Notes mit anderen Vault-Dateien kompatibel und können in Bases-Datenbanken aggregiert werden. Zudem nutzt das in \autoref{sec:Einleitung} erwähnte Plugin Fantasy Statblocks ebenfalls \ac{YAML} Frontmatter für Charakterdaten \autocite{ValentineFantasyStatblocks2024}, sodass Obsidian-Nutzer der \ac{TTRPG}-Community mit diesem Format bereits vertraut sind.
 
 \paragraph{Bidirektionale Token-Statblock-Verlinkung}
 
@@ -424,7 +421,7 @@ Das System erzwingt One-to-One Relationships zwischen Tokens und Statblocks: Ein
 	\label{fig:bidirectional-linking-flow}
 \end{figure}
 
-Diese bidirektionale Synchronisation entspricht dem Two-Way Data Binding Pattern und stellt Data Integrity durch Konsistenz-Checks sicher. Der Performance-Overhead ist minimal, da nur die betroffene Metadata-Datei und das spezifische \ac{YAML}-Frontmatter aktualisiert werden müssen, ohne dass andere Dateien durchsucht werden (Implementierung: \texttt{TokenStatblockLinkService.ts:67-95}).
+Der Performance-Overhead dieser Synchronisation ist minimal, da nur die betroffene Metadata-Datei und das spezifische \ac{YAML}-Frontmatter aktualisiert werden müssen, ohne dass andere Dateien durchsucht werden (Implementierung: siehe \autoref{lst:bidirectional-linking-full}).
 
 \subsubsection{Application State Management}
 
@@ -437,11 +434,9 @@ Der Runtime-Zustand wird mit Zustand \autocite{ZustandDocs2024} als State Manage
 	\label{fig:state-management-architecture}
 \end{figure}
 
-Die Architektur unterscheidet drei Pfade: Der \textbf{Read-Pfad} (1--4, blau) ermöglicht Components das Lesen des States durch einen Middleware-Layer. Der \textbf{Write-Pfad} (5--8, rot) verarbeitet Actions, die den State modifizieren. Der \textbf{Notify-Pfad} (9, grün) benachrichtigt Subscribers über Änderungen. Temporal fügt Undo/Redo-Funktionalität hinzu, während Immer Immutability erzwingt.
+Die Architektur unterscheidet drei Pfade: Der \textbf{Read-Pfad} ermöglicht Components das Lesen des States durch einen Middleware-Layer. Der \textbf{Write-Pfad} verarbeitet Actions, die den State modifizieren. Der \textbf{Notify-Pfad} benachrichtigt Subscribers über Änderungen. Temporal fügt Undo/Redo-Funktionalität hinzu, während Immer Immutability erzwingt.
 
 Die Verwendung von Immer garantiert Immutability durch Copy-on-Write: State-Updates erzeugen neue Objekte statt Mutations, was Time-Travel Debugging und Undo/Redo ohne zusätzliche Logik ermöglicht \autocite{ImmerDocs2024}. Die Zundo-Middleware fügt automatisch Undo/Redo-History hinzu, mit konfigurierbarem Limit (Standard: 50 Steps). Der vollständige Code des \texttt{AtlasState}-Interfaces und der Store-Konfiguration ist in \autoref{sec:anhang-state-management} zu finden (Implementierung: \texttt{atlasStore.ts:34-67}).
-
-Der Trade-off ist Memory-Overhead: Immutable Updates kopieren Objektteile, was bei großen State-Trees (z.B. mehr als 100 MapObjects) zu erhöhtem Memory-Verbrauch führt. Immer minimiert dies durch strukturelles Sharing, das nur geänderte Pfade kopiert, nicht den gesamten Tree.
 
 \subsubsection{Datenpersistenz und Synchronisation}
 
@@ -552,23 +547,17 @@ Foundry \ac{VTT}, ein etabliertes Virtual-Tabletop-Tool, nutzt PIXI.js als Rende
 
 \subsubsection{Wahl von PIXI.js Version 8}
 
-Eine kritische Entscheidung war die Wahl von PIXI.js Version 8 statt Version 7. Obsidian bundelt PIXI.js v7 global als \texttt{window.PIXI}, was zu Konflikten führen würde, wenn Atlas \ac{VTT} ebenfalls v7 nutzen würde. Die Lösung besteht darin, PIXI.js v8 als explizite npm-Abhängigkeit zu deklarieren und per ES6-Modul-Import einzubinden, anstatt das globale \texttt{window.PIXI} zu verwenden.
-
-Diese Entscheidung ermöglicht die sofortige Nutzung von v8-Features, während Foundry \ac{VTT} aktuell noch Version 7 nutzt und eine Migration zu v8 als umfangreiches Projekt mit mehreren Meilensteinen plant \autocite{FoundryIssue11183}. Da Atlas \ac{VTT} als Neuentwicklung ohne bestehende Codebasis entsteht, entfallen Migrationskosten. Zudem können v8-spezifische Features wie verbesserter TypeScript-Support und WebGPU-Vorbereitung genutzt werden.
+Atlas \ac{VTT} verwendet PIXI.js Version 8 statt der von Obsidian global bereitgestellten Version 7. Die technischen Gründe für diese Entscheidung sowie das Import-Pattern zur Vermeidung von Namespace-Konflikten wurden bereits in \autoref{subsec:Architekturentwurf} erläutert (siehe \autoref{lst:pixi-import}).
 
 \subsubsection{Geplante Implementierung und Best Practices}
 
-Basierend auf der PIXI.js Performance-Dokumentation \autocite{PixiPerf2024} wurden zwei primäre Optimierungstechniken für die Implementierung identifiziert:
-
-\textbf{Sprite Batching} wird automatisch von PIXI.js durchgeführt und bündelt bis zu 16 Textures in einem \ac{GPU}-Draw-Call \autocite{PixiPerf2024}, wodurch der \ac{GPU}-Overhead reduziert wird. Dies ist besonders relevant für \ac{VTT}s, da Token häufig unterschiedliche Texturen verwenden.
-
-\textbf{Power-of-Two Textures} optimieren die \ac{GPU}-Performance, da Hardware-Texture-Lookups für Größen wie 64×64, 128×128 oder 256×256 Pixel effizienter sind als beliebige Dimensionen \autocite{PixiTexture2024}. Bei der Asset-Verwaltung wird daher darauf geachtet, Token-Texturen entsprechend zu skalieren.
+Basierend auf der PIXI.js Performance-Dokumentation \autocite{PixiPerf2024} wurde \textbf{Sprite Batching} als primäre Optimierungstechnik identifiziert. PIXI.js führt Sprite Batching automatisch durch und bündelt bis zu 16 Textures in einem \ac{GPU}-Draw-Call, wodurch der \ac{GPU}-Overhead reduziert wird. Dies ist besonders relevant für \ac{VTT}s, da Token häufig unterschiedliche Texturen verwenden können.
 
 \subsubsection{Erwartete Trade-offs}
 
-Die Entscheidung für PIXI.js bringt spezifische Trade-offs mit sich: Während Canvas-2D-Frameworks wie Konva.js eine einfachere \ac{API} mit schnellerem Einstieg bieten, erfordert PIXI.js tieferes Verständnis von \ac{WebGL}-Konzepten und führt zu erhöhtem Code-Aufwand für einfache Operationen. Beispielsweise benötigt das Zeichnen einer einfachen Form in Konva.js weniger Code als in PIXI.js.
+Die Entscheidung für PIXI.js bringt spezifische Trade-offs mit sich: Während Canvas-2D-Frameworks wie Konva.js eine einfachere \ac{API} mit schnellerem Einstieg bieten, erfordert PIXI.js tieferes Verständnis von \ac{WebGL}-Konzepten.
 
-Der zentrale Vorteil von PIXI.js liegt in der \ac{WebGL}-Hardware-Beschleunigung, die laut den evaluierten Benchmarks bei objektreichen Szenarien (wie sie für VTTs typisch sind) höhere Frame-Raten ermöglicht (60 \ac{FPS} gegenüber 23 \ac{FPS} bei Konva.js). Da Virtual-Tabletops regelmäßig 50 bis 100 Objekte gleichzeitig darstellen müssen, wurde der höhere Entwicklungsaufwand als akzeptabler Trade-off für die erwartete Performance-Verbesserung bewertet. Die tatsächliche Performance-Validierung dieser Entscheidung erfolgt in \autoref{sec:evaluation}.
+Der zentrale Vorteil von PIXI.js liegt in der \ac{WebGL}-Hardware-Beschleunigung, die laut den evaluierten Benchmarks bei objektreichen Szenarien (wie sie für VTTs typisch sind) höhere Frame-Raten ermöglicht (60 \ac{FPS} gegenüber 23 \ac{FPS} bei Konva.js). Da Virtual-Tabletops oft viele Objekte gleichzeitig darstellen müssen, wurde der höhere Entwicklungsaufwand als akzeptabler Trade-off für die erwartete Performance-Verbesserung bewertet. Die tatsächliche Performance-Validierung dieser Entscheidung erfolgt in \autoref{sec:evaluation}.
 
 \subsection{Grid System: Performance-Optimierung durch Draw-Call-Reduktion}
 \label{subsec:grid-system}
@@ -577,7 +566,7 @@ Das Grid-System ermöglicht taktische Bewegung und Entfernungsmessung auf der Ma
 
 \subsubsection{Problem und ursprüngliche Implementierung}
 
-Das Grid-System ist ein fundamentales \ac{VTT}-Feature, das ein Raster für taktische Bewegung und Entfernungsmessung bereitstellt. In \ac{DnD} 5e entspricht dabei typischerweise ein Quadrat 5 Fuß realer Distanz \autocite{DnDBasicRules2014}. Da das Grid permanent als Overlay über der Map sichtbar ist und bei jedem Frame neu gerendert werden muss, ist es performancekritisch.
+Das Grid-System ist ein fundamentales \ac{VTT}-Feature für taktische Bewegung und Entfernungsmessung (siehe \autoref{tab:funktionale-anforderungen-karten}, F1.2). Da das Grid als Overlay über der Map sichtbar sein kann und bei jedem Frame neu gerendert werden muss, ist es performancekritisch.
 
 Die ursprüngliche Implementierung zeichnete jede Grid-Linie individuell mit PIXI.js Graphics, wie \autoref{lst:grid-original} zeigt.
 
@@ -593,49 +582,13 @@ for (let y = 0; y < mapHeight; y += gridSize) {
 }
 \end{lstlisting}
 
-Bei einer 4096×4096 Pixel Map mit 64 Pixel Grid-Größe resultierte dies in mehr als 1000 Draw-Calls (64 vertikale + 64 horizontale Linien). Die Performance-Analyse während der Entwicklung zeigte \ac{FPS}-Einbrüche bei großen Maps sowie erhöhten \ac{GPU}-Memory-Verbrauch durch Texture-Baking. Das Skalierungsverhalten war quadratisch zur Map-Größe, was für hochauflösende \ac{VTT}-Maps nicht praktikabel war.
+Bei einer 4096×4096 Pixel Map mit 64 Pixel Grid-Größe resultierte dies in mehr als 1000 Draw-Calls (64 vertikale + 64 horizontale Linien). Die Performance-Analyse während der Entwicklung zeigte \ac{FPS}-Einbrüche bei großen Maps. Das Skalierungsverhalten war quadratisch zur Map-Größe, was für hochauflösende \ac{VTT}-Maps nicht praktikabel war.
 
-\subsubsection{Research und Evaluation von Optimierungsansätzen}
+\subsubsection{Optimierungsstrategie: TilingSprite}
 
-Für die Optimierung wurden drei Ansätze evaluiert:
+Als Lösung für das Skalierungsproblem wurde PIXI.js' TilingSprite-Feature evaluiert \autocite{PixiTilingSprite2024}. Bei diesem Ansatz wird ein kleines Grid-Pattern (z.B. 128×128 Pixel) als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Im Gegensatz zur Einzellinien-Implementierung ermöglicht dies einen einzigen Draw-Call unabhängig von der Map-Größe, was den \ac{GPU}-Memory-Verbrauch reduzieren sollte. \autoref{lst:grid-tilingsprite} zeigt die Implementierung.
 
-\textbf{Ansatz 1: Individuelle Linien (Status Quo)} zeichnet jede Linie separat. Der Vorteil liegt in der Flexibilität, hunderte Draw-Calls führen aber zu schlechter Performance. Dieser Ansatz wurde als nicht skalierbar verworfen.
-
-\textbf{Ansatz 2: Graphics Texture Baking} rendert das Grid einmalig in eine Texture, die dann als Sprite dargestellt wird. Dies reduziert Draw-Calls zur Laufzeit, verursacht allerdings hohen \ac{GPU}-Memory-Verbrauch (20 \ac{MB} bei 4096×4096 Pixel Map), da die gesamte Map-Fläche als \ac{RGBA}-Texture gespeichert werden muss.
-
-\textbf{Ansatz 3: TilingSprite} nutzt PIXI.js' native Textur-Wiederholungs-Feature \autocite{PixiTilingSprite2024}. Ein kleines Grid-Pattern (z.B. 128×128 Pixel) wird als Texture erzeugt und von der \ac{GPU} automatisch gekachelt. Dies ermöglicht minimalen \ac{GPU}-Memory-Verbrauch bei einem einzigen Draw-Call.
-
-TilingSprite wurde gewählt, da es die \ac{GPU}-Hardware effizient ausnutzt: Anstatt das gesamte Grid im Speicher vorzuhalten, wird ein einzelnes Pattern durch native Texture-Sampling-Operationen wiederholt \autocite{PixiTilingSprite2024}. Dies reduziert Draw-Calls auf 1 und delegiert die Wiederholungslogik an die \ac{GPU}, die für solche Operationen optimiert ist.
-
-\subsubsection{Entscheidung und Implementierung}
-
-Basierend auf der Evaluation wurde TilingSprite gewählt, da es Draw-Calls auf einen einzigen reduziert und den \ac{GPU}-Memory-Verbrauch erheblich senkt. Die Einschränkung, Power-of-Two Textures nutzen zu müssen, wurde als akzeptabel bewertet, da \ac{GPU}-Hardware für Texture-Größen wie 64×64, 128×128 oder 256×256 Pixel optimiert ist \autocite{PixiTexture2024}.
-
-Die Implementierung erfolgte in zwei Schritten:
-
-\textbf{Schritt 1: Texture-Generierung} erzeugt ein Grid-Pattern als Power-of-Two Texture (\autoref{lst:grid-texture-gen}).
-
-\begin{lstlisting}[float,language=TypeScript,caption={Grid-Texture-Generierung mit Power-of-Two Sizing},label=lst:grid-texture-gen]
-// src/app/pixi/grids/grid-renderer.ts:45
-function generateGridTexture(gridSize: number): Texture {
-  // Naechste Power-of-Two finden (64, 128, 256, etc.)
-  const textureSize = Math.pow(2, Math.ceil(Math.log2(gridSize)));
-
-  const graphics = new Graphics();
-  graphics.rect(0, 0, gridSize, gridSize);
-  graphics.stroke({ width: 1, color: 0xffffff });
-
-  return graphics.generateTexture({
-    resolution: 1,
-    width: textureSize,
-    height: textureSize
-  });
-}
-\end{lstlisting}
-
-\textbf{Schritt 2: TilingSprite-Anwendung} verwendet die erzeugte Texture (\autoref{lst:grid-tilingsprite}).
-
-\begin{lstlisting}[float,language=TypeScript,caption={Grid-Rendering mit TilingSprite (1 Draw-Call)},label=lst:grid-tilingsprite]
+\begin{lstlisting}[float,language=TypeScript,caption={Grid-Rendering mit TilingSprite},label=lst:grid-tilingsprite]
 // src/app/pixi/grids/square-grid.ts:123
 const gridTexture = generateGridTexture(gridSize);
 const tilingSprite = new TilingSprite({
@@ -646,16 +599,16 @@ const tilingSprite = new TilingSprite({
 container.addChild(tilingSprite);
 \end{lstlisting}
 
-Der Trade-off dieser Optimierung liegt in der Notwendigkeit, Power-of-Two-Textures zu verwenden, was bei ungewöhnlichen Grid-Größen zu minimalem Memory-Overhead führen kann (z.B. wird eine 80$\times$80-Pixel-Texture auf 128$\times$128 Pixel aufgerundet). Dieser Overhead ist im Vergleich zum Texture-Baking-Ansatz vernachlässigbar. Die quantitative Validierung der Performance-Verbesserungen erfolgt in \autoref{sec:evaluation}.
+Die quantitative Validierung der Performance-Verbesserungen erfolgt in \autoref{sec:evaluation}.
 
 \subsection{Token Management: Performance-Optimierung bei vielen Objekten}
 \label{subsec:token-management}
 
-Tokens sind die zentralen interaktiven Objekte in einem Virtual-Tabletop und repräsentieren Spielfiguren, NPCs und Monster auf der Map \autocite{FoundryTokens2024}. Im Gegensatz zu statischen Elementen wie dem Grid oder der Map müssen Tokens hochgradig interaktiv sein (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendern (Avatar-Bild, Health Bar, Status-Icons, Labels). Die Performance-Herausforderung entsteht durch die Notwendigkeit, viele solcher Objekte gleichzeitig darzustellen: Typische Spielsitzungen enthalten 8--15 Tokens, während größere Encounters mit 50 bis 100 Tokens vorkommen können. Die PIXI.js-Dokumentation warnt explizit, dass das System langsamer wird, je mehr Objekte hinzugefügt werden \autocite{PixiPerf2024}, was die Notwendigkeit systematischer Performance-Optimierung bei objektreichen Szenarien unterstreicht.
+Tokens sind die zentralen interaktiven Objekte in einem Virtual-Tabletop und repräsentieren Spielfiguren, NPCs und Monster auf der Map \autocite{FoundryTokens2024}. Im Gegensatz zu statischen Elementen wie dem Grid oder der Map müssen Tokens hochgradig interaktiv sein (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendern (Avatar-Bild, Health Bar, Status-Icons, Labels). Die Performance-Herausforderung entsteht durch die Notwendigkeit, viele solcher Objekte gleichzeitig darzustellen, was systematische Performance-Optimierung erfordert (siehe \autoref{subsec:rendering-engine-pixi}).
 
 \subsubsection{Problem: Performance bei objektreichen Szenarien}
 
-Token-Rendering in objektreichen Szenarien stellt besondere Performance-Anforderungen: Während jedes Token hochgradig interaktiv sein muss (Drag \& Drop, Selection, Rotation) und komplexe visuelle Komponenten rendert (Avatar-Bild, Health Bar, Status-Icons), können in großen Encounters bis zu 100 Tokens gleichzeitig auf der Map existieren. Die PIXI.js-Dokumentation betont, dass zunehmende Szenen-Komplexität die Performance direkt beeinflusst \autocite{PixiPerf2024}, was die Relevanz dieser Problemstellung unterstreicht. Eine naive Implementierung ohne Optimierungsstrategien würde zu ineffizienter Texture-Verwaltung führen: Ohne Caching-Strategie würde die wiederholte Verwendung desselben Token-Avatars redundante \ac{I/O}-Operationen verursachen, was besonders bei großen Avatar-Texturen performance-kritisch ist.
+Eine naive Implementierung ohne Optimierungsstrategien würde zu ineffizienter Texture-Verwaltung führen: Ohne Caching-Strategie würde die wiederholte Verwendung derselben Token-Textur redundante \ac{I/O}-Operationen verursachen, was besonders bei großen Token-Texturen performance-kritisch sein kann.
 
 \subsubsection{Research: PIXI.js Performance Best Practices}
 
@@ -680,7 +633,7 @@ Von den recherchierten Techniken wurden zwei in der Implementierung umgesetzt:
 	\item \textbf{Texture Caching} vermeidet redundante \ac{I/O}-Operationen durch eine dedizierte \texttt{TextureCache}-Klasse
 \end{itemize}
 
-Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle in modulare Subkomponenten strukturiert:
+Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle \autocite{DigitalOceanSOLID} in modulare Subkomponenten strukturiert:
 
 \begin{itemize}
 	\item \textbf{TokenRenderer}: Zentrale Orchestrierung und Koordination des Token-Renderings

@@ -20,8 +20,8 @@ Die automatisierten Benchmark-Messungen mit 500 Iterationen pro Szenario liefert
 
 \begin{itemize}
 	\item Die Rendering-Performance ist über alle getesteten Szenarien (0, 20, 100 Token) konstant und erreicht die Hardware-Obergrenze von 120 \ac{FPS}
-	\item Die Frame Time von durchschnittlich 8,33 \ac{ms} liegt unter dem Schwellenwert für flüssige Interaktion (16,67 \ac{ms} für 60 \ac{FPS} \autocite[S. 1480]{Janzen2014FrameRate})
-	\item Der Speicherverbrauch skaliert mit der Token-Anzahl, wobei Texture-Sharing die Effizienz bei vielen gleichartigen Token erhöht
+	\item Die Frame Time von durchschnittlich 8,33 \ac{ms} liegt unter dem in \autoref{sec:Anforderungsanalyse} definierten Schwellenwert für flüssige Interaktion (16,67 \ac{ms} für 60 \ac{FPS})
+	\item Der Speicherverbrauch skaliert mit der Token-Anzahl, wobei Texture-Sharing die Effizienz bei vielen gleichartigen Token potenziell erhöht
 \end{itemize}
 
 \paragraph{Identifizierte Probleme}
@@ -64,7 +64,7 @@ Die methodischen Limitationen der Performance-Evaluation sind in \autoref{subsec
 
 Die Anforderungsanalyse identifizierte und adressierte die technischen Plattform-Limitationen. Die Single-Bundle-Architektur von Obsidian verhindert Code-Splitting und Lazy Loading, wie in \autoref{tab:nicht-funktionale-anforderungen-plattform} als nicht-funktionale Anforderung NF3.1 dokumentiert. Der PIXI.js-Versionskonflikt zwischen der globalen v7-Installation und der benötigten v8-Version wird in \autoref{subsec:rendering-engine-pixi} behandelt; die gewählte Lösung erhöht die Bundle-Größe um ca. 500~\ac{KB}.
 
-Eine weitere Einschränkung betrifft den Fokus auf Runtime-Performance. Die Evaluation erfasste primär Frame Rate und Speicherverbrauch während der Laufzeit. Andere Metriken wie Startup-Zeit, Bundle-Parse-Duration und Time-to-Interactive blieben unberücksichtigt, obwohl diese die wahrgenommene Nutzererfahrung beim Plugin-Start beeinflussen.
+Eine weitere Einschränkung betrifft den Fokus auf Runtime-Performance. Die Evaluation erfasste primär Frame Rate und Speicherverbrauch während der Laufzeit. Andere Metriken wie Startup-Zeit, Bundle-Parse-Duration und Time-to-Interactive blieben unberücksichtigt, obwohl diese die wahrgenommene Nutzererfahrung beim Plugin-Start beeinflussen könnten.
 
 \subsection{Kritische Würdigung}
 \label{subsec:KritischeWuerdigung}
@@ -79,7 +79,7 @@ Rückblickend hätten einige Aspekte anders angegangen werden können. Die Memor
 
 \paragraph{Gewonnene Erkenntnisse}
 
-Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenntnisse. Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation. Erst bei ausreichend vielen Wiederholungen -- mehr als 100 Iterationen -- werden nicht offensichtliche Probleme wie Memory Leaks sichtbar. Die strikte Trennung von Rendering-State und Persistenz-State vereinfacht sowohl Performance-Optimierung als auch Debugging, da Änderungen in einem Bereich den anderen nicht beeinflussen.
+Die Entwicklung und Evaluation des Plugins lieferte mehrere übertragbare Erkenntnisse. Performance-Tests sollten von Beginn an in den Entwicklungsprozess integriert werden, nicht erst als finale Evaluation. Nicht offensichtliche Probleme wie Memory Leaks können bei Kurztests unentdeckt bleiben und erfordern möglicherweise eine hohe Iterationszahl, um erkennbar zu werden. Die strikte Trennung von Rendering-State und Persistenz-State vereinfacht sowohl Performance-Optimierung als auch Debugging, da Änderungen in einem Bereich den anderen nicht beeinflussen.
 
 \section{Ausblick}
 \label{sec:Ausblick}
@@ -94,6 +94,6 @@ Das in \autoref{sec:AuswertungInterpretation} identifizierte Memory Leak erforde
 
 \paragraph{Weiterentwicklung}
 
-Eine mögliche Weiterentwicklung besteht in der Auslagerung rechenintensiver Operationen in Web Workers \autocite{ElectronPerformanceGuide2024}. Die in \autoref{subsec:grid-system} beschriebenen Grid-Berechnungen und die Asset-Indexierung sind Kandidaten für diese Optimierung, da sie den Main Thread nicht blockieren sollten.
+Eine mögliche Weiterentwicklung besteht in der Auslagerung rechenintensiver Operationen in Web Workers. Bei großen Vaults mit hunderten Statblock-Dateien könnten komplexe Suchoperationen -- etwa Fuzzy-Matching oder Volltext-Suche im Markdown-Inhalt -- von der Parallelisierung profitieren. Das Datacore-Plugin demonstriert, dass Web Workers in Obsidian-Plugins realisierbar sind und die Dateiverarbeitung im Hintergrund ermöglichen, ohne die Benutzeroberfläche zu blockieren \autocite{DatacoreWebWorker2024}.
 
 Die in \autoref{sec:Systemdesign} dokumentierten Architekturmuster -- PIXI.js-Integration (\autoref{subsec:rendering-engine-pixi}), Zustand-basiertes State Management (\autoref{subsec:Datenmodell}) und die modulare Service-Architektur (\autoref{subsec:Architekturentwurf}) -- sind auf andere Obsidian-Plugins mit Rendering-Anforderungen übertragbar.
