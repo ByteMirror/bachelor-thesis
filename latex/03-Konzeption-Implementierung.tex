@@ -220,7 +220,7 @@ Ein kritischer Konflikt entsteht durch Obsidians globales PIXI.js v7 Bundle. Atl
 
 \subsubsection{Wartbarkeit und Code-Qualität}
 
-Etablierte Software Engineering Prinzipien gewährleisten Wartbarkeit. Die modulare Service-Architektur setzt das Single Responsibility Principle um, wobei jedes Modul maximal 300 Lines of Code umfassen sollte \autocite{DigitalOceanSOLID,ESLintMaxLines2024}. Strict TypeScript mit vollständiger Type Safety eliminiert \texttt{any}-Types in Production Code. Das DRY-Prinzip begrenzt Code Duplication auf unter 5\%.
+Etablierte Software Engineering Prinzipien gewährleisten Wartbarkeit. Die modulare Service-Architektur setzt das Single Responsibility Principle um, wobei jedes Modul maximal 300 Lines of Code umfassen sollte \autocite[S. 49-50]{ShvetsDesignPatterns,ESLintMaxLines2024}. Strict TypeScript mit vollständiger Type Safety eliminiert \texttt{any}-Types in Production Code. Das DRY-Prinzip begrenzt Code Duplication auf unter 5\%.
 
 Die Architektur folgt Service-Oriented Architecture mit Event-Driven Communication für Loose Coupling und Singleton State durch Zustand Store in \texttt{main.ts:atlasStore}. Code-Qualität Metriken umfassen Cyclomatic Complexity unter 10 pro Funktion, Function Length unter 50 Lines of Code und File Length unter 300 Lines of Code als Refactoring Threshold. Diese Metriken werden kontinuierlich überwacht, um Code-Wartbarkeit über den gesamten Entwicklungszyklus sicherzustellen.
 
@@ -242,7 +242,7 @@ Die Architektur von Atlas \ac{VTT} folgt einem modularen, service-orientierten A
 
 Die Architektur von Atlas \ac{VTT} basiert auf vier Software-Engineering-Patterns. Eine \textbf{service-orientierte Architektur (\ac{SOA})} organisiert die Funktionalität in verschiedene eigenständige Services mit jeweils klar definierter Verantwortlichkeit \autocite{Fowler2014}. Services wie \texttt{AssetService}, \texttt{NetworkService} und \texttt{TokenStatblockLinkService} können dadurch unabhängig entwickelt und getestet werden.
 
-Das \textbf{Single Responsibility Principle (\ac{SRP})} stellt sicher, dass jedes Modul nur eine Änderungsursache hat \autocite{DigitalOceanSOLID}. Dies reduziert die Kopplung zwischen Komponenten und erhöht die Kohäsion innerhalb einzelner Module. Eng damit verbunden ist die \textbf{Event-Driven Communication}, die Services durch asynchrone Event-Emission entkoppelt. Dieses Pattern entspricht dem Observer Pattern \autocite{RefactoringGuruObserver}: Services kommunizieren über Events wie \texttt{atlas-vtt:refresh-assets}, wodurch neue Features ohne Modifikation bestehender Services hinzugefügt werden können.
+Das \textbf{Single Responsibility Principle (\ac{SRP})} stellt sicher, dass jedes Modul nur eine Änderungsursache hat \autocite[S. 49-50]{ShvetsDesignPatterns}. Dies reduziert die Kopplung zwischen Komponenten und erhöht die Kohäsion innerhalb einzelner Module. Eng damit verbunden ist die \textbf{Event-Driven Communication}, die Services durch asynchrone Event-Emission entkoppelt. Dieses Pattern entspricht dem Observer Pattern \autocite{RefactoringGuruObserver}: Services kommunizieren über Events wie \texttt{atlas-vtt:refresh-assets}, wodurch neue Features ohne Modifikation bestehender Services hinzugefügt werden können.
 
 Für Services mit vault-weitem Zustand -- insbesondere den \texttt{AssetService} -- kommt das \textbf{Singleton Pattern} zum Einsatz \autocite{RefactoringGuruSingleton}. Asset-Metadaten müssen über alle geöffneten Map-Views hinweg konsistent sein; multiple Instanzen würden zu Dateninkonsistenzen führen.
 
@@ -633,7 +633,7 @@ Von den recherchierten Techniken wurden zwei in der Implementierung umgesetzt:
 	\item \textbf{Texture Caching} vermeidet redundante \ac{I/O}-Operationen durch eine dedizierte \texttt{TextureCache}-Klasse
 \end{itemize}
 
-Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle \autocite{DigitalOceanSOLID} in modulare Subkomponenten strukturiert:
+Die Token-Rendering-Komponente wurde nach dem Single Responsibility Principle \autocite[S. 49-50]{ShvetsDesignPatterns} in modulare Subkomponenten strukturiert:
 
 \begin{itemize}
 	\item \textbf{TokenRenderer}: Zentrale Orchestrierung und Koordination des Token-Renderings
