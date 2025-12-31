@@ -11,7 +11,7 @@ Die Anforderungsanalyse fundiert die Konzeption und Implementierung von Atlas \a
 
 \subsection{Funktionale Anforderungen}
 
-Wie bereits in \autoref{sec:GrundlagenKapitel} erläutert digitalisieren \ac{VTT}s Tabletop-RPG-Gameplay durch interaktive Karten, Token-basiertes Movement und Fog of War. Die funktionalen Anforderungen von Atlas \ac{VTT} orientieren sich an etablierten \ac{VTT}-Standards von Foundry \ac{VTT} und Roll20 sowie an den Spielregeln von \ac{DnD} 5e.
+Wie bereits in \autoref{sec:GrundlagenKapitel} erläutert, digitalisieren \ac{VTT}s Tabletop-RPG-Gameplay durch interaktive Karten, Token-basiertes Movement und Fog of War. Die funktionalen Anforderungen von Atlas \ac{VTT} orientieren sich an etablierten \ac{VTT}-Standards von Foundry \ac{VTT} und Roll20 sowie an den Spielregeln von \ac{DnD} 5e.
 
 Die Fokussierung auf \ac{DnD} 5e als Referenzsystem erfolgt aus zwei Gründen: Erstens dominiert \ac{DnD} den \ac{TTRPG}-Markt mit einem geschätzten Anteil von über 50\% aller Verkäufe im Fachhandel \autocite{RPGDrop2024Market}, wodurch die Implementierung der \ac{DnD} 5e-Regeln die größte Zielgruppe adressiert. Zweitens erfordert die Entwicklung eines \ac{MVP} eine bewusste Einschränkung des Umfangs auf ein einzelnes Regelsystem, um innerhalb des Projektrahmens eine vollständige und nutzbare Implementierung zu gewährleisten. Die Architektur von Atlas \ac{VTT} ist jedoch modular gestaltet, sodass zukünftige Erweiterungen für andere Regelsysteme möglich sind.
 
@@ -69,7 +69,7 @@ Die Anforderungen F2.1-F2.5 sind als Must have klassifiziert, da sie die minimal
 
 \textbf{Foundry \ac{VTT}} implementiert Token-Manipulation als Kern-Feature. Die Funktionen umfassen Token Creation durch Drag \& Drop von Akteuren auf die Canvas, Placement mit präziser Positionierung über X/Y-Koordinaten sowie Movement mit automatischer Distanzmessung beim Ziehen. Für taktische Positionierung bietet das System Grid-Snapping sowie Rotation in Grad-Schritten mit Shift+WASD/Mausrad-Kontrolle \autocite{FoundryTokens2024}. Multi-Selection wird durch das Select Tokens Tool mit Shift-Click und Bounding-Box-Auswahl unterstützt.
 
-\textbf{Roll20} bietet vergleichbare Kern-Funktionalität: Drag \& Drop von Tokens aus der Art Library auf den Tabletop, automatisches Grid-Snapping beim Movement (kann per Alt-Taste deaktiviert werden), sowie Token-Rotation mit 45°-Schritten für Square-Grids und 30°-Schritten für Hexagonal-Grids \autocite{Roll20Graphics2024,Roll20TokenFeatures2024}. Multi-Selection erfolgt durch Shift-Click oder Rahmenauswahl.
+\textbf{Roll20} bietet vergleichbare Kern-Funktionalität: Drag \& Drop von Tokens aus der Art Library auf den Tabletop, automatisches Grid-Snapping beim Movement (kann per Alt-Taste deaktiviert werden) sowie Token-Rotation mit 45°-Schritten für Square-Grids und 30°-Schritten für Hexagonal-Grids \autocite{Roll20Graphics2024,Roll20TokenFeatures2024}. Multi-Selection erfolgt durch Shift-Click oder Rahmenauswahl.
 
 Token-Rotation (F2.4) wird in beiden Plattformen unterschiedlich granular implementiert (Foundry: beliebige Grad-Schritte, Roll20: feste Inkremente).
 
@@ -164,7 +164,7 @@ Die nicht-funktionalen Anforderungen legen messbare Qualitätsattribute für Per
 
 \subsubsection{Performance-Anforderungen}
 
-Performance stellt einen zentralen Faktor für flüssige Interaktionen in Desktop-Anwendungen dar. Nielsen beschreibt, dass Nutzer bei einer Reaktionszeit von 0,1 Sekunden (100~\ac{ms}) das System als augenblicklich reagierend wahrnehmen \autocite{Nielsen1993ResponseTimes}. Für kontinuierliche Interaktionen wie Maus-basiertes Dragging liegt die Wahrnehmungsschwelle jedoch niedriger: Forch et al. ermittelten in einer empirischen Studie einen Schwellenwert von 60~\ac{ms} \autocite[S. 53]{Forch2017LatencyPerception}. Für Animationen und kontinuierliches Rendering zeigen Studien, dass Performance-Verbesserungen bei etwa 60~\ac{FPS} ein Plateau erreichen \autocite[S. 1480]{Janzen2014FrameRate}, weshalb dieser Wert als Ziel für hochwertige interaktive Anwendungen gilt. 30~\ac{FPS} stellt hingegen das Minimum für flüssige Interaktionen dar, da niedrigere Frame-Raten zu signifikanten Performance-Einbußen führen \autocite[S. 1480]{Janzen2014FrameRate}.
+Performance stellt einen zentralen Faktor für flüssige Interaktionen in Desktop-Anwendungen dar. Nielsen beschreibt, dass Nutzer bei einer Reaktionszeit von 0,1 Sekunden (100~\ac{ms}) das System als augenblicklich reagierend wahrnehmen \autocite{Nielsen1993ResponseTimes}. Für kontinuierliche Interaktionen wie Maus-basiertes Dragging liegt die Wahrnehmungsschwelle jedoch niedriger: Forch et al. ermittelten in einer empirischen Studie einen Schwellenwert von 60~\ac{ms} \autocite[S. 53]{Forch2017LatencyPerception}. Für Animationen und kontinuierliches Rendering zeigen Studien, dass Performance-Verbesserungen bei etwa 60~\ac{FPS} ein Plateau erreichen \autocite[S. 1480]{Janzen2014FrameRate}, weshalb dieser Wert als Ziel für hochwertige interaktive Anwendungen gilt. 30~\ac{FPS} stellt hingegen das Minimum für flüssige Interaktionen dar, weil niedrigere Frame-Raten zu signifikanten Performance-Einbußen führen \autocite[S. 1480]{Janzen2014FrameRate}.
 
 \ac{VTT}s müssen große Maps und viele Tokens performant handhaben. Die PIXI.js-Dokumentation betont, dass die Szenen-Komplexität direkt die Performance beeinflusst und das System mit zunehmender Objektanzahl langsamer wird \autocite{PixiPerf2024}, was bei \ac{VTT}-Szenarien mit 50 bis 100 Tokens relevant ist. Obsidian basiert auf Electron, dessen Arbeitsspeicher pro Prozess auf maximal 4~GB begrenzt ist \autocite{ElectronV8MemoryCage2022}. Da alle Plugins im selben Renderer-Prozess laufen und sich dieses Limit teilen, wurde für Atlas \ac{VTT} ein konservatives Design-Ziel von 500~\ac{MB} für typische Szenarien festgelegt.
 
@@ -263,7 +263,7 @@ Die strikte Separation zwischen React (\ac{UI} Layer) und PIXI.js (Rendering Lay
 
 \paragraph{State Management Layer}
 
-Der State Management Layer verwaltet den Anwendungszustand über einen zentralen Store. Die JavaScript-Library Zustand stellt diesen globalen Datenspeicher in \texttt{atlasStore.ts} bereit, der Map-Daten, \ac{UI}-Zustand und Tool-Modus umfasst. Eine \texttt{storeFactory.ts} erzeugt View-spezifische Store-Instanzen, während \texttt{tabStore.ts} Tab-spezifischen State für Multi-Map-Support verwaltet. Die Middlewares zundo und immer ermöglichen Undo/Redo-Funktionalität und immutable State-Updates.
+Der State Management Layer verwaltet den Anwendungszustand über einen zentralen Store. Die JavaScript-Library Zustand stellt diesen globalen Datenspeicher in \texttt{atlasStore.ts} bereit, der Map-Daten, \ac{UI}-Zustand und Tool-Modus umfasst. Eine \texttt{storeFactory.ts} erzeugt View-spezifische Store-Instanzen, während \texttt{tabStore.ts} Tab-spezifischen State für Multi-Map-Support verwaltet. Die Middlewares Zundo und Immer ermöglichen Undo/Redo-Funktionalität und immutable State-Updates.
 
 Die Verwendung von Immer garantiert Immutability durch strukturelles Sharing: State-Updates erzeugen neue Objekte statt bestehende zu mutieren. Strukturelles Sharing ermöglicht, dass nur geänderte Teile des State-Trees kopiert werden, während Immer unveränderte Daten wiederverwendet \autocite{ImmerPerformance2024}.
 
@@ -335,7 +335,7 @@ Diese Separation entspricht dem Table Data Gateway Pattern \autocite{FowlerTable
 
 \subsubsection{Map Data Format}
 
-Das \texttt{.atlasmap}-Format speichert Map-Konfiguration und platzierte Objekte als \ac{JSON}. Die Datenstruktur umfasst ein \texttt{version}-Feld für Schema-Versionierung, \texttt{name} und \texttt{background}-Konfiguration (Image-Pfad und Grid-Parameter), sowie ein \texttt{objects}-Array mit platzierten Map-Objekten (Token, FogRegion, etc.). Jedes Objekt enthält \texttt{type}, \texttt{id}, Position (\texttt{x}/\texttt{y}) und typ-spezifische Properties wie \texttt{statblockPath} für Tokens oder \texttt{shape}/\texttt{points} für FogRegions (vollständiges Schema: siehe \autoref{sec:anhang-map-format}).
+Das \texttt{.atlasmap}-Format speichert Map-Konfiguration und platzierte Objekte als \ac{JSON}. Die Datenstruktur umfasst ein \texttt{version}-Feld für Schema-Versionierung, \texttt{name} und \texttt{background}-Konfiguration (Image-Pfad und Grid-Parameter) sowie ein \texttt{objects}-Array mit platzierten Map-Objekten (Token, FogRegion, etc.). Jedes Objekt enthält \texttt{type}, \texttt{id}, Position (\texttt{x}/\texttt{y}) und typ-spezifische Properties wie \texttt{statblockPath} für Tokens oder \texttt{shape}/\texttt{points} für FogRegions (vollständiges Schema: siehe \autoref{sec:anhang-map-format}).
 
 Mehrere Faktoren motivierten die Wahl von \ac{JSON} als Datenformat: \ac{JSON} ist human-readable und damit git-friendly, was Diff-Visualisierung und Merge-Konflikt-Auflösung bei kollaborativer Map-Entwicklung erleichtert \autocite{JSON2017}.
 
@@ -659,4 +659,3 @@ Die implementierte Optimierungsstrategie bringt folgende Design-Trade-offs mit s
 \end{itemize}
 
 Die tatsächlichen Performance-Verbesserungen durch Texture-Caching und automatisches Sprite-Batching werden in \autoref{sec:evaluation} quantifiziert.
-

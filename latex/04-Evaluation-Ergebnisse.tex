@@ -233,7 +233,7 @@ Der in \autoref{fig:benchmark-flow} dargestellte Iterationszyklus durchläuft fo
 
 	\item \textbf{Callback (SyncService $\rightarrow$ TokenRenderer)}: Der SyncService ruft den registrierten Callback \texttt{onTokensChanged} auf, der die Kontrolle an die \texttt{syncTokens()}-Methode des TokenRenderers übergibt.
 
-	\item[4a.] \textbf{New (TokenRenderer $\rightarrow$ createTokenSprite)}: Für jeden neuen Token erstellt der TokenRenderer einen PIXI.js-Container mit: einem \texttt{Sprite} für die Textur, einem \texttt{Graphics}-Objekt als kreisförmige Maske, einem weiteren \texttt{Graphics}-Objekt als Hintergrund für Hit-Detection, sowie Event-Handlern für Interaktion.
+	\item[4a.] \textbf{New (TokenRenderer $\rightarrow$ createTokenSprite)}: Für jeden neuen Token erstellt der TokenRenderer einen PIXI.js-Container mit: einem \texttt{Sprite} für die Textur, einem \texttt{Graphics}-Objekt als kreisförmige Maske, einem weiteren \texttt{Graphics}-Objekt als Hintergrund für Hit-Detection sowie Event-Handlern für Interaktion.
 
 	\item[4b.] \textbf{Delete (TokenRenderer $\rightarrow$ destroy)}: Am Ende der Iteration ruft der BenchmarkService \texttt{clearAllTokens()} auf. Der TokenRenderer identifiziert gelöschte Token und ruft für jeden \texttt{container.destroy(\{children: true\})} auf. Der \texttt{InteractionController.removeHandlers()} entfernt die registrierten Event-Listener.
 
